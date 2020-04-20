@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - openjdk8
+
+services: postgresql
+
+before_script:
+  - cd backend
+  - chmod +x mvnw
+  - psql -c 'create database "ComprasEnCasa";' -U postgres
