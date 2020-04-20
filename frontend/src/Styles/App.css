@@ -1,0 +1,10 @@
+.App {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    font-weight: 600;
+    font-family: monospace;
+    text-align: center;
+}
