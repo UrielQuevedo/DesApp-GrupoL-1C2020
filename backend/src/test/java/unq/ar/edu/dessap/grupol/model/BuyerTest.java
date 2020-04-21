@@ -2,7 +2,10 @@ package unq.ar.edu.dessap.grupol.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import unq.ar.edu.dessap.grupol.service.BuyerService;
 import unq.ar.edu.dessap.grupol.service.builder.BuyerBuilder;
+import unq.ar.edu.dessap.grupol.service.impl.BuyerServiceImpl;
 
 public class BuyerTest {
 
@@ -66,6 +69,14 @@ public class BuyerTest {
         Assert.assertEquals("buyer1", buyer1.getUsername());
         Assert.assertEquals("hashed", buyer1.getPassword());
         Assert.assertEquals("buyer1@compras.en.casa", buyer1.getEmail());
+    }
+
+    @Autowired
+    BuyerService buyerService = new BuyerServiceImpl();
+
+    @Test
+    public void testBuyer() {
+        buyerService.create("pepe","facil","pepe@gmail.com");
     }
 
 }

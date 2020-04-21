@@ -9,6 +9,7 @@ public class Buyer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(nullable = false)
     private String username;
     @Column(unique = true, nullable = false)
     private String email;
