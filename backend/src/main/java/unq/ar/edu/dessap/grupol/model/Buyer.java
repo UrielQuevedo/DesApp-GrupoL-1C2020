@@ -16,10 +16,10 @@ public class Buyer {
 
     public Buyer(){}
     public Buyer(long _id, String _username, String _email, String _password) {
-        this.id = _id;
-        this.username = _username;
-        this.email = _email;
-        this.password = _password;
+        this.setId(_id);
+        this.setUsername(_username);
+        this.setEmail(_email);
+        this.setPassword(_password);
     }
 
     public long getId() {
