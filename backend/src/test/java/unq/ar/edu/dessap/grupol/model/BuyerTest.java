@@ -70,13 +70,4 @@ public class BuyerTest {
         Assert.assertEquals("hashed", buyer1.getPassword());
         Assert.assertEquals("buyer1@compras.en.casa", buyer1.getEmail());
     }
-
-    @Autowired
-    BuyerService buyerService = new BuyerServiceImpl();
-
-    @Test
-    public void testBuyer() {
-        buyerService.create("pepe","facil","pepe@gmail.com");
-    }
-
 }
