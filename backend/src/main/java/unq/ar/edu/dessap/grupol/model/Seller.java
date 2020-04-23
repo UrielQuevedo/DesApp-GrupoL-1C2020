@@ -16,6 +16,9 @@ public class Seller {
     private String email;
     @Column(unique = true, nullable = false)
     private String password;
+
+    @OneToOne
+    @JoinColumn(name = "FK_STORE", updatable = false, nullable = false)
     private Store store;
 
     public Seller(long _id, String _username, String _email, String _password, Store _store) {
