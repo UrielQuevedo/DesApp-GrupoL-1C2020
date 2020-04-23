@@ -1,9 +1,6 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
-import unq.ar.edu.dessap.grupol.model.Buyer;
-import unq.ar.edu.dessap.grupol.model.Sector;
-import unq.ar.edu.dessap.grupol.model.Store;
-import unq.ar.edu.dessap.grupol.model.Time;
+import unq.ar.edu.dessap.grupol.model.*;
 
 import java.time.DayOfWeek;
 import java.util.List;
@@ -16,7 +13,7 @@ public class StoreBuilder {
     private String address;
     private List<DayOfWeek> openDays;
     private List<Time> times;
-    private List<String> payments;
+    private List<Payment> payments;
     private Double maxDistance;
 
     public static StoreBuilder aStore() {
@@ -46,6 +43,27 @@ public class StoreBuilder {
 
     public StoreBuilder withMaxDistance(final Double maxDistance) {
         this.maxDistance = maxDistance;
+        return this;
+    }
+
+    public StoreBuilder withSectors(List<Sector> sectors) {
+        this.sectors = sectors;
+        return this;
+    }
+
+    public StoreBuilder withOpenDays(List<DayOfWeek> days) {
+        this.openDays = days;
+        return this;
+    }
+
+    public StoreBuilder withPayments(List<Payment> payments) {
+        this.payments = payments;
+        return this;
+    }
+
+
+    public StoreBuilder withTimes(List<Time> times) {
+        this.times = times;
         return this;
     }
 

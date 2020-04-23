@@ -47,13 +47,14 @@ public class Store {
     @JoinTable(name = "rel_stores_payments", joinColumns =
     @JoinColumn(name = "store_id", nullable = false))
     @Column(name = "payment", nullable = false)
-    private List<String> payments;
+    @Enumerated(EnumType.STRING)
+    private List<Payment> payments;
 
     @Column(nullable = false)
     private Double maxDistance;
 
     public Store(long id, String name, List<Sector> sectors,  String address,
-                 List<DayOfWeek> openDays, List<Time> times, List<String> payments,
+                 List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
                  Double maxDistance) {
         this.id = id;
         this.name = name;
@@ -113,11 +114,11 @@ public class Store {
         this.times = times;
     }
 
-    public List<String> getPayments() {
+    public List<Payment> getPayments() {
         return payments;
     }
 
-    public void setPayments(List<String> payments) {
+    public void setPayments(List<Payment> payments) {
         this.payments = payments;
     }
 
@@ -141,7 +142,7 @@ public class Store {
         this.times.add(time);
     }
 
-    public void addPayments(String payment) {
+    public void addPayments(Payment payment) {
         this.payments.add(payment);
     }
 

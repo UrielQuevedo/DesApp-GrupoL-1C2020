@@ -1,6 +1,7 @@
 package unq.ar.edu.dessap.grupol.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,5 +21,12 @@ public class Time {
     @ManyToMany(mappedBy = "times")
     private List<Store> stores;
 
+    public Time() {}
+
+    public Time(String of, String until) {
+        this.of = of;
+        this.until = until;
+        this.stores = new ArrayList<>();
+    }
 
 }

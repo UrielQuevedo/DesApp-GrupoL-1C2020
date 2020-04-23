@@ -17,4 +17,7 @@ public class Sector {
     @ManyToMany(mappedBy = "sectors")
     private List<Store> stores;
 
+    public Sector () {}
+
+
 }
