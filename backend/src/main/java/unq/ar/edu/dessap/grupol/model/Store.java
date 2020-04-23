@@ -52,13 +52,16 @@ public class Store {
     @Column(nullable = false)
     private Double maxDistance;
 
-    public Store(String name, String address, Double maxDistance) {
+    public Store(long id, String name, List<Sector> sectors,  String address,
+                 List<DayOfWeek> openDays, List<Time> times, List<String> payments,
+                 Double maxDistance) {
+        this.id = id;
         this.name = name;
-        this.sectors = new ArrayList<>();
+        this.sectors = sectors;
         this.address = address;
-        this.openDays = new ArrayList<>();
-        this.times = new ArrayList<>();
-        this.payments = new ArrayList<>();
+        this.openDays = openDays;
+        this.times = times;
+        this.payments = payments;
         this.maxDistance = maxDistance;
     }
 
