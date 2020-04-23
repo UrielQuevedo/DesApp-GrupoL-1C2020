@@ -1,6 +1,7 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
 import unq.ar.edu.dessap.grupol.model.Seller;
+import unq.ar.edu.dessap.grupol.model.Store;
 
 public class SellerBuilder {
 
@@ -8,13 +9,14 @@ public class SellerBuilder {
     private String username;
     private String email;
     private String password;
+    private Store store;
 
     public static SellerBuilder aSeller() {
         return new SellerBuilder();
     }
 
     public Seller build() {
-        return new Seller(this.id, this.username, this.email, this.password);
+        return new Seller(this.id, this.username, this.email, this.password, this.store);
     }
 
     public SellerBuilder withId(final long _id) {
@@ -34,6 +36,11 @@ public class SellerBuilder {
 
     public SellerBuilder withPassword(final String _password) {
         this.password = _password;
+        return this;
+    }
+
+    public SellerBuilder withStore(Store store) {
+        this.store = store;
         return this;
     }
 }
