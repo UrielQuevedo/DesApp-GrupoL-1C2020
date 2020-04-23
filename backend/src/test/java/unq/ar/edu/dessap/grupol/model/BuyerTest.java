@@ -12,7 +12,7 @@ public class BuyerTest {
     @Test
     public void testGivenABuyerWithUserNameAndOtherBuyerWithUsernameWhenTheyRecieveGetUsernameThenTheyGiveTheirUsernames() {
         Buyer buyer1 = BuyerBuilder.aBuyer()
-                        .withUsername("buyer1").build();
+                .withUsername("buyer1").build();
 
         Buyer buyer2 = BuyerBuilder.aBuyer()
                 .withUsername("buyer2").build();
