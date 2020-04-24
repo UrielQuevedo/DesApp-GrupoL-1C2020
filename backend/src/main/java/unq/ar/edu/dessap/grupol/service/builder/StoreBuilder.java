@@ -10,7 +10,7 @@ public class StoreBuilder {
     private long id;
     private String name;
     private List<Sector> sectors;
-    private String address;
+    private Location location;
     private List<DayOfWeek> openDays;
     private List<Time> times;
     private List<Payment> payments;
@@ -21,7 +21,7 @@ public class StoreBuilder {
     }
 
     public Store build() {
-        return new Store(this.id, this.name, this.sectors, this.address, this.openDays, this.times, this.payments, this.maxDistance);
+        return new Store(this.id, this.name, this.sectors, this.location, this.openDays, this.times, this.payments, this.maxDistance);
     }
 
 
@@ -36,8 +36,8 @@ public class StoreBuilder {
         return this;
     }
 
-    public StoreBuilder withAddress(final String address) {
-        this.address = address;
+    public StoreBuilder withAddress(final Location location) {
+        this.location = location;
         return this;
     }
 
@@ -60,7 +60,6 @@ public class StoreBuilder {
         this.payments = payments;
         return this;
     }
-
 
     public StoreBuilder withTimes(List<Time> times) {
         this.times = times;

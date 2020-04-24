@@ -8,6 +8,8 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
+
 public class StoreTest {
 
     @Test
@@ -28,10 +30,11 @@ public class StoreTest {
 
     @Test
     public void testGivenAStoreWithAddressWhenReceiveGetAddressThenGiveHisAddress() {
+        Location location = mock(Location.class);
         Store store = StoreBuilder.aStore()
-                .withAddress("calle falsa 123").build();
+                .withAddress(location).build();
 
-        Assert.assertEquals("calle falsa 123", store.getAddress());
+        Assert.assertEquals(location, store.getLocation());
     }
 
     @Test

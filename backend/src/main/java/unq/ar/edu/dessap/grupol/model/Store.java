@@ -92,11 +92,11 @@ public class Store {
         this.name = name;
     }
 
-    public Location getAddress() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setAddress(Location location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
