@@ -1,6 +1,7 @@
 package unq.ar.edu.dessap.grupol.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "sellers")
@@ -13,13 +14,19 @@ public class Seller {
     private String username;
     @Column(unique = true, nullable = false)
     private String email;
+    @Column(unique = true, nullable = false)
     private String password;
 
-    public Seller(long _id, String _username, String _email, String _password) {
+    @OneToOne
+    @JoinColumn(name = "FK_STORE", updatable = false, nullable = false)
+    private Store store;
+
+    public Seller(long _id, String _username, String _email, String _password, Store _store) {
         this.setId(_id);
         this.setUsername(_username);
         this.setEmail(_email);
         this.setPassword(_password);
+        this.setStore(_store);
     }
 
     public long getId() {
@@ -52,6 +59,14 @@ public class Seller {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Store getStore() {
+        return this.store;
+   }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
 }

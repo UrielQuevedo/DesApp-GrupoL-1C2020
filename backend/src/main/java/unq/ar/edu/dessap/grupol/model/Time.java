@@ -21,12 +21,46 @@ public class Time {
     @ManyToMany(mappedBy = "times")
     private List<Store> stores;
 
-    public Time() {}
+    public Time() {
+    }
 
-    public Time(String of, String until) {
+    public Time(long id, String of, String until, List<Store> stores) {
+        this.id = id;
         this.of = of;
         this.until = until;
-        this.stores = new ArrayList<>();
+        this.stores = stores;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getOf() {
+        return of;
+    }
+
+    public void setOf(String of) {
+        this.of = of;
+    }
+
+    public String getUntil() {
+        return until;
+    }
+
+    public void setUntil(String until) {
+        this.until = until;
+    }
+
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
     }
 
 }

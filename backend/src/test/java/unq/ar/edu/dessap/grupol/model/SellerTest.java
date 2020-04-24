@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import unq.ar.edu.dessap.grupol.service.builder.SellerBuilder;
 
+import static org.mockito.Mockito.mock;
+
 public class SellerTest {
 
     @Test
@@ -66,6 +68,25 @@ public class SellerTest {
         Assert.assertEquals("Seller1", Seller1.getUsername());
         Assert.assertEquals("hashed", Seller1.getPassword());
         Assert.assertEquals("Seller1@compras.en.casa", Seller1.getEmail());
+    }
+
+    @Test
+    public void testGivenASellerWhenReceiveSizeGetStoreThenGiveIsEqualToNull() {
+
+        Seller Seller1 = SellerBuilder.aSeller().build();
+
+        Assert.assertEquals(null, Seller1.getStore());
+    }
+
+    @Test
+    public void testGivenASellerWithToStoreWhenReceiveGetStoreThenGiveHisStore() {
+
+        Store storeMock = mock(Store.class);
+
+        Seller Seller1 = SellerBuilder.aSeller()
+                            .withStore(storeMock).build();
+
+        Assert.assertEquals(storeMock, Seller1.getStore());
     }
 
 }
