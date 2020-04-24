@@ -13,36 +13,28 @@ import static org.mockito.Mockito.mock;
 public class StoreTest {
 
     @Test
-    public void testGivenAStoreWithIdWhenReceiveGetIdThenGiveHisId() {
-        Store store = StoreBuilder.aStore()
-                .withId(1).build();
-
-        Assert.assertEquals(1, store.getId());
-    }
-
-    @Test
     public void testGivenAStoreWithNameWhenReceiveGetNameThenGiveHisName() {
-        Store store = StoreBuilder.aStore()
+        Store Store1 = StoreBuilder.aStore()
                 .withName("store1").build();
 
-        Assert.assertEquals("store1", store.getName());
+        Assert.assertEquals("store1", Store1.getName());
     }
 
     @Test
     public void testGivenAStoreWithAddressWhenReceiveGetAddressThenGiveHisAddress() {
         Location location = mock(Location.class);
-        Store store = StoreBuilder.aStore()
+        Store Store1 = StoreBuilder.aStore()
                 .withAddress(location).build();
 
-        Assert.assertEquals(location, store.getLocation());
+        Assert.assertEquals(location, Store1.getLocation());
     }
 
     @Test
     public void testGivenAStoreWithMaxDistanceWhenReceiveGetMaxDistanceThenGiveHisMaxDistance() {
-        Store store = StoreBuilder.aStore()
+        Store Store1 = StoreBuilder.aStore()
                 .withMaxDistance(new Double(100.1)).build();
 
-        Assert.assertEquals(new Double(100.1), store.getMaxDistance());
+        Assert.assertEquals(new Double(100.1), Store1.getMaxDistance());
     }
 
     @Test
@@ -51,10 +43,10 @@ public class StoreTest {
         List<Sector> sectors = new ArrayList<>();
         sectors.add(new Sector());
 
-        Store store = StoreBuilder.aStore()
+        Store Store1 = StoreBuilder.aStore()
                 .withSectors(sectors).build();
 
-        Assert.assertEquals(1, store.getSectors().size());
+        Assert.assertEquals(1, Store1.getSectors().size());
     }
 
     @Test
@@ -65,10 +57,10 @@ public class StoreTest {
         days.add(DayOfWeek.WEDNESDAY);
         days.add(DayOfWeek.FRIDAY);
 
-        Store store = StoreBuilder.aStore()
+        Store Store1 = StoreBuilder.aStore()
                 .withOpenDays(days).build();
 
-        Assert.assertEquals(3, store.getOpenDays().size());
+        Assert.assertEquals(3, Store1.getOpenDays().size());
     }
 
     @Test
@@ -77,21 +69,33 @@ public class StoreTest {
         List<Payment> payments = new ArrayList<>();
         payments.add(Payment.EFECTIVO);
 
-        Store store = StoreBuilder.aStore()
+        Store Store1 = StoreBuilder.aStore()
                 .withPayments(payments).build();
 
-        Assert.assertEquals(1, store.getPayments().size());
+        Assert.assertEquals(1, Store1.getPayments().size());
     }
 
     @Test
     public void testGivenAStoreWithATimeWhenReceiveSizeGetTimesThenGiveTheSizeFromTimes() {
 
         List<Time> times = new ArrayList<>();
-        times.add(new Time());
+        times.add(mock(Time.class));
 
-        Store store = StoreBuilder.aStore()
+        Store Store1 = StoreBuilder.aStore()
                 .withTimes(times).build();
 
-        Assert.assertEquals(1, store.getTimes().size());
+        Assert.assertEquals(1, Store1.getTimes().size());
+    }
+
+    @Test
+    public void testGiveAStoreWithProdutsWhenReceiveSizeGetProductsThenGiveTheSizeFromProducts() {
+
+        List<Product> products = new ArrayList<>();
+        products.add(mock(Product.class));
+
+        Store Store1 = StoreBuilder.aStore()
+                .withProducts(products).build();
+
+        Assert.assertEquals(1, Store1.getProducts().size());
     }
 }
