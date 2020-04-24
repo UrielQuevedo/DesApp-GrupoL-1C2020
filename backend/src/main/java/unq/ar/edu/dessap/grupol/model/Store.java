@@ -54,7 +54,7 @@ public class Store {
     private Double maxDistance;
 
     @JoinTable(
-            name = "rel_stores_prodcuts",
+            name = "rel_stores_products",
             joinColumns = @JoinColumn(name = "store_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="product_id", nullable = false)
     )

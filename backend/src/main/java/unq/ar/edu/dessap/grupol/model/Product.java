@@ -1,23 +1,27 @@
 package unq.ar.edu.dessap.grupol.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name="product_id")
+    @Column(nullable = false, name = "product_id")
     private long id;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String name;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String brand;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private int stock;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private double price;
     private String image_url;
+    @ManyToMany(mappedBy = "products")
+    private List<Store> stores;
 
     public Product(){}
 
