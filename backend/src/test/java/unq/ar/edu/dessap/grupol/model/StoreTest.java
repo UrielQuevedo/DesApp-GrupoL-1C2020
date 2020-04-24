@@ -94,7 +94,4 @@ public class StoreTest {
 
         Assert.assertEquals(1, store.getTimes().size());
     }
-
-
-
 }

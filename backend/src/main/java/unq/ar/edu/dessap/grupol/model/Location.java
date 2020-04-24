@@ -8,13 +8,12 @@ public class Location {
     private Double longitude;
     private String address;
 
+    public Location(){}
     public Location(Double latitude, Double longitude, String address) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.address = address;
     }
-    
-    public Location(){}
 
     public Double getLongitude() {
         return this.longitude;
