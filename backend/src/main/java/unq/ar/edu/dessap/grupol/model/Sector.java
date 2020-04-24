@@ -19,5 +19,34 @@ public class Sector {
 
     public Sector () {}
 
+    public Sector(long id, String name, List<Store> stores) {
+        this.id = id;
+        this.name = name;
+        this.stores = stores;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
+    }
+
+    public List<Store> getStores() {
+        return stores;
+    }
 
 }
