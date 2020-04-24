@@ -25,7 +25,7 @@ public class Store {
     private List<Sector> sectors;
 
     @Column(nullable = false)
-    private String address;
+    private Location location;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "rel_stores_days", joinColumns =
@@ -53,18 +53,20 @@ public class Store {
     @Column(nullable = false)
     private Double maxDistance;
 
-    public Store(long id, String name, List<Sector> sectors,  String address,
+    public Store(long id, String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
                  Double maxDistance) {
         this.id = id;
         this.name = name;
         this.sectors = sectors;
-        this.address = address;
+        this.location = location;
         this.openDays = openDays;
         this.times = times;
         this.payments = payments;
         this.maxDistance = maxDistance;
     }
+
+    public Store(){}
 
     public long getId() {
         return id;
@@ -90,12 +92,12 @@ public class Store {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public List<DayOfWeek> getOpenDays() {
