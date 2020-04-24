@@ -4,6 +4,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import unq.ar.edu.dessap.grupol.service.builder.ProductBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.mock;
+
 public class ProductTest {
     @Test
     public void testGivenAProductWithNameAndOtherProductWithNameWhenTheyRecieveGetNameThenTheyGiveTheirNames() {
@@ -76,4 +81,17 @@ public class ProductTest {
         Assert.assertEquals(80.00, product.getPrice(), 00.1);
         Assert.assertEquals(30, product.getStock());
     }
+
+    @Test
+    public void testGiveAProductWithStoresWhenReceiveSizeGetStoresThenGiveHisSize() {
+
+        List<Store> stores = new ArrayList<>();
+        stores.add(mock(Store.class));
+
+        Product product = ProductBuilder.aProduct()
+                            .withStores(stores).build();
+
+        Assert.assertEquals(1, product.getStores().size());
+    }
+
 }
