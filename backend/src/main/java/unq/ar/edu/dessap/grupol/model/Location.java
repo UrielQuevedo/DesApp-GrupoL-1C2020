@@ -9,6 +9,7 @@ public class Location {
     private String address;
 
     public Location(){}
+
     public Location(Double latitude, Double longitude, String address) {
         this.latitude = latitude;
         this.longitude = longitude;
