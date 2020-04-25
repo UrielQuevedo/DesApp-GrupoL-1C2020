@@ -1,6 +1,9 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
 import unq.ar.edu.dessap.grupol.model.Product;
+import unq.ar.edu.dessap.grupol.model.Store;
+
+import java.util.List;
 
 public class ProductBuilder {
     private String name;
@@ -8,10 +11,11 @@ public class ProductBuilder {
     private int stock;
     private double price;
     private String image_url;
+    private List<Store> stores;
 
     public static ProductBuilder aProduct() { return new ProductBuilder(); }
 
-    public Product build() { return new Product(this.name, this.brand, this.stock, this.price, this.image_url); }
+    public Product build() { return new Product(this.name, this.brand, this.stock, this.price, this.image_url, this.stores); }
 
     public ProductBuilder withName(final String _name) {
         this.name = _name;
@@ -37,4 +41,10 @@ public class ProductBuilder {
         this.image_url = _image_url;
         return this;
     }
+
+    public ProductBuilder withStores(List<Store> stores) {
+        this.stores = stores;
+        return this;
+    }
+
 }

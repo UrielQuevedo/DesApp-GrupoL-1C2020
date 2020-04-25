@@ -53,10 +53,17 @@ public class Store {
     @Column(nullable = false)
     private Double maxDistance;
 
-    public Store(long id, String name, List<Sector> sectors,  Location location,
+    @JoinTable(
+            name = "rel_stores_products",
+            joinColumns = @JoinColumn(name = "store_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="product_id", nullable = false)
+    )
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Product> products;
+
+    public Store(String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
-                 Double maxDistance) {
-        this.id = id;
+                 Double maxDistance, List<Product> products) {
         this.name = name;
         this.sectors = sectors;
         this.location = location;
@@ -64,6 +71,7 @@ public class Store {
         this.times = times;
         this.payments = payments;
         this.maxDistance = maxDistance;
+        this.products = products;
     }
 
     public Store(){}
@@ -146,6 +154,14 @@ public class Store {
 
     public void addPayments(Payment payment) {
         this.payments.add(payment);
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
 }
