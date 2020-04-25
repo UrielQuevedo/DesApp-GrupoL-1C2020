@@ -40,4 +40,19 @@ public class SectorTest {
         Assert.assertEquals(1, Sector1.getStores().size());
     }
 
+    @Test
+    public void TestSetterSector() {
+        Sector sector = SectorBuilder.aSector().build();
+        List<Store> stores = new ArrayList<>();
+        stores.add(mock(Store.class));
+
+        sector.setId(1);
+        sector.setName("Farmacia");
+        sector.setStores(stores);
+
+        Assert.assertEquals(1, sector.getId());
+        Assert.assertEquals("Farmacia", sector.getName());
+        Assert.assertEquals(1, sector.getStores().size());
+    }
+
 }

@@ -98,4 +98,65 @@ public class StoreTest {
 
         Assert.assertEquals(1, Store1.getProducts().size());
     }
+
+    @Test
+    public void testSetterStore() {
+        Store store = StoreBuilder.aStore().build();
+        Location location = mock(Location.class);
+
+        List<DayOfWeek> days = new ArrayList<>();
+        days.add(DayOfWeek.MONDAY);
+
+        List<Payment> payments = new ArrayList<>();
+        payments.add(Payment.TARJETA_DE_DEBITO);
+
+        Product product = mock(Product.class);
+        List<Product> products = new ArrayList<>();
+        products.add(product);
+
+        Sector sector = mock(Sector.class);
+        List<Sector> sectors = new ArrayList<>();
+        sectors.add(sector);
+
+        Time time = mock(Time.class);
+        List<Time> times = new ArrayList<>();
+        times.add(time);
+
+        store.setId(1);
+        store.setLocation(location);
+        store.setMaxDistance(2.0);
+        store.setName("La Flauta");
+        store.setOpenDays(days);
+        store.setPayments(payments);
+        store.setProducts(products);
+        store.setSectors(sectors);
+        store.setTimes(times);
+
+        Assert.assertEquals(1, store.getId());
+        Assert.assertEquals(location, store.getLocation());
+        Assert.assertEquals(2.0, store.getMaxDistance(), 0.0);
+        Assert.assertEquals("La Flauta", store.getName());
+        Assert.assertEquals(DayOfWeek.MONDAY, store.getOpenDays().get(0));
+        Assert.assertEquals(Payment.TARJETA_DE_DEBITO, store.getPayments().get(0));
+        Assert.assertEquals(product, store.getProducts().get(0));
+        Assert.assertEquals(sector, store.getSectors().get(0));
+        Assert.assertEquals(time, store.getTimes().get(0));
+    }
+
+    @Test
+    public void testAddsStore() {
+        Store store = StoreBuilder.aStore().build();
+        Sector sector = mock(Sector.class);
+        Time time = mock(Time.class);
+
+        store.addDay(DayOfWeek.MONDAY);
+        store.addPayments(Payment.MERCADO_PAGO);
+        store.addSector(sector);
+        store.addTimes(time);
+
+        Assert.assertEquals(DayOfWeek.MONDAY, store.getOpenDays().get(0));
+        Assert.assertEquals(Payment.MERCADO_PAGO, store.getPayments().get(0));
+        Assert.assertEquals(sector, store.getSectors().get(0));
+        Assert.assertEquals(time, store.getTimes().get(0));
+    }
 }

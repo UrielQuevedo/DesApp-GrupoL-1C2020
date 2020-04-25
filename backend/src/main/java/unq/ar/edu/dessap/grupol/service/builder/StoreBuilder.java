@@ -3,18 +3,19 @@ package unq.ar.edu.dessap.grupol.service.builder;
 import unq.ar.edu.dessap.grupol.model.*;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreBuilder {
 
     private String name;
-    private List<Sector> sectors;
+    private List<Sector> sectors = new ArrayList<>();
     private Location location;
-    private List<DayOfWeek> openDays;
-    private List<Time> times;
-    private List<Payment> payments;
+    private List<DayOfWeek> openDays = new ArrayList<>();
+    private List<Time> times = new ArrayList<>();
+    private List<Payment> payments = new ArrayList<>();
     private Double maxDistance;
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     public static StoreBuilder aStore() {
         return new StoreBuilder();
