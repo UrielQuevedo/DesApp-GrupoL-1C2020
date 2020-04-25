@@ -7,6 +7,8 @@ import unq.ar.edu.dessap.grupol.service.BuyerService;
 import unq.ar.edu.dessap.grupol.service.builder.BuyerBuilder;
 import unq.ar.edu.dessap.grupol.service.impl.BuyerServiceImpl;
 
+import static org.mockito.Mockito.mock;
+
 public class BuyerTest {
 
     @Test
@@ -59,15 +61,32 @@ public class BuyerTest {
 
     @Test
     public void testSetterBuyer() {
+
+        History mockHistory = mock(History.class);
+
         Buyer buyer1 = BuyerBuilder.aBuyer().build();
         buyer1.setEmail("buyer1@compras.en.casa");
         buyer1.setUsername("buyer1");
         buyer1.setId(1);
         buyer1.setPassword("hashed");
+        buyer1.setHistory(mockHistory);
 
         Assert.assertEquals(1, buyer1.getId());
         Assert.assertEquals("buyer1", buyer1.getUsername());
         Assert.assertEquals("hashed", buyer1.getPassword());
         Assert.assertEquals("buyer1@compras.en.casa", buyer1.getEmail());
+        Assert.assertEquals(mockHistory, buyer1.getHistory());
     }
+
+    @Test
+    public void testGivenABuyerWithHistoryWhenReceiveGetHistoryThenGiveAHistory() {
+
+        History mockHistory = mock(History.class);
+
+        Buyer buyer = BuyerBuilder.aBuyer().
+                        withHistory(mockHistory).build();
+
+        Assert.assertEquals(mockHistory, buyer.getHistory());
+    }
+
 }

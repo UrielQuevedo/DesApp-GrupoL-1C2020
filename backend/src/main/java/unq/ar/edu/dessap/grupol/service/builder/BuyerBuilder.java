@@ -39,4 +39,9 @@ public class BuyerBuilder {
         return this;
     }
 
+    public BuyerBuilder withHistory(History history) {
+        this.history = history;
+        return this;
+    }
+
 }
