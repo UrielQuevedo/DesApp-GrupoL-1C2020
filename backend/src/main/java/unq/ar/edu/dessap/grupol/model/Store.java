@@ -61,9 +61,12 @@ public class Store {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Product> products;
 
+    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL)
+    private Seller seller;
+
     public Store(String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
-                 Double maxDistance, List<Product> products) {
+                 Double maxDistance, List<Product> products, Seller seller) {
         this.name = name;
         this.sectors = sectors;
         this.location = location;
@@ -72,6 +75,15 @@ public class Store {
         this.payments = payments;
         this.maxDistance = maxDistance;
         this.products = products;
+        this.seller = seller;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 
     public Store(){}

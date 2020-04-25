@@ -16,13 +16,15 @@ public class StoreBuilder {
     private List<Payment> payments = new ArrayList<>();
     private Double maxDistance;
     private List<Product> products = new ArrayList<>();
+    private Seller seller;
 
     public static StoreBuilder aStore() {
         return new StoreBuilder();
     }
 
     public Store build() {
-        return new Store(this.name, this.sectors, this.location, this.openDays, this.times, this.payments, this.maxDistance, this.products);
+        return new Store(this.name, this.sectors, this.location, this.openDays, this.times,
+                            this.payments, this.maxDistance, this.products, this.seller);
     }
 
     public StoreBuilder withName(final String name) {
@@ -64,4 +66,11 @@ public class StoreBuilder {
         this.products = products;
         return this;
     }
+
+
+    public StoreBuilder withSeller(Seller seller) {
+        this.seller = seller;
+        return this;
+    }
+
 }
