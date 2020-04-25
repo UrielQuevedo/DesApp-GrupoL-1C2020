@@ -1,19 +1,22 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
 import unq.ar.edu.dessap.grupol.model.Buyer;
+import unq.ar.edu.dessap.grupol.model.History;
 
 public class BuyerBuilder {
+
     private long id;
     private String username;
     private String email;
     private String password;
+    private History history;
 
     public static BuyerBuilder aBuyer() {
         return new BuyerBuilder();
     }
 
     public Buyer build() {
-        return new Buyer(this.id, this.username, this.email, this.password);
+        return new Buyer(this.id, this.username, this.email, this.password, this.history);
     }
 
     public BuyerBuilder withId(final long _id) {

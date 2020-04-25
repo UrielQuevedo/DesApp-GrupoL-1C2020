@@ -1,6 +1,7 @@
 package unq.ar.edu.dessap.grupol.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "buyers")
@@ -14,13 +15,17 @@ public class Buyer {
     @Column(unique = true, nullable = false)
     private String email;
     private String password;
+    @Transient
+    private History history;
 
     public Buyer(){}
-    public Buyer(long _id, String _username, String _email, String _password) {
+
+    public Buyer(long _id, String _username, String _email, String _password, History history) {
         this.setId(_id);
         this.setUsername(_username);
         this.setEmail(_email);
         this.setPassword(_password);
+        this.history = history;
     }
 
     public long getId() {
@@ -53,6 +58,14 @@ public class Buyer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 
 }
