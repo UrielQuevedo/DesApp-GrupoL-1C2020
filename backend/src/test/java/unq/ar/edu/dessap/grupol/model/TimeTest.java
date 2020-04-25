@@ -48,4 +48,21 @@ public class TimeTest {
         Assert.assertEquals(1, Time1.getStores().size());
     }
 
+    @Test
+    public void testSetsTime() {
+        Time time = TimeBuilder.aTime().build();
+        List<Store> stores = new ArrayList<>();
+        stores.add(mock(Store.class));
+
+        time.setId(1);
+        time.setOf("09:00");
+        time.setStores(stores);
+        time.setUntil("18:00");
+
+        Assert.assertEquals(1, time.getId());
+        Assert.assertEquals("09:00", time.getOf());
+        Assert.assertEquals("18:00", time.getUntil());
+        Assert.assertEquals(1, stores.size());
+    }
+
 }
