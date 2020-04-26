@@ -16,16 +16,16 @@ public class Buyer {
     private String email;
     private String password;
     @Transient
-    private History history;
+    private List<Order> orders;
 
     public Buyer(){}
 
-    public Buyer(long _id, String _username, String _email, String _password, History history) {
+    public Buyer(long _id, String _username, String _email, String _password, List<Order> _orders) {
         this.setId(_id);
         this.setUsername(_username);
         this.setEmail(_email);
         this.setPassword(_password);
-        this.history = history;
+        this.setOrders(_orders);
     }
 
     public long getId() {
@@ -60,12 +60,12 @@ public class Buyer {
         this.password = password;
     }
 
-    public History getHistory() {
-        return history;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setHistory(History history) {
-        this.history = history;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
 }

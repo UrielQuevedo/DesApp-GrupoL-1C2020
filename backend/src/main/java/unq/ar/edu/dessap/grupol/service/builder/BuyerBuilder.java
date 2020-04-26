@@ -1,7 +1,9 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
 import unq.ar.edu.dessap.grupol.model.Buyer;
-import unq.ar.edu.dessap.grupol.model.History;
+import unq.ar.edu.dessap.grupol.model.Order;
+
+import java.util.List;
 
 public class BuyerBuilder {
 
@@ -9,14 +11,14 @@ public class BuyerBuilder {
     private String username;
     private String email;
     private String password;
-    private History history;
+    private List<Order> orders;
 
     public static BuyerBuilder aBuyer() {
         return new BuyerBuilder();
     }
 
     public Buyer build() {
-        return new Buyer(this.id, this.username, this.email, this.password, this.history);
+        return new Buyer(this.id, this.username, this.email, this.password, this.orders);
     }
 
     public BuyerBuilder withId(final long _id) {
@@ -39,8 +41,8 @@ public class BuyerBuilder {
         return this;
     }
 
-    public BuyerBuilder withHistory(History history) {
-        this.history = history;
+    public BuyerBuilder withOrders(List<Order> orders) {
+        this.orders = orders;
         return this;
     }
 
