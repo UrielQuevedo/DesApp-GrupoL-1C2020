@@ -1,14 +1,25 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "orders")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @ManyToOne
+    @JoinColumn(name = "fk_buyer", nullable = false, updatable = false)
     private Buyer buyer;
+    @Transient
     private List<Product> products;
+    @Transient
     private List<Store> stores;
+    @Column(updatable = false, nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     public Order() {}

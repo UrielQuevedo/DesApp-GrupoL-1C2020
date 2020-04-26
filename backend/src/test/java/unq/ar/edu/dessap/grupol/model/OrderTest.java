@@ -72,6 +72,8 @@ public class OrderTest {
 
         Buyer buyerMock = mock(Buyer.class);
 
+        Date dateMock = mock(Date.class);
+
         List<Product> products = new ArrayList<>();
         products.add(mock(Product.class));
 
@@ -84,11 +86,13 @@ public class OrderTest {
         order.setBuyer(buyerMock);
         order.setProducts(products);
         order.setStores(stores);
+        order.setDate(dateMock);
 
         Assert.assertEquals(1, order.getId());
         Assert.assertEquals(buyerMock, order.getBuyer());
         Assert.assertEquals(products, order.getProducts());
         Assert.assertEquals(stores, order.getStores());
+        Assert.assertEquals(dateMock, order.getDate());
     }
 
 }
