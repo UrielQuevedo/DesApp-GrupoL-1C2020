@@ -11,10 +11,19 @@ public class Order {
 
     public Order() {}
 
-    public Order(Buyer buyer, List<Product> products, List<Store> stores) {
+    public Order(long id, Buyer buyer, List<Product> products, List<Store> stores) {
+        this.id = id;
         this.buyer = buyer;
         this.products = products;
         this.stores = stores;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public List<Store> getStores() {
@@ -39,10 +48,6 @@ public class Order {
 
     public void setBuyer(Buyer buyer) {
         this.buyer = buyer;
-    }
-
-    public long getId() {
-        return id;
     }
 
 }
