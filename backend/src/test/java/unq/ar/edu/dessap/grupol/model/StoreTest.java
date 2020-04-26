@@ -2,6 +2,7 @@ package unq.ar.edu.dessap.grupol.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import unq.ar.edu.dessap.grupol.service.builder.SellerBuilder;
 import unq.ar.edu.dessap.grupol.service.builder.StoreBuilder;
 
 import java.time.DayOfWeek;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class StoreTest {
 
@@ -122,6 +124,8 @@ public class StoreTest {
         List<Time> times = new ArrayList<>();
         times.add(time);
 
+        Seller seller = mock(Seller.class);
+
         store.setId(1);
         store.setLocation(location);
         store.setMaxDistance(2.0);
@@ -131,6 +135,7 @@ public class StoreTest {
         store.setProducts(products);
         store.setSectors(sectors);
         store.setTimes(times);
+        store.setSeller(seller);
 
         Assert.assertEquals(1, store.getId());
         Assert.assertEquals(location, store.getLocation());
@@ -141,6 +146,7 @@ public class StoreTest {
         Assert.assertEquals(product, store.getProducts().get(0));
         Assert.assertEquals(sector, store.getSectors().get(0));
         Assert.assertEquals(time, store.getTimes().get(0));
+        Assert.assertEquals(seller, store.getSeller());
     }
 
     @Test
@@ -159,4 +165,16 @@ public class StoreTest {
         Assert.assertEquals(sector, store.getSectors().get(0));
         Assert.assertEquals(time, store.getTimes().get(0));
     }
+
+    @Test
+    public void testGivenAStoreWithSellerWhenReceiveGetSellerThenGiveASeller() {
+
+        Seller seller = mock(Seller.class);
+
+        Store store = StoreBuilder.aStore()
+                            .withSeller(seller).build();
+
+        Assert.assertEquals(seller, store.getSeller());
+    }
+
 }
