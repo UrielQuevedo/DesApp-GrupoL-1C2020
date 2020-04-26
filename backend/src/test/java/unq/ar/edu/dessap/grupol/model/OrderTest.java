@@ -5,6 +5,7 @@ import org.junit.Test;
 import unq.ar.edu.dessap.grupol.service.builder.OrderBuilder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -53,6 +54,17 @@ public class OrderTest {
                 .withStores(stores).build();
 
         Assert.assertEquals(1, order.getStores().size());
+    }
+
+    @Test
+    public void testGivenAOrderWithDateWhenReceiveGetDateThenGiveHisDate() {
+
+        Date dateMock = mock(Date.class);
+
+        Order order = OrderBuilder.aOrder()
+                .withDate(dateMock).build();
+
+        Assert.assertEquals(dateMock, order.getDate());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class Order {
@@ -8,14 +9,24 @@ public class Order {
     private Buyer buyer;
     private List<Product> products;
     private List<Store> stores;
+    private Date date;
 
     public Order() {}
 
-    public Order(long id, Buyer buyer, List<Product> products, List<Store> stores) {
+    public Order(long id, Buyer buyer, List<Product> products, List<Store> stores, Date date) {
         this.id = id;
         this.buyer = buyer;
         this.products = products;
         this.stores = stores;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setId(long id) {

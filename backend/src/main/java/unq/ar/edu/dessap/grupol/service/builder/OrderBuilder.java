@@ -5,6 +5,7 @@ import unq.ar.edu.dessap.grupol.model.Order;
 import unq.ar.edu.dessap.grupol.model.Product;
 import unq.ar.edu.dessap.grupol.model.Store;
 
+import java.util.Date;
 import java.util.List;
 
 public class OrderBuilder {
@@ -13,13 +14,14 @@ public class OrderBuilder {
     private Buyer buyer;
     private List<Product> products;
     private List<Store> stores;
+    private Date date;
 
     public static OrderBuilder aOrder() {
         return new OrderBuilder();
     }
 
     public Order build() {
-        return new Order(this.id, this.buyer, this.products, this.stores);
+        return new Order(this.id, this.buyer, this.products, this.stores, this.date);
     }
 
     public OrderBuilder withId(int id) {
@@ -42,4 +44,10 @@ public class OrderBuilder {
         this.stores = stores;
         return this;
     }
+
+    public OrderBuilder withDate(Date date) {
+        this.date = date;
+        return this;
+    }
+
 }
