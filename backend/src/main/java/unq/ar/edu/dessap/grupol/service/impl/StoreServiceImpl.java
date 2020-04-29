@@ -8,9 +8,7 @@ import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.StoreRepository;
 import unq.ar.edu.dessap.grupol.service.StoreService;
-import unq.ar.edu.dessap.grupol.service.builder.StoreBuilder;
-
-import java.util.List;
+import unq.ar.edu.dessap.grupol.controller.exception.DuplicatedLocationException;
 
 @Service
 @Transactional
@@ -22,10 +20,16 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store create(StoreDto storeDto) {
 
-        // verificar que no exista el store mediante el storeRepository
+        Store storedb =
+                this.storeRepository
+                        .findByLatitudeAndLongitude(storeDto.getLocation().getLatitude(),
+                                                    storeDto.getLocation().getLongitude());
+
+        if (storedb != null) {
+            throw new DuplicatedLocationException();
+        }
 
         Store store = Converter.toStore(storeDto);
-
         this.storeRepository.save(store);
         return store;
     }
