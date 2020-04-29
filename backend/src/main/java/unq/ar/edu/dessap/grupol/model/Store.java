@@ -61,8 +61,11 @@ public class Store {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Product> products;
 
-    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "FK_SELLER", updatable = false, nullable = false)
     private Seller seller;
+
+    public Store(){}
 
     public Store(String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
@@ -85,8 +88,6 @@ public class Store {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
-
-    public Store(){}
 
     public long getId() {
         return id;

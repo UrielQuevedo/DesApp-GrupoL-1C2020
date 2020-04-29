@@ -3,10 +3,13 @@ package unq.ar.edu.dessap.grupol.controller.converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.SectorDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.TimeDto;
+import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
 import unq.ar.edu.dessap.grupol.model.Sector;
+import unq.ar.edu.dessap.grupol.model.Seller;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.model.Time;
 import unq.ar.edu.dessap.grupol.service.builder.SectorBuilder;
+import unq.ar.edu.dessap.grupol.service.builder.SellerBuilder;
 import unq.ar.edu.dessap.grupol.service.builder.StoreBuilder;
 import unq.ar.edu.dessap.grupol.service.builder.TimeBuilder;
 
@@ -40,7 +43,7 @@ public class Converter {
         return times;
     }
 
-    public static Store toStore(StoreDto storeDto) {
+    public static Store toStore(StoreDto storeDto, Seller seller) {
 
         return StoreBuilder.aStore()
                 .withName(storeDto.getName())
@@ -50,6 +53,16 @@ public class Converter {
                 .withTimes(toListTimes(storeDto.getTimes()))
                 .withPayments(storeDto.getPayments())
                 .withMaxDistance(storeDto.getMaxDistance())
+                .withSeller(seller)
+                .build();
+    }
+
+    public static Seller toSeller(UserDto userDto) {
+
+        return SellerBuilder.aSeller()
+                .withUsername(userDto.getUsername())
+                .withPassword(userDto.getPassword())
+                .withEmail(userDto.getEmail())
                 .build();
     }
 

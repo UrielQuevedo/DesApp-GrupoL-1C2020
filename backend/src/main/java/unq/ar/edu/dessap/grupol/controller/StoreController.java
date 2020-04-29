@@ -11,22 +11,17 @@ import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.service.StoreService;
 
 @RestController
-@RequestMapping(value = "/api/stores")
+@RequestMapping(value = "/api")
 @Component
 public class StoreController {
 
     @Autowired
     private StoreService storeService;
 
-    @RequestMapping(
-            method = RequestMethod.POST,
-            produces = "application/json"
-    )
-    public ResponseEntity<Store> create(@RequestBody StoreDto storeDto) {
-        Store store = storeService.create(storeDto);
-
+    @PostMapping(value = "/sellers/{id}/stores")
+    public ResponseEntity<Store> create(@PathVariable("id") Long id, @RequestBody StoreDto storeDto) {
+        Store store = storeService.create(id, storeDto);
         return new ResponseEntity<>(store, HttpStatus.CREATED);
     }
-
 
 }
