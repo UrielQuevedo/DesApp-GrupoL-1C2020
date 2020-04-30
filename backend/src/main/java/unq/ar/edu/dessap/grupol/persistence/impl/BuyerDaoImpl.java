@@ -8,6 +8,10 @@ import unq.ar.edu.dessap.grupol.model.Buyer;
 import unq.ar.edu.dessap.grupol.persistence.BuyerDao;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.BuyerRepository;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+import java.util.OptionalInt;
+
 @Repository
 public class BuyerDaoImpl implements BuyerDao {
 
@@ -17,5 +21,15 @@ public class BuyerDaoImpl implements BuyerDao {
     @Override
     public Buyer save(Buyer buyer) {
         return buyerRepository.save(buyer);
+    }
+
+    @Override
+    public Buyer getBuyerById(long id) {
+        Optional<Buyer> buyerOption = buyerRepository.findById(id);
+        if (buyerOption.isPresent()) {
+            return buyerOption.get();
+        } else {
+            throw new RuntimeException("No se encuentra el id");
+        }
     }
 }
