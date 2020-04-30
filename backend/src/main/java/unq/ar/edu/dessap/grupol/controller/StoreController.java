@@ -32,4 +32,10 @@ public class StoreController {
         return new ResponseEntity<>(stores, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/stores/{id}")
+    public ResponseEntity<StoreDto> getById(@PathVariable("id") Long id) {
+        StoreDto storeDto = storeService.getById(id);
+        return new ResponseEntity<>(storeDto, HttpStatus.OK);
+    }
+
 }

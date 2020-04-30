@@ -12,4 +12,6 @@ public interface StoreService  {
     Store create(Long id, StoreDto storeDto);
 
     List<Store> getAll();
+
+    StoreDto getById(Long id);
 }

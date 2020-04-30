@@ -12,4 +12,12 @@ public class TimeDto {
     public String getUntil() {
         return until;
     }
+
+    public void setUntil(String until) {
+        this.until = until;
+    }
+
+    public void setOf(String of) {
+        this.of = of;
+    }
 }

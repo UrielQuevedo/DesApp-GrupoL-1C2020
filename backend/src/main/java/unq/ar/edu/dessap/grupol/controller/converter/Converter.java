@@ -15,6 +15,7 @@ import unq.ar.edu.dessap.grupol.service.builder.TimeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Converter {
 
@@ -66,4 +67,36 @@ public class Converter {
                 .build();
     }
 
+    public static StoreDto toStoreDto(Store store) {
+        StoreDto storeDto = new StoreDto();
+        storeDto.setName(store.getName());
+        storeDto.setLocation(store.getLocation());
+        storeDto.setMaxDistance(store.getMaxDistance());
+        storeDto.setSectors(toSectorsDtos(store.getSectors()));
+        storeDto.setOpenDays(store.getOpenDays());
+        storeDto.setPayments(store.getPayments());
+        storeDto.setTimes(toTimesDtos(store.getTimes()));
+        return storeDto;
+    }
+
+    private static List<TimeDto> toTimesDtos(List<Time> times) {
+        List<TimeDto> timesDtos = new ArrayList<>();
+        times.forEach(time -> {
+            TimeDto timeDto = new TimeDto();
+            timeDto.setOf(time.getOf());
+            timeDto.setUntil(time.getUntil());
+            timesDtos.add(timeDto);
+        });
+        return timesDtos;
+    }
+
+    public static List<SectorDto> toSectorsDtos(List<Sector> sectors) {
+        List<SectorDto> sectorDtos = new ArrayList<>();
+        sectors.forEach(sector -> {
+            SectorDto sectorDto = new SectorDto();
+            sectorDto.setName(sector.getName());
+            sectorDtos.add(sectorDto);
+        });
+        return sectorDtos;
+    }
 }

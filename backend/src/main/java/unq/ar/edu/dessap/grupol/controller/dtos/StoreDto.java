@@ -14,7 +14,6 @@ public class StoreDto {
     private List<DayOfWeek> openDays;
     private List<Payment> payments;
     private List<TimeDto> times;
-   // private Seller seller;
 
     public Double getMaxDistance() {
         return maxDistance;
@@ -36,4 +35,31 @@ public class StoreDto {
 
     public List<Payment> getPayments() { return payments; }
 
+    public void setTimes(List<TimeDto> times) {
+        this.times = times;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public void setOpenDays(List<DayOfWeek> openDays) {
+        this.openDays = openDays;
+    }
+
+    public void setSectors(List<SectorDto> sectors) {
+        this.sectors = sectors;
+    }
+
+    public void setMaxDistance(Double maxDistance) {
+        this.maxDistance = maxDistance;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

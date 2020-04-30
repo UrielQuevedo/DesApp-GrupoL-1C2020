@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.Store;
 
+import java.util.List;
+
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Long>  {
 
