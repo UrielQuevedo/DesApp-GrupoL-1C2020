@@ -7,4 +7,5 @@ import unq.ar.edu.dessap.grupol.model.Buyer;
 @Repository
 public interface BuyerDao {
     Buyer save(Buyer buyer);
+    Buyer getBuyerById(long id);
 }

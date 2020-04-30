@@ -1,8 +1,10 @@
 package unq.ar.edu.dessap.grupol.service.impl;
 
+import org.springframework.stereotype.Service;
 import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.service.GeoDistanceService;
 
+@Service
 public class GeoDistanceServiceImpl implements GeoDistanceService {
 
     @Override

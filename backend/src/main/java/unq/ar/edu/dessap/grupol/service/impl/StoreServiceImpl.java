@@ -6,11 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.converter.Converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.controller.exception.NotFound;
-import unq.ar.edu.dessap.grupol.model.Sector;
 import unq.ar.edu.dessap.grupol.model.Seller;
+import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.SellerRepository;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.StoreRepository;
+import unq.ar.edu.dessap.grupol.service.GeoDistanceService;
 import unq.ar.edu.dessap.grupol.service.StoreService;
 import unq.ar.edu.dessap.grupol.controller.exception.DuplicatedLocationException;
 
@@ -29,6 +30,8 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     private StoreRepository storeRepository;
+    @Autowired
+    private GeoDistanceService geoDistanceService;
 
     @Autowired
     private SellerRepository sellerRepository;
@@ -37,13 +40,13 @@ public class StoreServiceImpl implements StoreService {
     public Store create(Long id, StoreDto storeDto) {
 
         Seller seller = this.sellerRepository
-                            .findById(id)
-                            .orElseThrow(NotFound::new);
+                .findById(id)
+                .orElseThrow(NotFound::new);
 
         Store storedb =
                 this.storeRepository
                         .findByLatitudeAndLongitude(storeDto.getLocation().getLatitude(),
-                                                    storeDto.getLocation().getLongitude());
+                                storeDto.getLocation().getLongitude());
 
         if (storedb != null) {
             throw new DuplicatedLocationException();
@@ -67,8 +70,18 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreDto getById(Long id) {
         Store store = this.storeRepository.findById(id)
-                         .orElseThrow(NotFound::new);
+                .orElseThrow(NotFound::new);
         return Converter.toStoreDto(store);
     }
 
+    @Override
+    public List<Store> getStoresNearby(Location location) {
+        return storeRepository.findAll()
+                .stream()
+                .filter(
+                        store ->
+                                geoDistanceService.calculateMaxDistanceBetweenTwoLocation(location, store.getLocation())
+                                        > store.getMaxDistance()
+                ).collect(Collectors.toList());
+    }
 }

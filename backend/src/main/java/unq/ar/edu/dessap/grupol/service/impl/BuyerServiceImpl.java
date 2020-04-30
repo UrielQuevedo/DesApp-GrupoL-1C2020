@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.model.Buyer;
 import unq.ar.edu.dessap.grupol.persistence.BuyerDao;
-import unq.ar.edu.dessap.grupol.persistence.impl.BuyerDaoImpl;
 import unq.ar.edu.dessap.grupol.service.BuyerService;
 import unq.ar.edu.dessap.grupol.service.builder.BuyerBuilder;
 
@@ -29,5 +28,11 @@ public class BuyerServiceImpl implements BuyerService {
                         .build();
 
         return buyerDao.save(buyer);
+    }
+
+    @Override
+    @Transactional
+    public Buyer getBuyerById(long id) {
+        return buyerDao.getBuyerById(id);
     }
 }
