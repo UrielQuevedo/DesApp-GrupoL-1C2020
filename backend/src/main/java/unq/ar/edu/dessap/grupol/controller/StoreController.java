@@ -27,9 +27,9 @@ public class StoreController {
     }
 
     @GetMapping(value = "/stores")
-    public ResponseEntity<List<Store>> getAll() {
-        List<Store> stores = storeService.getAll();
-        return new ResponseEntity<>(stores, HttpStatus.OK);
+    public ResponseEntity<List<StoreDto>> getAll() {
+        List<StoreDto> storesDtos = storeService.getAll();
+        return new ResponseEntity<>(storesDtos, HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/{id}")

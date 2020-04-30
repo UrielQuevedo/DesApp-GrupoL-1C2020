@@ -55,19 +55,13 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Store> getAll() {
-/*
-        List<Store> results = new ArrayList<>();
+    public List<StoreDto> getAll() {
+        List<StoreDto> storesDtos = new ArrayList<>();
         List<Store> stores = this.storeRepository.findAll();
-        List<List<Sector>> sectors = stores.stream().map(store -> store.getSectors()).collect(Collectors.toList());
-        sectors.forEach(sectorl1 -> {
-
-        });*/
-      /*  List<Store> stores = this.storeRepository.findAll().stream()
-                                .map(store -> Converter.toSectorsDtos(store.getSectors()))
-
-        */
-        return this.storeRepository.findAll();
+        stores.forEach(store -> {
+            storesDtos.add(Converter.toStoreDto(store));
+        });
+        return storesDtos;
     }
 
     @Override
