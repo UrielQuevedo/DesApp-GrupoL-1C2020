@@ -15,6 +15,7 @@ import unq.ar.edu.dessap.grupol.controller.exception.DuplicatedLocationException
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Service
 @Transactional
@@ -48,6 +49,11 @@ public class StoreServiceImpl implements StoreService {
         Store store = Converter.toStore(storeDto, seller);
         this.em.persist(store);
         return store;
+    }
+
+    @Override
+    public List<Store> getAll() {
+        return this.storeRepository.findAll();
     }
 
 }

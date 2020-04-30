@@ -10,6 +10,8 @@ import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.service.StoreService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api")
 @Component
@@ -22,6 +24,12 @@ public class StoreController {
     public ResponseEntity<Store> create(@PathVariable("id") Long id, @RequestBody StoreDto storeDto) {
         Store store = storeService.create(id, storeDto);
         return new ResponseEntity<>(store, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/stores")
+    public ResponseEntity<List<Store>> getAll() {
+        List<Store> stores = storeService.getAll();
+        return new ResponseEntity<>(stores, HttpStatus.OK);
     }
 
 }
