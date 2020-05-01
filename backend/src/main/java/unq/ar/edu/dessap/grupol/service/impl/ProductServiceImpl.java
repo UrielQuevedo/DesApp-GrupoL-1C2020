@@ -14,6 +14,7 @@ import unq.ar.edu.dessap.grupol.service.ProductService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Service
 @Transactional
@@ -35,5 +36,12 @@ public class ProductServiceImpl implements ProductService {
                                         .orElseThrow(NotFound::new);
 
         return Converter.toProduct(productDto, store);
+    }
+
+    @Override
+    public List<ProductDto> getAll(Long id) {
+
+        List<Product> products = productRepository.findAllByIdStore(id);
+        return Converter.toProductsDtos(products);
     }
 }

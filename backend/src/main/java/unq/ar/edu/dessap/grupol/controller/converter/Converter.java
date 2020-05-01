@@ -71,13 +71,13 @@ public class Converter {
         return storeDto;
     }
 
-    private static List<ProductDto> toProductsDtos(List<Product> products) {
+    public static List<ProductDto> toProductsDtos(List<Product> products) {
         List<ProductDto> productsDtos = new ArrayList<>();
         products.forEach(product -> productsDtos.add(toProductDto(product)));
         return productsDtos;
     }
 
-    private static ProductDto toProductDto(Product product) {
+    public static ProductDto toProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setName(product.getName());
         productDto.setBrand(product.getBrand());
@@ -87,7 +87,7 @@ public class Converter {
         return productDto;
     }
 
-    private static List<TimeDto> toTimesDtos(List<Time> times) {
+    public static List<TimeDto> toTimesDtos(List<Time> times) {
         List<TimeDto> timesDtos = new ArrayList<>();
         times.forEach(time -> {
             TimeDto timeDto = new TimeDto();
