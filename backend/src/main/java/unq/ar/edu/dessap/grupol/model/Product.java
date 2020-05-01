@@ -8,7 +8,7 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, name = "product_id")
     private long id;
     @Column(nullable = false)
@@ -20,7 +20,12 @@ public class Product {
     @Column(nullable = false)
     private double price;
     private String image_url;
-    @ManyToMany(mappedBy = "products")
+    @JoinTable(
+            name = "rel_stores_products",
+            joinColumns = @JoinColumn(name = "fk_product", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="fk_store", nullable = false)
+    )
+    @ManyToMany(cascade={CascadeType.REFRESH, CascadeType.MERGE})
     private List<Store> stores;
 
     public Product(){}

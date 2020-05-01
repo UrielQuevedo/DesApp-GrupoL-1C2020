@@ -53,12 +53,7 @@ public class Store {
     @Column(nullable = false)
     private Double maxDistance;
 
-    @JoinTable(
-            name = "rel_stores_products",
-            joinColumns = @JoinColumn(name = "store_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="product_id", nullable = false)
-    )
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "stores")
     private List<Product> products;
 
     @OneToOne
@@ -67,9 +62,10 @@ public class Store {
 
     public Store(){}
 
-    public Store(String name, List<Sector> sectors,  Location location,
+    public Store(long id, String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
                  Double maxDistance, List<Product> products, Seller seller) {
+        this.id = id;
         this.name = name;
         this.sectors = sectors;
         this.location = location;

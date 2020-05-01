@@ -1,21 +1,11 @@
 package unq.ar.edu.dessap.grupol.controller.converter;
 
-import unq.ar.edu.dessap.grupol.controller.dtos.SectorDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.TimeDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
-import unq.ar.edu.dessap.grupol.model.Sector;
-import unq.ar.edu.dessap.grupol.model.Seller;
-import unq.ar.edu.dessap.grupol.model.Store;
-import unq.ar.edu.dessap.grupol.model.Time;
-import unq.ar.edu.dessap.grupol.service.builder.SectorBuilder;
-import unq.ar.edu.dessap.grupol.service.builder.SellerBuilder;
-import unq.ar.edu.dessap.grupol.service.builder.StoreBuilder;
-import unq.ar.edu.dessap.grupol.service.builder.TimeBuilder;
+import unq.ar.edu.dessap.grupol.controller.dtos.*;
+import unq.ar.edu.dessap.grupol.model.*;
+import unq.ar.edu.dessap.grupol.service.builder.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Converter {
 
@@ -98,5 +88,25 @@ public class Converter {
             sectorDtos.add(sectorDto);
         });
         return sectorDtos;
+    }
+
+    public static Product toProduct(ProductDto productDto, Store store) {
+
+        // cambiar esto
+        Store newStore = StoreBuilder.aStore()
+                            .withId(store.getId())
+                            .build();
+
+        List<Store> stores = new ArrayList<>();
+        stores.add(newStore);
+
+        return ProductBuilder.aProduct()
+                .withName(productDto.getName())
+                .withBrand(productDto.getBrand())
+                .withPrice(productDto.getPrice())
+                .withStock(productDto.getStock())
+                .withImage_url(productDto.getImage_url())
+                .withStores(stores)
+                .build();
     }
 }

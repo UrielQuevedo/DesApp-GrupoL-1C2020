@@ -8,6 +8,7 @@ import java.util.List;
 
 public class StoreBuilder {
 
+    private long id;
     private String name;
     private List<Sector> sectors = new ArrayList<>();
     private Location location;
@@ -23,8 +24,13 @@ public class StoreBuilder {
     }
 
     public Store build() {
-        return new Store(this.name, this.sectors, this.location, this.openDays, this.times,
+        return new Store(this.id, this.name, this.sectors, this.location, this.openDays, this.times,
                             this.payments, this.maxDistance, this.products, this.seller);
+    }
+
+    public StoreBuilder withId(final long id) {
+        this.id = id;
+        return this;
     }
 
     public StoreBuilder withName(final String name) {
