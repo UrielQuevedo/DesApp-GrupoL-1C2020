@@ -10,6 +10,11 @@ import java.util.List;
 @Service
 public interface StoreService  {
 
-    Store create(StoreDto storeDto);
+    Store create(Long id, StoreDto storeDto);
+
+    List<StoreDto> getAll();
+
+    StoreDto getById(Long id);
+
     List<Store> getStoresNearby(Location location);
 }

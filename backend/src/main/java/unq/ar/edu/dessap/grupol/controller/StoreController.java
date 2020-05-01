@@ -15,24 +15,32 @@ import unq.ar.edu.dessap.grupol.service.StoreService;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/stores")
+@RequestMapping(value = "/api")
 @Component
 public class StoreController {
 
     @Autowired
     private StoreService storeService;
 
-    @RequestMapping(
-            method = RequestMethod.POST,
-            produces = "application/json"
-    )
-    public ResponseEntity<Store> create(@RequestBody StoreDto storeDto) {
-        Store store = storeService.create(storeDto);
-
+    @PostMapping(value = "/sellers/{id}/stores")
+    public ResponseEntity<Store> create(@PathVariable("id") Long id, @RequestBody StoreDto storeDto) {
+        Store store = storeService.create(id, storeDto);
         return new ResponseEntity<>(store, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/nearby")
+    @GetMapping(value = "/stores")
+    public ResponseEntity<List<StoreDto>> getAll() {
+        List<StoreDto> storesDtos = storeService.getAll();
+        return new ResponseEntity<>(storesDtos, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/stores/{id}")
+    public ResponseEntity<StoreDto> getById(@PathVariable("id") Long id) {
+        StoreDto storeDto = storeService.getById(id);
+        return new ResponseEntity<>(storeDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/stores/nearby")
     public ResponseEntity<List<Store>> getStoresNearby(@RequestBody Location location) {
         try {
             List<Store> storesNearby = storeService.getStoresNearby(location);
