@@ -92,21 +92,18 @@ public class Converter {
 
     public static Product toProduct(ProductDto productDto, Store store) {
 
-        // cambiar esto
-        Store newStore = StoreBuilder.aStore()
-                            .withId(store.getId())
-                            .build();
-
-        List<Store> stores = new ArrayList<>();
-        stores.add(newStore);
-
-        return ProductBuilder.aProduct()
+        Product product = ProductBuilder.aProduct()
                 .withName(productDto.getName())
                 .withBrand(productDto.getBrand())
                 .withPrice(productDto.getPrice())
                 .withStock(productDto.getStock())
                 .withImage_url(productDto.getImage_url())
-                .withStores(stores)
+                .withStores(new ArrayList<>())
                 .build();
+
+        store.getProducts().add(product);
+        store.setProducts(store.getProducts());
+
+        return product;
     }
 }

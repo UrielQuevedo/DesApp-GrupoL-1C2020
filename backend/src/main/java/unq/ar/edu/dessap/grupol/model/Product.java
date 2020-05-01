@@ -20,12 +20,7 @@ public class Product {
     @Column(nullable = false)
     private double price;
     private String image_url;
-    @JoinTable(
-            name = "rel_stores_products",
-            joinColumns = @JoinColumn(name = "fk_product", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="fk_store", nullable = false)
-    )
-    @ManyToMany(cascade={CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "products")
     private List<Store> stores;
 
     public Product(){}

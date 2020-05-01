@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
                                         .orElseThrow(NotFound::new);
 
         Product product = Converter.toProduct(productDto, store);
-        em.persist(product);
+      //  em.persist(product);
         return product;
     }
 }
