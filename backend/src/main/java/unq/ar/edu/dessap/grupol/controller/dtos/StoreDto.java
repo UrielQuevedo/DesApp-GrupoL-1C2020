@@ -14,6 +14,7 @@ public class StoreDto {
     private List<DayOfWeek> openDays;
     private List<Payment> payments;
     private List<TimeDto> times;
+    private List<ProductDto> products;
 
     public Double getMaxDistance() {
         return maxDistance;
@@ -30,6 +31,14 @@ public class StoreDto {
     public List<SectorDto> getSectors() { return sectors;}
 
     public List<DayOfWeek> getOpenDays() { return openDays; }
+
+    public List<ProductDto> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductDto> products) {
+        this.products = products;
+    }
 
     public List<TimeDto> getTimes() { return times; }
 

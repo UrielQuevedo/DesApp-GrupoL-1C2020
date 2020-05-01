@@ -45,6 +45,7 @@ public class Converter {
                 .withPayments(storeDto.getPayments())
                 .withMaxDistance(storeDto.getMaxDistance())
                 .withSeller(seller)
+                .withProducts(new ArrayList<>())
                 .build();
     }
 
@@ -66,7 +67,24 @@ public class Converter {
         storeDto.setOpenDays(store.getOpenDays());
         storeDto.setPayments(store.getPayments());
         storeDto.setTimes(toTimesDtos(store.getTimes()));
+        storeDto.setProducts(toProductsDtos(store.getProducts()));
         return storeDto;
+    }
+
+    private static List<ProductDto> toProductsDtos(List<Product> products) {
+        List<ProductDto> productsDtos = new ArrayList<>();
+        products.forEach(product -> productsDtos.add(toProductDto(product)));
+        return productsDtos;
+    }
+
+    private static ProductDto toProductDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setName(product.getName());
+        productDto.setBrand(product.getBrand());
+        productDto.setImage_url(product.getImage_url());
+        productDto.setPrice(product.getStock());
+        productDto.setStock(product.getStock());
+        return productDto;
     }
 
     private static List<TimeDto> toTimesDtos(List<Time> times) {

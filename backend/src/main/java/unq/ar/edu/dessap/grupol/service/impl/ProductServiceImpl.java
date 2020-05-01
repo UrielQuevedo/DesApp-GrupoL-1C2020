@@ -34,8 +34,6 @@ public class ProductServiceImpl implements ProductService {
         Store store = storeRepository.findById(id)
                                         .orElseThrow(NotFound::new);
 
-        Product product = Converter.toProduct(productDto, store);
-      //  em.persist(product);
-        return product;
+        return Converter.toProduct(productDto, store);
     }
 }
