@@ -15,6 +15,7 @@ import unq.ar.edu.dessap.grupol.service.ProductService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,12 +31,15 @@ public class ProductServiceImpl implements ProductService {
     private StoreRepository storeRepository;
 
     @Override
-    public Product create(Long id, ProductDto productDto) {
+    public Product create(Long idStore, ProductDto productDto) {
 
-        Store store = storeRepository.findById(id)
-                                        .orElseThrow(NotFound::new);
+        Store store = storeRepository.findById(idStore)
+                .orElseThrow(NotFound::new);
 
-        return Converter.toProduct(productDto, store);
+        Product product = Converter.toProduct(productDto, store);
+        store.addProduct(product);
+        em.persist(product);
+        return product;
     }
 
     @Override
@@ -44,4 +48,36 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findAllByIdStore(id);
         return Converter.toProductsDtos(products);
     }
+
+    @Override
+    public ProductDto update(Long id, ProductDto productDto) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(NotFound::new);
+
+        product.setName(productDto.getName());
+        product.setBrand(productDto.getBrand());
+        product.setImage_url(productDto.getImage_url());
+        product.setStock(productDto.getStock());
+        product.setPrice(productDto.getPrice());
+        em.persist(product);
+        return productDto;
+    }
+
+    @Override
+    public List<ProductDto> delete(Long idStore, Long idProduct) {
+
+        Store store = storeRepository.findById(idStore)
+                .orElseThrow(NotFound::new);
+
+        Product product = productRepository.findById(idProduct)
+                .orElseThrow(NotFound::new);
+
+        List<Product> products = store.getProducts().stream().filter(p -> p.getId() != product.getId())
+                                        .collect(Collectors.toList());
+        store.setProducts(products);
+        em.persist(store);
+        return Converter.toProductsDtos(products);
+    }
+
 }

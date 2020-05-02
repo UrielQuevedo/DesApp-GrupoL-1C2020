@@ -21,17 +21,31 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping(value = "/{id}/products")
-    public ResponseEntity<Product> create(@PathVariable("id") Long id,
+    @PostMapping(value = "/{idStore}/products")
+    public ResponseEntity<Product> create(@PathVariable("idStore") Long idStore,
                                           @RequestBody ProductDto productDto) {
-        Product product = productService.create(id, productDto);
+        Product product = productService.create(idStore, productDto);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/{id}/products")
-    public ResponseEntity<List<ProductDto>> getAll(@PathVariable("id") Long id) {
-        List<ProductDto> productDtos = productService.getAll(id);
+    @GetMapping(value = "/{idStore}/products")
+    public ResponseEntity<List<ProductDto>> getAll(@PathVariable("idStore") Long idStore) {
+        List<ProductDto> productDtos = productService.getAll(idStore);
         return new ResponseEntity<>(productDtos, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/products/{id}")
+    public ResponseEntity<ProductDto> update(@PathVariable("id") Long id,
+                                             @RequestBody ProductDto productDto) {
+        ProductDto productDtoUpdated = productService.update(id, productDto);
+        return new ResponseEntity<>(productDtoUpdated, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{idStore}/products/{idProduct}")
+    public ResponseEntity<List<ProductDto>> delete(@PathVariable("idStore") Long idStore,
+                                             @PathVariable("idProduct") Long idProduct) {
+        List<ProductDto> products = productService.delete(idStore, idProduct);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import unq.ar.edu.dessap.grupol.model.Location;
+import unq.ar.edu.dessap.grupol.model.Product;
 import unq.ar.edu.dessap.grupol.model.Store;
 
 import java.util.List;
