@@ -1,21 +1,11 @@
 package unq.ar.edu.dessap.grupol.controller.converter;
 
-import unq.ar.edu.dessap.grupol.controller.dtos.SectorDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.TimeDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
-import unq.ar.edu.dessap.grupol.model.Sector;
-import unq.ar.edu.dessap.grupol.model.Seller;
-import unq.ar.edu.dessap.grupol.model.Store;
-import unq.ar.edu.dessap.grupol.model.Time;
-import unq.ar.edu.dessap.grupol.service.builder.SectorBuilder;
-import unq.ar.edu.dessap.grupol.service.builder.SellerBuilder;
-import unq.ar.edu.dessap.grupol.service.builder.StoreBuilder;
-import unq.ar.edu.dessap.grupol.service.builder.TimeBuilder;
+import unq.ar.edu.dessap.grupol.controller.dtos.*;
+import unq.ar.edu.dessap.grupol.model.*;
+import unq.ar.edu.dessap.grupol.service.builder.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Converter {
 
@@ -55,6 +45,7 @@ public class Converter {
                 .withPayments(storeDto.getPayments())
                 .withMaxDistance(storeDto.getMaxDistance())
                 .withSeller(seller)
+                .withProducts(new ArrayList<>())
                 .build();
     }
 
@@ -76,10 +67,27 @@ public class Converter {
         storeDto.setOpenDays(store.getOpenDays());
         storeDto.setPayments(store.getPayments());
         storeDto.setTimes(toTimesDtos(store.getTimes()));
+        storeDto.setProducts(toProductsDtos(store.getProducts()));
         return storeDto;
     }
 
-    private static List<TimeDto> toTimesDtos(List<Time> times) {
+    public static List<ProductDto> toProductsDtos(List<Product> products) {
+        List<ProductDto> productsDtos = new ArrayList<>();
+        products.forEach(product -> productsDtos.add(toProductDto(product)));
+        return productsDtos;
+    }
+
+    public static ProductDto toProductDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setName(product.getName());
+        productDto.setBrand(product.getBrand());
+        productDto.setImage_url(product.getImage_url());
+        productDto.setPrice(product.getStock());
+        productDto.setStock(product.getStock());
+        return productDto;
+    }
+
+    public static List<TimeDto> toTimesDtos(List<Time> times) {
         List<TimeDto> timesDtos = new ArrayList<>();
         times.forEach(time -> {
             TimeDto timeDto = new TimeDto();
@@ -98,5 +106,22 @@ public class Converter {
             sectorDtos.add(sectorDto);
         });
         return sectorDtos;
+    }
+
+    public static Product toProduct(ProductDto productDto, Store store) {
+
+        Product product = ProductBuilder.aProduct()
+                .withName(productDto.getName())
+                .withBrand(productDto.getBrand())
+                .withPrice(productDto.getPrice())
+                .withStock(productDto.getStock())
+                .withImage_url(productDto.getImage_url())
+                .withStores(new ArrayList<>())
+                .build();
+
+        store.getProducts().add(product);
+        store.setProducts(store.getProducts());
+
+        return product;
     }
 }

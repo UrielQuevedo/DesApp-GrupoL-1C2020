@@ -18,8 +18,8 @@ public class Store {
 
     @JoinTable(
             name = "rel_stores_sectors",
-            joinColumns = @JoinColumn(name = "store_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="sector_id", nullable = false)
+            joinColumns = @JoinColumn(name = "fk_store", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="fk_sector", nullable = false)
     )
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Sector> sectors;
@@ -29,15 +29,15 @@ public class Store {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "rel_stores_days", joinColumns =
-    @JoinColumn(name = "store_id", nullable = false))
+    @JoinColumn(name = "fk_store", nullable = false))
     @Column(name = "day", nullable = false)
     @Enumerated(EnumType.STRING)
     private List<DayOfWeek> openDays;
 
     @JoinTable(
             name = "rel_stores_times",
-            joinColumns = @JoinColumn(name = "store_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="time_id", nullable = false)
+            joinColumns = @JoinColumn(name = "fk_store", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="fk_time", nullable = false)
     )
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Time> times;
@@ -45,7 +45,7 @@ public class Store {
 
     @ElementCollection(fetch = FetchType.LAZY)
     @JoinTable(name = "rel_stores_payments", joinColumns =
-    @JoinColumn(name = "store_id", nullable = false))
+    @JoinColumn(name = "fk_store", nullable = false))
     @Column(name = "payment", nullable = false)
     @Enumerated(EnumType.STRING)
     private List<Payment> payments;
@@ -55,21 +55,22 @@ public class Store {
 
     @JoinTable(
             name = "rel_stores_products",
-            joinColumns = @JoinColumn(name = "store_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="product_id", nullable = false)
+            joinColumns = @JoinColumn(name = "fk_store", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="fk_product", nullable = false)
     )
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Product> products;
 
     @OneToOne
-    @JoinColumn(name = "FK_SELLER", updatable = false, nullable = false)
+    @JoinColumn(name = "fk_seller", updatable = false, nullable = false)
     private Seller seller;
 
     public Store(){}
 
-    public Store(String name, List<Sector> sectors,  Location location,
+    public Store(long id, String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
                  Double maxDistance, List<Product> products, Seller seller) {
+        this.id = id;
         this.name = name;
         this.sectors = sectors;
         this.location = location;
