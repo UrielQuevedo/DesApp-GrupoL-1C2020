@@ -82,7 +82,7 @@ public class Converter {
         productDto.setName(product.getName());
         productDto.setBrand(product.getBrand());
         productDto.setImage_url(product.getImage_url());
-        productDto.setPrice(product.getStock());
+        productDto.setPrice(product.getPrice());
         productDto.setStock(product.getStock());
         return productDto;
     }
@@ -118,9 +118,6 @@ public class Converter {
                 .withImage_url(productDto.getImage_url())
                 .withStores(new ArrayList<>())
                 .build();
-
-        store.getProducts().add(product);
-        store.setProducts(store.getProducts());
 
         return product;
     }

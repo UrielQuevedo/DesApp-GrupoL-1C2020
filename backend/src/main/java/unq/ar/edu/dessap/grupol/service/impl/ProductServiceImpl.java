@@ -15,6 +15,7 @@ import unq.ar.edu.dessap.grupol.service.ProductService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,7 +36,10 @@ public class ProductServiceImpl implements ProductService {
         Store store = storeRepository.findById(id)
                                         .orElseThrow(NotFound::new);
 
-        return Converter.toProduct(productDto, store);
+        Product product = Converter.toProduct(productDto, store);
+        store.addProduct(product);
+        em.persist(product);
+        return product;
     }
 
     @Override
@@ -43,5 +47,20 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> products = productRepository.findAllByIdStore(id);
         return Converter.toProductsDtos(products);
+    }
+
+    @Override
+    public ProductDto update(Long idProduct, ProductDto productDto) {
+
+        Product product = productRepository.findById(idProduct)
+                            .orElseThrow(NotFound::new);
+
+        product.setName(productDto.getName());
+        product.setBrand(productDto.getBrand());
+        product.setImage_url(productDto.getImage_url());
+        product.setStock(productDto.getStock());
+        product.setPrice(productDto.getPrice());
+        em.persist(product);
+        return productDto;
     }
 }

@@ -1,7 +1,5 @@
 package unq.ar.edu.dessap.grupol.controller.dtos;
 
-import javax.persistence.Column;
-
 public class ProductDto {
 
     private String name;
