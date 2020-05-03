@@ -1,0 +1,12 @@
+.login-box {
+  margin-top: 13vh;
+  background: #ffffff;
+  padding: 35px;
+  box-shadow: 0 2px 20px 12px #f2f2f2;
+  border-radius: 10px;
+}
+
+.login-box form {
+  width: 100%;
+  margin-top: 10px;
+}
