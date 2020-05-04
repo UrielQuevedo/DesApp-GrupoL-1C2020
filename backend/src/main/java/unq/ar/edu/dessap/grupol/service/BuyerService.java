@@ -7,4 +7,5 @@ import unq.ar.edu.dessap.grupol.model.Buyer;
 public interface BuyerService {
     Buyer create(String username, String password, String email);
     Buyer getBuyerById(long id);
+    Buyer getBuyerByEmailAndPassword(String email, String password);
 }

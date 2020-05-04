@@ -35,4 +35,14 @@ public class BuyerServiceImpl implements BuyerService {
     public Buyer getBuyerById(long id) {
         return buyerDao.getBuyerById(id);
     }
+
+    @Override
+    @Transactional
+    public Buyer getBuyerByEmailAndPassword(String email, String password) {
+        Buyer buyer = buyerDao.getBuyerByEmail(email);
+        if (passwordEncoder.matches(password, buyer.getPassword())) {
+            return buyer;
+        }
+        throw new RuntimeException("No coiciden los datos");
+    }
 }

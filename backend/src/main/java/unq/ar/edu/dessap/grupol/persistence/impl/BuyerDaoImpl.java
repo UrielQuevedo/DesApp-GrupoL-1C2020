@@ -22,14 +22,18 @@ public class BuyerDaoImpl implements BuyerDao {
     public Buyer save(Buyer buyer) {
         return buyerRepository.save(buyer);
     }
-
+        
     @Override
     public Buyer getBuyerById(long id) {
-        Optional<Buyer> buyerOption = buyerRepository.findById(id);
-        if (buyerOption.isPresent()) {
-            return buyerOption.get();
-        } else {
-            throw new RuntimeException("No se encuentra el id");
-        }
+        Optional<Buyer> optionalBuyer = buyerRepository.findById(id);
+        if (optionalBuyer.isPresent()) return optionalBuyer.get();
+        throw new RuntimeException("No se encuentra el id");
+    }
+
+    @Override
+    public Buyer getBuyerByEmail(String email) {
+        Optional<Buyer> optionalBuyer = buyerRepository.findByEmail(email);
+        if (optionalBuyer.isPresent()) return optionalBuyer.get();
+        throw new RuntimeException("No coiciden los datos");
     }
 }
