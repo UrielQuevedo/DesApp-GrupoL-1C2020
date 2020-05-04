@@ -1,31 +1,36 @@
 import React, { useState } from 'react'
 import '../Styles/Login.css';
-import { Typography, Box, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline } from '@material-ui/core';
+import { Typography, Box, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline, InputAdornment, IconButton } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { registerRequest } from '../Service/Api';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const Register = () => {
 
   const { register, handleSubmit } = useForm();
+  const [ showPassword, setShowPassword ] = useState(false);
   const { push } = useHistory();
 
   const sendRegisterForm = (data, e) => {
     registerRequest(data)
-      .then(_ => push('/home'))
+      .then((_) => push('/home'))
       .catch((error) => console.log(error.response));
   }
 
   return (
-    <Grid justify="center" style={{display:'flex'}}>
+    <Grid container justify="center" style={{display:'flex'}}>
       <CssBaseline />
       <Grid
-        lg="3"
+        item
+        container
+        lg={3}
         direction="column"
         justify="center"
         alignItems="center"
       >
-        <Grid direction="column" justify="center" alignItems="center" className="login-box">
+        <Grid container direction="column" justify="center" alignItems="center" className="login-box">
           <Typography
             component="h2"
             align="center"
@@ -62,7 +67,7 @@ const Register = () => {
               required
               label="Contraseña"
               name="password"
-              type="password"
+              type={ showPassword ? 'text' : 'password' }
               id="password"
               autoComplete="current-password"
             />
@@ -73,9 +78,21 @@ const Register = () => {
               required
               label="Confirmar Contraseña"
               name="password_confirmed"
-              type="password"
+              type={ showPassword ? 'text' : 'password' }
               id="password_confirmed"
               autoComplete="current-password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label="toggle password visibility"
+                    >
+                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
             <Button
               type="submit"
