@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //TODO Agregar Api de Backend de Heroku;
-const server = 'http://localhost:5000';
+const server = 'http://localhost:8080';
 
 const request = (type, path, body, params) => axios
     .request({
@@ -11,3 +11,7 @@ const request = (type, path, body, params) => axios
         params: params,
     })
     .then(req => req.data);
+
+export const registerRequest = (user_data) => request('POST', '/api/v1/auth/register', user_data)
+export const loginRequest = (user_data) => request('POST', '/api/v1/auth/login', user_data)
+

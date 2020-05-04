@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import '../Styles/Login.css';
-import { Typography, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline } from '@material-ui/core';
+import { Typography, Box, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { loginRequest } from '../Service/Api';
+import { registerRequest } from '../Service/Api';
 
-const Login = () => {
+const Register = () => {
 
   const { register, handleSubmit } = useForm();
   const { push } = useHistory();
-  const [ isRemember, setIsRemember ] = useState(false);
 
-  const sendLoginForm = (data, e) => {
-    loginRequest(data)
+  const sendRegisterForm = (data, e) => {
+    registerRequest(data)
       .then(_ => push('/home'))
       .catch((error) => console.log(error.response));
   }
@@ -32,9 +31,19 @@ const Login = () => {
             align="center"
             variant="h3"
           >
-            Iniciar Sesión
+            Crear Cuenta
           </Typography>
-          <form onSubmit={handleSubmit(sendLoginForm)}>
+          <form onSubmit={handleSubmit(sendRegisterForm)}>
+            <TextField
+              margin="normal"
+              inputRef={register}
+              fullWidth
+              required
+              label="Nombre de Usuario"
+              name="username"
+              type="text"
+              id="username"
+            />
             <TextField
               margin="normal"
               inputRef={register}
@@ -57,10 +66,16 @@ const Login = () => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Recordarme"
-              style={{ marginTop:'20px' }}
+            <TextField
+              margin="normal"
+              inputRef={register}
+              fullWidth
+              required
+              label="Confirmar Contraseña"
+              name="password_confirmed"
+              type="password"
+              id="password_confirmed"
+              autoComplete="current-password"
             />
             <Button
               type="submit"
@@ -69,13 +84,13 @@ const Login = () => {
               color="primary"
               style={{ margin: '20px 0 20px 0' }}
               >
-              Ingresar
+              Registrarse
             </Button>
             <Grid container justify="center" style={{ marginBottom:'20px' }}>
               <div>
-                ¿No tienes una cuenta?
-                <Link to="/register" style={{marginLeft:'5px'}}>
-                  Regístrate
+                ¿Ya tienes una cuenta?
+                <Link to="/login" style={{marginLeft:'5px'}}>
+                  Iniciar Sesión
                 </Link>
               </div>
             </Grid>
@@ -86,4 +101,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default Register;
