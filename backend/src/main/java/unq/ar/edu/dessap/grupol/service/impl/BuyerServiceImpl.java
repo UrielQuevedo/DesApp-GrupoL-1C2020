@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.model.Buyer;
 import unq.ar.edu.dessap.grupol.persistence.BuyerDao;
 import unq.ar.edu.dessap.grupol.service.BuyerService;
@@ -43,6 +44,6 @@ public class BuyerServiceImpl implements BuyerService {
         if (passwordEncoder.matches(password, buyer.getPassword())) {
             return buyer;
         }
-        throw new RuntimeException("No coiciden los datos");
+        throw new LoginException();
     }
 }

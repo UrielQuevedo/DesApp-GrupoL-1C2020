@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
 import unq.ar.edu.dessap.grupol.model.Buyer;
 import unq.ar.edu.dessap.grupol.service.BuyerService;
@@ -32,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<Buyer> login(@Valid @RequestBody UserDto userData) {
+    public ResponseEntity<Buyer> login(@Valid @RequestBody LoginUserDto userData) {
         try {
             Buyer buyer = buyerService.getBuyerByEmailAndPassword(userData.getEmail(), userData.getPassword());
             return new ResponseEntity<>(buyer, HttpStatus.OK);

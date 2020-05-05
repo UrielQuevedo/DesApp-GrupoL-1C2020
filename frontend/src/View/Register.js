@@ -19,7 +19,7 @@ const Register = () => {
   const sendRegisterForm = async (data, e) => {
     //TODO Mejorar estructura
     if (data.password === data.password_confirmed) {
-      setLoading(!loading);
+      setLoading(true);
       try {
         const _ = await registerRequest(data);
         push('/');
@@ -27,6 +27,7 @@ const Register = () => {
         //TODO Visualizar este error
         console.log(error.response.data.message);
       }
+      setLoading(false);
     } else {
       setError('Las contraseñas no coinciden');
     }
@@ -117,7 +118,6 @@ const Register = () => {
                 variant="contained"
                 disabled={loading}
                 color="primary"
-                style={{ margin: '20px 0 20px 0', height:'30px' }}
                 >
                 Registrarse
               </Button>
