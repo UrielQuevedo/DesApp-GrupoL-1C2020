@@ -7,6 +7,8 @@ import unq.ar.edu.dessap.grupol.persistence.SellerDao;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.BuyerRepository;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.SellerRepository;
 
+import java.util.Optional;
+
 @Repository
 public class SellerDaoImpl implements SellerDao {
 
@@ -16,5 +18,10 @@ public class SellerDaoImpl implements SellerDao {
     @Override
     public void save(Seller seller) {
         sellerRepository.save(seller);
+    }
+
+    @Override
+    public Optional<Seller> findById(Long id) {
+        return sellerRepository.findById(id);
     }
 }
