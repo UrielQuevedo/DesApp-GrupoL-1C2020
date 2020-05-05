@@ -1,5 +1,7 @@
 package unq.ar.edu.dessap.grupol.controller.dtos;
 
+import unq.ar.edu.dessap.grupol.model.Product;
+
 public class ProductDto {
 
     private String name;
@@ -47,4 +49,5 @@ public class ProductDto {
     public void setName(String name) {
         this.name = name;
     }
+
 }
