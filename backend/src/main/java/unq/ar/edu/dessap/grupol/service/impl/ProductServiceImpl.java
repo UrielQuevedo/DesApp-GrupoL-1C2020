@@ -76,6 +76,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = store.getProducts().stream().filter(p -> p.getId() != product.getId())
                                         .collect(Collectors.toList());
         store.setProducts(products);
+        productRepository.deleteById(product.getId());
         em.persist(store);
         return Converter.toProductsDtos(products);
     }
