@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../Styles/Login.css';
-import { Typography, Box, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline, InputAdornment, IconButton } from '@material-ui/core';
+import { Typography, Grid, Button, TextField, CssBaseline, InputAdornment, IconButton, CircularProgress, Box } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { registerRequest } from '../Service/Api';
@@ -11,14 +12,28 @@ const Register = () => {
 
   const { register, handleSubmit } = useForm();
   const [ showPassword, setShowPassword ] = useState(false);
+  const [ error, setError ] = useState();
+  const [ loading, setLoading ] = useState(false);
   const { push } = useHistory();
 
-  const sendRegisterForm = (data, e) => {
-    registerRequest(data)
-      .then((_) => push('/home'))
-      .catch((error) => console.log(error.response));
+  const sendRegisterForm = async (data, e) => {
+    //TODO Mejorar estructura
+    if (data.password === data.password_confirmed) {
+      setLoading(!loading);
+      try {
+        const _ = await registerRequest(data);
+        push('/');
+      } catch (error) {
+        //TODO Visualizar este error
+        console.log(error.response.data.message);
+      }
+    } else {
+      setError('Las contraseñas no coinciden');
+    }
+    e.target.reset();
   }
 
+  //TODO Emprolijar y sacar codigo repetido
   return (
     <Grid container justify="center" style={{display:'flex'}}>
       <CssBaseline />
@@ -94,15 +109,20 @@ const Register = () => {
                 )
               }}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              style={{ margin: '20px 0 20px 0' }}
-              >
-              Registrarse
-            </Button>
+            { error && <Alert variant="filled" severity="error">{error}</Alert> }
+            <Box style={{position:'relative'}}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={loading}
+                color="primary"
+                style={{ margin: '20px 0 20px 0', height:'30px' }}
+                >
+                Registrarse
+              </Button>
+              { loading && <CircularProgress style={{ position:'absolute', top:'50%', left:'50%', marginLeft:'-12px', marginTop:'-12px'  }}  size={24} /> }
+            </Box>
             <Grid container justify="center" style={{ marginBottom:'20px' }}>
               <div>
                 ¿Ya tienes una cuenta?
