@@ -17,15 +17,17 @@ public class Buyer {
     private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "buyer")
     private List<Order> orders;
+    private Location location;
 
     public Buyer(){}
 
-    public Buyer(long _id, String _username, String _email, String _password, List<Order> _orders) {
+    public Buyer(long _id, String _username, String _email, String _password, List<Order> _orders, Location _location) {
         this.setId(_id);
         this.setUsername(_username);
         this.setEmail(_email);
         this.setPassword(_password);
         this.setOrders(_orders);
+        this.setLocation(_location);
     }
 
     public long getId() {
@@ -68,4 +70,11 @@ public class Buyer {
         this.orders = orders;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }

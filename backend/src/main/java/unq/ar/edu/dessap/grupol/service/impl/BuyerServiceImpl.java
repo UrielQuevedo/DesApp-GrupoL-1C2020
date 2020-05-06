@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.model.Buyer;
+import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.persistence.BuyerDao;
 import unq.ar.edu.dessap.grupol.service.BuyerService;
 import unq.ar.edu.dessap.grupol.service.builder.BuyerBuilder;
+
+import java.util.Optional;
 
 @Service
 public class BuyerServiceImpl implements BuyerService {
@@ -45,5 +48,13 @@ public class BuyerServiceImpl implements BuyerService {
             return buyer;
         }
         throw new LoginException();
+    }
+
+    @Override
+    public Buyer updateBuyerLocation(long id, Location location) {
+        Buyer buyer = buyerDao.getBuyerById(id);
+        buyer.setLocation(location);
+        buyerDao.save(buyer);
+        return buyer;
     }
 }
