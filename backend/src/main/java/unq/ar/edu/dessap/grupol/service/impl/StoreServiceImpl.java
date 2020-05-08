@@ -9,14 +9,11 @@ import unq.ar.edu.dessap.grupol.controller.exception.NotFound;
 import unq.ar.edu.dessap.grupol.model.Seller;
 import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.Store;
-import unq.ar.edu.dessap.grupol.persistence.impl.repository.SellerRepository;
-import unq.ar.edu.dessap.grupol.persistence.impl.repository.StoreRepository;
+import unq.ar.edu.dessap.grupol.persistence.SellerDao;
+import unq.ar.edu.dessap.grupol.persistence.StoreDao;
 import unq.ar.edu.dessap.grupol.service.GeoDistanceService;
 import unq.ar.edu.dessap.grupol.service.StoreService;
 import unq.ar.edu.dessap.grupol.controller.exception.DuplicatedLocationException;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,42 +22,39 @@ import java.util.stream.Collectors;
 @Transactional
 public class StoreServiceImpl implements StoreService {
 
-    @PersistenceContext
-    EntityManager em;
-
     @Autowired
-    private StoreRepository storeRepository;
+    private StoreDao storeDao;
+
     @Autowired
     private GeoDistanceService geoDistanceService;
 
     @Autowired
-    private SellerRepository sellerRepository;
+    private SellerDao sellerDao;
 
     @Override
     public Store create(Long id, StoreDto storeDto) {
 
-        Seller seller = this.sellerRepository
-                .findById(id)
-                .orElseThrow(NotFound::new);
+        Seller seller = sellerDao
+                            .findById(id)
+                            .orElseThrow(NotFound::new);
 
-        Store storedb =
-                this.storeRepository
-                        .findByLatitudeAndLongitude(storeDto.getLocation().getLatitude(),
-                                storeDto.getLocation().getLongitude());
+        Store storedb = storeDao
+                            .findByLatitudeAndLongitude(storeDto.getLocation().getLatitude(),
+                                    storeDto.getLocation().getLongitude());
 
         if (storedb != null) {
             throw new DuplicatedLocationException();
         }
 
         Store store = Converter.toStore(storeDto, seller);
-        this.em.persist(store);
+        storeDao.save(store);
         return store;
     }
 
     @Override
     public List<StoreDto> getAll() {
         List<StoreDto> storesDtos = new ArrayList<>();
-        List<Store> stores = this.storeRepository.findAll();
+        List<Store> stores = storeDao.getAll();
         stores.forEach(store -> {
             storesDtos.add(Converter.toStoreDto(store));
         });
@@ -69,14 +63,14 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public StoreDto getById(Long id) {
-        Store store = this.storeRepository.findById(id)
-                .orElseThrow(NotFound::new);
+        Store store = storeDao.findById(id)
+                        .orElseThrow(NotFound::new);
         return Converter.toStoreDto(store);
     }
 
     @Override
     public List<Store> getStoresNearby(Location location) {
-        return storeRepository.findAll()
+        return storeDao.getAll()
                 .stream()
                 .filter(
                         store ->
@@ -84,4 +78,6 @@ public class StoreServiceImpl implements StoreService {
                                         > store.getMaxDistance()
                 ).collect(Collectors.toList());
     }
+
 }
+
