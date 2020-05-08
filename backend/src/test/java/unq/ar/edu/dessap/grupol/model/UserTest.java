@@ -47,4 +47,20 @@ public class UserTest {
         Assert.assertEquals("Buyer", user.getRole());
     }
 
+    @Test
+    public void testSetterUser() {
+        User user = UserBuilder.aUser().build();
+
+        user.setId(1);
+        user.setUsername("daniv");
+        user.setPassword("123");
+        user.setEmail("daniv@gmail.com");
+        user.setRole("Buyer");
+
+        Assert.assertEquals(1, user.getId());
+        Assert.assertEquals("daniv", user.getUsername());
+        Assert.assertEquals("123", user.getPassword());
+        Assert.assertEquals("daniv@gmail.com", user.getEmail());
+        Assert.assertEquals("Buyer", user.getRole());
+    }
 }
