@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../Styles/Login.css';
+import '../Styles/Auth.css';
 import { Typography, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline, CircularProgress, Box, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Link, useHistory } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Login = () => {
     setLoading(true);
     try {
       const _ = await loginRequest(data);
-      push('/');
+      push('/login/location');
     } catch (error) {
       setError(error.response.data.message)
     }
@@ -31,15 +31,17 @@ const Login = () => {
   }
 
   return (
-    <Grid justify="center" style={{display:'flex'}}>
+    <Grid container justify="center">
       <CssBaseline />
       <Grid
-        lg="3"
+        container
+        item
+        lg={3}
         direction="column"
         justify="center"
         alignItems="center"
       >
-        <Grid direction="column" justify="center" alignItems="center" className="login-box">
+        <Grid container direction="column" justify="center" alignItems="center" className="login-box">
           <Typography
             component="h2"
             align="center"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../Styles/Login.css';
+import '../Styles/Auth.css';
 import { Typography, Grid, Button, TextField, CssBaseline, InputAdornment, IconButton, CircularProgress, Box } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Link, useHistory } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Register = () => {
       setLoading(true);
       try {
         const _ = await registerRequest(data);
-        push('/');
+        push('/login/location');
       } catch (error) {
         //TODO Visualizar este error
         console.log(error.response.data.message);
@@ -36,7 +36,7 @@ const Register = () => {
 
   //TODO Emprolijar y sacar codigo repetido
   return (
-    <Grid container justify="center" style={{display:'flex'}}>
+    <Grid container justify="center">
       <CssBaseline />
       <Grid
         item
@@ -121,12 +121,12 @@ const Register = () => {
                 >
                 Registrarse
               </Button>
-              { loading && <CircularProgress style={{ position:'absolute', top:'50%', left:'50%', marginLeft:'-12px', marginTop:'-12px'  }}  size={24} /> }
+              { loading && <CircularProgress className="loading" size={24} /> }
             </Box>
             <Grid container justify="center" style={{ marginBottom:'20px' }}>
               <div>
                 ¿Ya tienes una cuenta?
-                <Link to="/login" style={{marginLeft:'5px'}}>
+                <Link to="/login" style={{ marginLeft:'5px' }}>
                   Iniciar Sesión
                 </Link>
               </div>
