@@ -8,4 +8,5 @@ import unq.ar.edu.dessap.grupol.model.Buyer;
 public interface BuyerDao {
     Buyer save(Buyer buyer);
     Buyer getBuyerById(long id);
+    Buyer getBuyerByEmail(String email);
 }

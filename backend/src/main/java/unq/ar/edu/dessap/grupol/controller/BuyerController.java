@@ -8,9 +8,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import unq.ar.edu.dessap.grupol.model.Buyer;
+import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.Order;
 import unq.ar.edu.dessap.grupol.service.BuyerService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
@@ -43,4 +45,9 @@ public class BuyerController {
         }
     }
 
+    @PutMapping(value = "/{id}/location")
+    public ResponseEntity<Buyer> updateBuyerLocation(@Valid @RequestBody Location location, @PathVariable("id") Long id) {
+        Buyer buyer = buyerService.updateBuyerLocation(id, location);
+        return new ResponseEntity<>(buyer, HttpStatus.OK);
+    }
 }

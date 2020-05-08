@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.model.Buyer;
 import unq.ar.edu.dessap.grupol.persistence.BuyerDao;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.BuyerRepository;
@@ -25,11 +26,15 @@ public class BuyerDaoImpl implements BuyerDao {
 
     @Override
     public Buyer getBuyerById(long id) {
-        Optional<Buyer> buyerOption = buyerRepository.findById(id);
-        if (buyerOption.isPresent()) {
-            return buyerOption.get();
-        } else {
-            throw new RuntimeException("No se encuentra el id");
-        }
+        Optional<Buyer> optionalBuyer = buyerRepository.findById(id);
+        if (optionalBuyer.isPresent()) return optionalBuyer.get();
+        throw new RuntimeException("No se encuentra el id");
+    }
+
+    @Override
+    public Buyer getBuyerByEmail(String email) {
+        Optional<Buyer> optionalBuyer = buyerRepository.findByEmail(email);
+        if (optionalBuyer.isPresent()) return optionalBuyer.get();
+        throw new LoginException();
     }
 }
