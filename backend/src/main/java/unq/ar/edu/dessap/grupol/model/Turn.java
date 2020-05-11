@@ -9,6 +9,8 @@ public class Turn {
     private User user;
     private LocalDateTime date;
 
+    public Turn() {}
+
     public Turn(long id, Store store, User user, LocalDateTime date) {
         this.id = id;
         this.store = store;
@@ -47,4 +49,5 @@ public class Turn {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
 }
