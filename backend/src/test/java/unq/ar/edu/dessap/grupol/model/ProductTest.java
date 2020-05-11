@@ -10,6 +10,15 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 
 public class ProductTest {
+
+    @Test
+    public void testGivenAProductWithIdWhenTheyRecieveGetIdThenGiveHisId() {
+        Product product = ProductBuilder.aProduct()
+                            .withId(1).build();
+
+        Assert.assertEquals(1, product.getId());
+    }
+
     @Test
     public void testGivenAProductWithNameAndOtherProductWithNameWhenTheyRecieveGetNameThenTheyGiveTheirNames() {
         Product product1 = ProductBuilder.aProduct()
@@ -69,12 +78,14 @@ public class ProductTest {
     public void testSetterProduct() {
         Product product = ProductBuilder.aProduct().build();
 
+        product.setId(1);
         product.setBrand("milka");
         product.setImage_url("image1.com");
         product.setName("chocolate");
         product.setPrice(80.00);
         product.setStock(30);
 
+        Assert.assertEquals(1, product.getId());
         Assert.assertEquals("milka", product.getBrand());
         Assert.assertEquals("image1.com", product.getImage_url());
         Assert.assertEquals("chocolate", product.getName());

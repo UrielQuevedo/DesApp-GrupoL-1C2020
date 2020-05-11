@@ -52,4 +52,22 @@ public class TurnTest {
         Assert.assertEquals(date, turn.getDate());
     }
 
+    @Test
+    public void testSetterTurn() {
+
+        User userMock = mock(User.class);
+        Store storeMock = mock(Store.class);
+        LocalDateTime date = LocalDateTime.now();
+
+        Turn turn = TurnBuilder.aTurn().build();
+        turn.setId(1);
+        turn.setUser(userMock);
+        turn.setStore(storeMock);
+        turn.setDate(date);
+
+        Assert.assertEquals(1, turn.getId());
+        Assert.assertEquals(userMock, turn.getUser());
+        Assert.assertEquals(storeMock, turn.getStore());
+        Assert.assertEquals(date, turn.getDate());
+    }
 }

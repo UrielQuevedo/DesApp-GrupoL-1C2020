@@ -6,6 +6,8 @@ import unq.ar.edu.dessap.grupol.model.Store;
 import java.util.List;
 
 public class ProductBuilder {
+
+    private long id;
     private String name;
     private String brand;
     private int stock;
@@ -15,7 +17,7 @@ public class ProductBuilder {
 
     public static ProductBuilder aProduct() { return new ProductBuilder(); }
 
-    public Product build() { return new Product(this.name, this.brand, this.stock, this.price, this.image_url, this.stores); }
+    public Product build() { return new Product(this.id, this.name, this.brand, this.stock, this.price, this.image_url, this.stores); }
 
     public ProductBuilder withName(final String _name) {
         this.name = _name;
@@ -47,4 +49,8 @@ public class ProductBuilder {
         return this;
     }
 
+    public ProductBuilder withId(final long id) {
+        this.id = id;
+        return this;
+    }
 }
