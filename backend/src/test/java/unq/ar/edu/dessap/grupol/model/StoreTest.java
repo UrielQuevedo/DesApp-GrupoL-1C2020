@@ -177,4 +177,16 @@ public class StoreTest {
         Assert.assertEquals(seller, store.getSeller());
     }
 
+    @Test
+    public void testGivenAStoreWithATurnWhenReceiveSizeGetTurnsThenGiveHisSizeGetTurns() {
+
+        List<Turn> turns = new ArrayList<>();
+        turns.add(mock(Turn.class));
+
+        Store store = StoreBuilder.aStore()
+                         .withTurns(turns).build();
+
+        Assert.assertEquals(1, store.getTurns().size());
+    }
+
 }
