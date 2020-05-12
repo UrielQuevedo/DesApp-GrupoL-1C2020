@@ -65,11 +65,15 @@ public class Store {
     @JoinColumn(name = "fk_seller", updatable = false, nullable = false)
     private Seller seller;
 
+    @Transient
+    private List<Turn> turns;
+
     public Store(){}
 
     public Store(long id, String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
-                 Double maxDistance, List<Product> products, Seller seller) {
+                 Double maxDistance, List<Product> products, Seller seller,
+                 List<Turn> turns) {
         this.id = id;
         this.name = name;
         this.sectors = sectors;
@@ -80,6 +84,7 @@ public class Store {
         this.maxDistance = maxDistance;
         this.products = products;
         this.seller = seller;
+        this.turns = turns;
     }
 
     public Seller getSeller() {
@@ -176,6 +181,15 @@ public class Store {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+
+    public List<Turn> getTurns() {
+        return turns;
+    }
+
+    public void setTurns(List<Turn> turns) {
+        this.turns = turns;
     }
 
     public void addProduct(Product product) {

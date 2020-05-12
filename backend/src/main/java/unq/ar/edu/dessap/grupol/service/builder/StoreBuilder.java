@@ -18,6 +18,7 @@ public class StoreBuilder {
     private Double maxDistance;
     private List<Product> products = new ArrayList<>();
     private Seller seller;
+    private List<Turn> turns;
 
     public static StoreBuilder aStore() {
         return new StoreBuilder();
@@ -25,7 +26,7 @@ public class StoreBuilder {
 
     public Store build() {
         return new Store(this.id, this.name, this.sectors, this.location, this.openDays, this.times,
-                            this.payments, this.maxDistance, this.products, this.seller);
+                            this.payments, this.maxDistance, this.products, this.seller, this.turns);
     }
 
     public StoreBuilder withId(final long id) {
@@ -79,4 +80,8 @@ public class StoreBuilder {
         return this;
     }
 
+    public StoreBuilder withTurns(List<Turn> turns) {
+        this.turns = turns;
+        return this;
+    }
 }

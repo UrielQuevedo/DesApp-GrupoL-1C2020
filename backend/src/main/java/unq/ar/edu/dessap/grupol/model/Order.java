@@ -1,6 +1,10 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import org.apache.tomcat.jni.Local;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,65 +15,78 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
-    @JoinColumn(name = "fk_buyer", nullable = false, updatable = false)
-    private Buyer buyer;
+
     @Transient
-    private List<Product> products;
+    private User user;
+
     @Transient
-    private List<Store> stores;
-    @Column(updatable = false, nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    private String product;
+
+    @Transient
+    private Integer amount;
+
+    @Transient
+    private Store store;
+
+    @Transient
+    private LocalDateTime date;
 
     public Order() {}
 
-    public Order(long id, Buyer buyer, List<Product> products, List<Store> stores, Date date) {
+    public Order(long id, User user, String product, Integer amount, Store store, LocalDateTime date) {
         this.id = id;
-        this.buyer = buyer;
-        this.products = products;
-        this.stores = stores;
+        this.user = user;
+        this.product = product;
+        this.amount = amount;
+        this.store = store;
         this.date = date;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public long getId() {
         return id;
     }
 
-    public List<Store> getStores() {
-        return stores;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setStores(List<Store> stores) {
-        this.stores = stores;
+    public User getUser() {
+        return user;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public String getProduct() {
+        return product;
     }
 
-    public Buyer getBuyer() {
-        return buyer;
+    public void setProduct(String product) {
+        this.product = product;
     }
 
-    public void setBuyer(Buyer buyer) {
-        this.buyer = buyer;
+    public Integer getAmount() {
+        return amount;
     }
 
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }

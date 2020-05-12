@@ -126,6 +126,10 @@ public class StoreTest {
 
         Seller seller = mock(Seller.class);
 
+        Turn turn = mock(Turn.class);
+        List<Turn> turns = new ArrayList<>();
+        turns.add(turn);
+
         store.setId(1);
         store.setLocation(location);
         store.setMaxDistance(2.0);
@@ -136,6 +140,7 @@ public class StoreTest {
         store.setSectors(sectors);
         store.setTimes(times);
         store.setSeller(seller);
+        store.setTurns(turns);
 
         Assert.assertEquals(1, store.getId());
         Assert.assertEquals(location, store.getLocation());
@@ -147,6 +152,7 @@ public class StoreTest {
         Assert.assertEquals(sector, store.getSectors().get(0));
         Assert.assertEquals(time, store.getTimes().get(0));
         Assert.assertEquals(seller, store.getSeller());
+        Assert.assertEquals(turn, store.getTurns().get(0));
     }
 
     @Test
@@ -175,6 +181,28 @@ public class StoreTest {
                             .withSeller(seller).build();
 
         Assert.assertEquals(seller, store.getSeller());
+    }
+
+    @Test
+    public void testGivenAStoreWithATurnWhenReceiveSizeGetTurnsThenGiveHisSizeGetTurns() {
+
+        List<Turn> turns = new ArrayList<>();
+        turns.add(mock(Turn.class));
+
+        Store store = StoreBuilder.aStore()
+                         .withTurns(turns).build();
+
+        Assert.assertEquals(1, store.getTurns().size());
+    }
+
+    @Test
+    public void testGivenAStoreWithProductWhenReceiveSizeGetTurnsThenGiveHisSize() {
+
+        Store store = StoreBuilder.aStore().build();
+
+        store.addProduct(mock(Product.class));
+
+        Assert.assertEquals(1, store.getProducts().size());
     }
 
 }

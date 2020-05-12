@@ -15,7 +15,7 @@ public class Buyer {
     @Column(unique = true, nullable = false)
     private String email;
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "buyer")
+    @Transient
     private List<Order> orders;
     private Location location;
 

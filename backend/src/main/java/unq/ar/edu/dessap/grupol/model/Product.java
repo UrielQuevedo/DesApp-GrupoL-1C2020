@@ -25,8 +25,9 @@ public class Product {
 
     public Product(){}
 
-    public Product(String _name, String _brand, int _stock, double _price, String _image_url,
+    public Product(long id, String _name, String _brand, int _stock, double _price, String _image_url,
                     List<Store> _stores) {
+        this.id = id;
         this.setBrand(_brand);
         this.setImage_url(_image_url);
         this.setName(_name);
