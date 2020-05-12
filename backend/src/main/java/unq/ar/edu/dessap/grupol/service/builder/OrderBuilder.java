@@ -1,27 +1,26 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
-import unq.ar.edu.dessap.grupol.model.Buyer;
-import unq.ar.edu.dessap.grupol.model.Order;
-import unq.ar.edu.dessap.grupol.model.Product;
-import unq.ar.edu.dessap.grupol.model.Store;
+import unq.ar.edu.dessap.grupol.model.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class OrderBuilder {
 
     private long id;
-    private Buyer buyer;
-    private List<Product> products;
-    private List<Store> stores;
-    private Date date;
+    private User user;
+    private String product;
+    private Integer amount;
+    private Store store;
+    private LocalDateTime date;
 
     public static OrderBuilder aOrder() {
         return new OrderBuilder();
     }
 
     public Order build() {
-        return new Order(this.id, this.buyer, this.products, this.stores, this.date);
+        return new Order(this.id, this.user, this.product, this.amount, this.store, this.date);
     }
 
     public OrderBuilder withId(int id) {
@@ -30,24 +29,30 @@ public class OrderBuilder {
     }
 
 
-    public OrderBuilder withBuyer(Buyer buyer) {
-        this.buyer = buyer;
+    public OrderBuilder withUser(User user) {
+        this.user = user;
         return this;
     }
 
-    public OrderBuilder withProducts(List<Product> products) {
-        this.products = products;
+    public OrderBuilder withProduct(String nameProduct) {
+        this.product = nameProduct;
         return this;
     }
 
-    public OrderBuilder withStores(List<Store> stores) {
-        this.stores = stores;
+    public OrderBuilder withAmount(Integer amount) {
+        this.amount = amount;
         return this;
     }
 
-    public OrderBuilder withDate(Date date) {
+    public OrderBuilder withStore(Store store) {
+        this.store = store;
+        return this;
+    }
+
+    public OrderBuilder withDate(LocalDateTime date) {
         this.date = date;
         return this;
     }
+
 
 }
