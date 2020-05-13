@@ -1,0 +1,28 @@
+
+====== RELEASE NOTES  ==========
+
+Universidad Nacional de Quilmes
+Desarrollo de Aplicaciones
+Compras en Casa
+
+Grupo C1L 
+	- Daniel Villegas
+	- Uriel Quevedo
+	
+---------------------------------------------------------------------
+TAG ENTREGA 1.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Configuracion de las herramientas para continuous integration (travis, heroku y codacy).
+* Configuration of tools for continuous integration, continuous deploy, etc (travis, heroku and codacy).
+* Integracion con Spring.
+* Frontend con NodeJS y React.
+* Estructura del proyecto.
+
+NOTES:
+* Hacer el deploy del frontend
+
+
+KNOWN ISSUES:
+
+- 
