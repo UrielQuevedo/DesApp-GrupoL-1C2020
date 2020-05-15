@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     private StoreDao storeDao;
 
     @Override
-    public Product create(Long idStore, ProductDto productDto) {
+    public ProductDto create(Long idStore, ProductDto productDto) {
 
         Store store = storeDao
                         .findById(idStore)
@@ -35,7 +35,8 @@ public class ProductServiceImpl implements ProductService {
         Product product = Converter.toProduct(productDto, store);
         store.addProduct(product);
         productDao.save(product);
-        return product;
+        productDto.setId(product.getId());
+        return productDto;
     }
 
     @Override

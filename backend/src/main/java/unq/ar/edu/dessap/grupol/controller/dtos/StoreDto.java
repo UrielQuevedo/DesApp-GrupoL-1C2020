@@ -7,6 +7,7 @@ import java.util.List;
 
 public class StoreDto {
 
+    private long id;
     private String name;
     private Location location;
     private Double maxDistance;
@@ -26,6 +27,10 @@ public class StoreDto {
 
     public String getName() {
         return name;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public List<SectorDto> getSectors() { return sectors;}
@@ -70,5 +75,9 @@ public class StoreDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

@@ -60,6 +60,7 @@ public class Converter {
 
     public static StoreDto toStoreDto(Store store) {
         StoreDto storeDto = new StoreDto();
+        storeDto.setId(store.getId());
         storeDto.setName(store.getName());
         storeDto.setLocation(store.getLocation());
         storeDto.setMaxDistance(store.getMaxDistance());
@@ -79,6 +80,7 @@ public class Converter {
 
     public static ProductDto toProductDto(Product product) {
         ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setBrand(product.getBrand());
         productDto.setImage_url(product.getImage_url());
