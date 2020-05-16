@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
                             .findById(id)
                             .orElseThrow(NotFound::new);
 
+        productDto.setId(product.getId());
         product.setName(productDto.getName());
         product.setBrand(productDto.getBrand());
         product.setImage_url(productDto.getImage_url());
