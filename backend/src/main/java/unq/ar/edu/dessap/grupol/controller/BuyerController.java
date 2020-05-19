@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
 import unq.ar.edu.dessap.grupol.model.Buyer;
 import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.Order;
@@ -26,26 +27,21 @@ public class BuyerController {
     private BuyerService buyerService;
 
     @GetMapping(value = "/{id}")
+    @ExceptionHandling
     public ResponseEntity<Buyer> getBuyer(@NotEmpty(message = "Ingresar id") @PathVariable String id) {
-        try {
-            Buyer buyer = buyerService.getBuyerById(Long.parseLong(id));
-            return new ResponseEntity<>(buyer, HttpStatus.OK);
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
-        }
+        Buyer buyer = buyerService.getBuyerById(Long.parseLong(id));
+        return new ResponseEntity<>(buyer, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}/orders")
+    @ExceptionHandling
     public ResponseEntity<List<Order>> getOrders(String id) {
-        try {
-            Buyer buyer = buyerService.getBuyerById(Long.parseLong(id));
-            return new ResponseEntity<>(buyer.getOrders(), HttpStatus.OK);
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
-        }
+        Buyer buyer = buyerService.getBuyerById(Long.parseLong(id));
+        return new ResponseEntity<>(buyer.getOrders(), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}/location")
+    @ExceptionHandling
     public ResponseEntity<Buyer> updateBuyerLocation(@Valid @RequestBody Location location, @PathVariable("id") Long id) {
         Buyer buyer = buyerService.updateBuyerLocation(id, location);
         return new ResponseEntity<>(buyer, HttpStatus.OK);
