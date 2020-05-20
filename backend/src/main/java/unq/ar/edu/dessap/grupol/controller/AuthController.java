@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
 import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
-import unq.ar.edu.dessap.grupol.model.Buyer;
-import unq.ar.edu.dessap.grupol.service.BuyerService;
+import unq.ar.edu.dessap.grupol.model.User;
+import unq.ar.edu.dessap.grupol.service.UserService;
+
 import javax.validation.Valid;
 
 
@@ -19,24 +20,21 @@ import javax.validation.Valid;
 @RequestMapping(value = "/api/v1/auth")
 @Component
 public class AuthController {
-
     @Autowired
-    private BuyerService buyerService;
+    private UserService userService;
 
     @PostMapping(value = "/register")
-    public ResponseEntity<Buyer> register(@Valid @RequestBody UserDto userData) {
-        Buyer buyer = buyerService.create(userData.getUsername(), userData.getPassword(), userData.getEmail());
+    public ResponseEntity<User> register(@Valid @RequestBody UserDto userData) {
+        User user = userService.create(userData.getUsername(), userData.getPassword(), userData.getEmail());
 
-        //TODO se esta devolviendo la contraseña
         //TODO handlear la excepcion cuando esta repetido el email
-        return new ResponseEntity<>(buyer, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/login")
     @ExceptionHandling
-    public ResponseEntity<Buyer> login(@Valid @RequestBody LoginUserDto userData) {
-        Buyer buyer = buyerService.getBuyerByEmailAndPassword(userData.getEmail(), userData.getPassword());
-        return new ResponseEntity<>(buyer, HttpStatus.OK);
+    public ResponseEntity<User> login(@Valid @RequestBody LoginUserDto userData) {
+        User user = userService.getUserByEmailAndPassword(userData.getEmail(), userData.getPassword());
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
 }

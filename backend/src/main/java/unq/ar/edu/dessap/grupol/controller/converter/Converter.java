@@ -34,7 +34,7 @@ public class Converter {
         return times;
     }
 
-    public static Store toStore(StoreDto storeDto, Seller seller) {
+    public static Store toStore(StoreDto storeDto, User user) {
 
         return StoreBuilder.aStore()
                 .withName(storeDto.getName())
@@ -44,17 +44,8 @@ public class Converter {
                 .withTimes(toListTimes(storeDto.getTimes()))
                 .withPayments(storeDto.getPayments())
                 .withMaxDistance(storeDto.getMaxDistance())
-                .withSeller(seller)
+                .withUser(user)
                 .withProducts(new ArrayList<>())
-                .build();
-    }
-
-    public static Seller toSeller(UserDto userDto) {
-
-        return SellerBuilder.aSeller()
-                .withUsername(userDto.getUsername())
-                .withPassword(userDto.getPassword())
-                .withEmail(userDto.getEmail())
                 .build();
     }
 

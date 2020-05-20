@@ -70,4 +70,18 @@ public class TurnTest {
         Assert.assertEquals(storeMock, turn.getStore());
         Assert.assertEquals(date, turn.getDate());
     }
+
+    @Test
+    public void testTurnEmptyBuilder() {
+        Turn turn1 = TurnBuilder.aTurn().build();
+        Turn turn2 = new Turn();
+
+        Assert.assertNull(turn1.getDate());
+        Assert.assertNull(turn1.getStore());
+        Assert.assertNull(turn1.getUser());
+
+        Assert.assertNull(turn2.getDate());
+        Assert.assertNull(turn2.getStore());
+        Assert.assertNull(turn2.getUser());
+    }
 }

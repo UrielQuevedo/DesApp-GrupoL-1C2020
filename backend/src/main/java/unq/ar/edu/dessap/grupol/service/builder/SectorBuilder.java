@@ -1,7 +1,6 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
 import unq.ar.edu.dessap.grupol.model.Sector;
-import unq.ar.edu.dessap.grupol.model.Seller;
 import unq.ar.edu.dessap.grupol.model.Store;
 
 import java.util.List;
