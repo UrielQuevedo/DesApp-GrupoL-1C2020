@@ -63,7 +63,7 @@ public class Store {
 
     @OneToOne
     @JoinColumn(name = "fk_seller", updatable = false, nullable = false)
-    private Seller seller;
+    private User seller;
 
     @Transient
     private List<Turn> turns;
@@ -72,7 +72,7 @@ public class Store {
 
     public Store(long id, String name, List<Sector> sectors,  Location location,
                  List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
-                 Double maxDistance, List<Product> products, Seller seller,
+                 Double maxDistance, List<Product> products, User seller,
                  List<Turn> turns) {
         this.id = id;
         this.name = name;
@@ -87,11 +87,11 @@ public class Store {
         this.turns = turns;
     }
 
-    public Seller getSeller() {
+    public User getSeller() {
         return seller;
     }
 
-    public void setSeller(Seller seller) {
+    public void setSeller(User seller) {
         this.seller = seller;
     }
 

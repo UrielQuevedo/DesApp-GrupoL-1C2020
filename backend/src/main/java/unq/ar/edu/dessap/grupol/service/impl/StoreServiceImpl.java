@@ -6,11 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.converter.Converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.controller.exception.NotFound;
-import unq.ar.edu.dessap.grupol.model.Seller;
 import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.Store;
-import unq.ar.edu.dessap.grupol.persistence.SellerDao;
+import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.persistence.StoreDao;
+import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.GeoDistanceService;
 import unq.ar.edu.dessap.grupol.service.StoreService;
 import unq.ar.edu.dessap.grupol.controller.exception.DuplicatedLocationException;
@@ -29,14 +29,12 @@ public class StoreServiceImpl implements StoreService {
     private GeoDistanceService geoDistanceService;
 
     @Autowired
-    private SellerDao sellerDao;
+    private UserDao userDao;
 
     @Override
     public Store create(Long id, StoreDto storeDto) {
 
-        Seller seller = sellerDao
-                            .findById(id)
-                            .orElseThrow(NotFound::new);
+        User user = userDao.getUserById(id);
 
         Store storedb = storeDao
                             .findByLatitudeAndLongitude(storeDto.getLocation().getLatitude(),
@@ -46,7 +44,7 @@ public class StoreServiceImpl implements StoreService {
             throw new DuplicatedLocationException();
         }
 
-        Store store = Converter.toStore(storeDto, seller);
+        Store store = Converter.toStore(storeDto, user);
         storeDao.save(store);
         return store;
     }

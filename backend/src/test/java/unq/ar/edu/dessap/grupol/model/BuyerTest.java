@@ -2,10 +2,6 @@ package unq.ar.edu.dessap.grupol.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import unq.ar.edu.dessap.grupol.service.BuyerService;
-import unq.ar.edu.dessap.grupol.service.builder.BuyerBuilder;
-import unq.ar.edu.dessap.grupol.service.impl.BuyerServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,7 +3,6 @@ package unq.ar.edu.dessap.grupol.model;
 import org.junit.Assert;
 import org.junit.Test;
 import unq.ar.edu.dessap.grupol.service.builder.SectorBuilder;
-import unq.ar.edu.dessap.grupol.service.builder.SellerBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

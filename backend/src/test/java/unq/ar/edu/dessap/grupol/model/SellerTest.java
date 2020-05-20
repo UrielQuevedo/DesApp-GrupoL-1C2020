@@ -2,7 +2,6 @@ package unq.ar.edu.dessap.grupol.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import unq.ar.edu.dessap.grupol.service.builder.SellerBuilder;
 
 import static org.mockito.Mockito.mock;
 
