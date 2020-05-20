@@ -22,7 +22,7 @@ public class User {
     @Transient
     private List<Order> orders;
     private Location location;
-    @OneToOne(mappedBy = "seller", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Store store;
 
     public User() {}

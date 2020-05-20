@@ -123,7 +123,7 @@ public class StoreTest {
         List<Time> times = new ArrayList<>();
         times.add(time);
 
-        Seller seller = mock(Seller.class);
+        User seller = mock(User.class);
 
         Turn turn = mock(Turn.class);
         List<Turn> turns = new ArrayList<>();
@@ -138,7 +138,7 @@ public class StoreTest {
         store.setProducts(products);
         store.setSectors(sectors);
         store.setTimes(times);
-        store.setSeller(seller);
+        store.setUser(seller);
         store.setTurns(turns);
 
         Assert.assertEquals(1, store.getId());
@@ -150,7 +150,7 @@ public class StoreTest {
         Assert.assertEquals(product, store.getProducts().get(0));
         Assert.assertEquals(sector, store.getSectors().get(0));
         Assert.assertEquals(time, store.getTimes().get(0));
-        Assert.assertEquals(seller, store.getSeller());
+        Assert.assertEquals(seller, store.getUser());
         Assert.assertEquals(turn, store.getTurns().get(0));
     }
 
@@ -172,14 +172,14 @@ public class StoreTest {
     }
 
     @Test
-    public void testGivenAStoreWithSellerWhenReceiveGetSellerThenGiveASeller() {
+    public void testGivenAStoreWithUserWhenReceiveGetUserThenGiveAUser() {
 
-        Seller seller = mock(Seller.class);
+        User seller = mock(User.class);
 
         Store store = StoreBuilder.aStore()
-                            .withSeller(seller).build();
+                            .withUser(seller).build();
 
-        Assert.assertEquals(seller, store.getSeller());
+        Assert.assertEquals(seller, store.getUser());
     }
 
     @Test

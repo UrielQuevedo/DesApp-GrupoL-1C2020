@@ -46,4 +46,19 @@ public class LocationTest {
         Assert.assertEquals(30.00, location.getLongitude(), 0.00);
     }
 
+    @Test
+    public void testLocationEmptyBuilder() {
+        Location location1 = new Location();
+        Location location2 = LocationBuilder.aLocation().build();
+
+        Assert.assertNull(location1.getLongitude());
+        Assert.assertNull(location1.getAddress());
+        Assert.assertNull(location1.getLatitude());
+
+        Assert.assertNull(location2.getLongitude());
+        Assert.assertNull(location2.getAddress());
+        Assert.assertNull(location2.getLatitude());
+
+    }
+
 }
