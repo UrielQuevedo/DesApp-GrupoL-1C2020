@@ -15,4 +15,5 @@ const request = (type, path, body, params) => axios
 export const registerRequest = (user_data) => request('POST', '/api/v1/auth/register', user_data);
 export const loginRequest = (user_data) => request('POST', '/api/v1/auth/login', user_data);
 export const sendBuyerLocationRequest = (id, location) => request('PUT', `/api/v1/buyer/${id}/location`, location);
-export const getStoreByIdUser = (idUser) => request('GET', `/api/${idUser}/stores`); 
+export const getStoreByIdUserRequest = (idUser) => request('GET', `/api/${idUser}/stores`); 
+export const addProductRequest = (idStore, product_data) => request('POST', `/api/stores/${idStore}/products`, product_data);

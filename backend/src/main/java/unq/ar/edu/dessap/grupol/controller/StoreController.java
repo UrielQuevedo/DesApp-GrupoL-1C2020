@@ -22,7 +22,7 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
-    @PostMapping(value = "/sellers/{id}/stores")
+    @PostMapping(value = "/users/{id}/stores")
     public ResponseEntity<Store> create(@PathVariable("id") Long id, @RequestBody StoreDto storeDto) {
         Store store = storeService.create(id, storeDto);
         return new ResponseEntity<>(store, HttpStatus.CREATED);

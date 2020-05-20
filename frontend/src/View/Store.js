@@ -1,43 +1,52 @@
-import React from 'react';
-import { getStoreByIdUser } from '../Service/Api';
-import Product from './Product';
+import React , { useState, useEffect } from 'react';
 import ListProduct from './ListProduct';
-import { findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
+import AddProduct from './AddProduct';
+import useStore from '../Hooks/useStore';
+import DialogAddProduct from './DialogAddProduct';
+import { getStoreByIdUserRequest } from '../Service/Api';
 
-class Store extends React.Component {
+const Store = () => {
 
-    constructor() {
-        super();
-        this.state = {
-            name: null,
-            products: null
-        }
+  const [ id, setId ] = useState(null); 
+  const [ name, setName ] = useState(null); 
+  const [ products, setProducts] = useState(null);
+  const [ productsSize, setProductsSize] = useState(0); 
+
+  useEffect(() => {
+      if(!id) {
+      getStoreByIdUserRequest(1)
+      .then(data => {
+        console.log(data);
+        const { id, name, products } = data;
+        setId(id);
+        setName(name);
+        setProducts(products);
+        setProductsSize(products.size);
+      })
+      .catch(error => {
+        console.log(error);
+      })
     }
-
-    componentDidMount() {
-        getStoreByIdUser(1)
-        .then(data => {
-            console.log(data); 
-            this.setState({ name: data.name, products: data.products});
-        })
-        .catch(error => console.log(error));
+else {
+    if(productsSize != products.size) {
+      console.log("agregue un producto");
     }
+  }
+    return () => console.log("hago un clear");
 
+  }, [products])
 
-    render() {
-        const { name, products } = this.state;
-        return (
-            <div className="container">
+    return (
+          <div className="container">
+            <h1> {name} </h1>
+            <DialogAddProduct setProducts={setProducts}/>
             <div className="row">
-                <h1>{name}</h1>
+              { products  &&
+              <ListProduct products={products}/>
+             }          
             </div>
-            <div className="row">
-                { products && 
-                 <ListProduct products={products}/>}
-            </div>
-        </div>
-        )
-    }
+          </div>
+    )
 }
 
 export default Store;

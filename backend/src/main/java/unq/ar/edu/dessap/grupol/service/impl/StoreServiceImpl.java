@@ -80,8 +80,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreDto getByUserId(Long idUser) {
 
-        Seller user = sellerDao.findById(idUser)
-                            .orElseThrow(NotFound::new);
+        User user = userDao.getUserById(idUser);
 
         return Converter.toStoreDto(user.getStore());
     }
