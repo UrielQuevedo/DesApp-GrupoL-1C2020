@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.persistence.StoreDao;
-import unq.ar.edu.dessap.grupol.persistence.impl.repository.SellerRepository;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.StoreRepository;
 
 import java.util.List;
