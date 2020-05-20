@@ -28,7 +28,7 @@ public class AuthController {
         User user = userService.create(userData.getUsername(), userData.getPassword(), userData.getEmail());
 
         //TODO handlear la excepcion cuando esta repetido el email
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/login")

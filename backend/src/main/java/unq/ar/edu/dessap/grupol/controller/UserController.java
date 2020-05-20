@@ -13,6 +13,7 @@ import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
@@ -26,14 +27,14 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     @ExceptionHandling
-    public ResponseEntity<User> getUser(@NotEmpty(message = "Ingresar id") @PathVariable long id) {
+    public ResponseEntity<User> getUser(@PathVariable("id") long id) {
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}/orders")
     @ExceptionHandling
-    public ResponseEntity<List<Order>> getOrders(long id) {
+    public ResponseEntity<List<Order>> getOrders(@PathVariable("id") long id) {
         List<Order> orders = userService.getUserOrdersById(id);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }

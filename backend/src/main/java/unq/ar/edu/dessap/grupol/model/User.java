@@ -1,5 +1,7 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,16 +15,18 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(nullable = false)
     //TODO para que esta el role?
     private String role;
     @Transient
+    @JsonIgnore
     private List<Order> orders;
     private Location location;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Store store;
 
     public User() {}
