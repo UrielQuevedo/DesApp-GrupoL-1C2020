@@ -77,5 +77,13 @@ public class StoreServiceImpl implements StoreService {
                 ).collect(Collectors.toList());
     }
 
+    @Override
+    public StoreDto getByUserId(Long idUser) {
+
+        User user = userDao.getUserById(idUser);
+
+        return Converter.toStoreDto(user.getStore());
+    }
+
 }
 

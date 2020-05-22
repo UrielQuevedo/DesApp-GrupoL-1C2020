@@ -4,6 +4,7 @@ import unq.ar.edu.dessap.grupol.model.Product;
 
 public class ProductDto {
 
+    private long id;
     private String name;
     private String brand;
     private int stock;
@@ -12,6 +13,10 @@ public class ProductDto {
 
     public String getImage_url() {
         return image_url;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void setImage_url(String image_url) {
@@ -50,4 +55,7 @@ public class ProductDto {
         this.name = name;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 }
