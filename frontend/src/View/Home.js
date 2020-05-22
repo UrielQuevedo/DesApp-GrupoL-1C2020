@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grid, TextField, Button, InputAdornment, Box } from '@material-ui/core';
+import { Grid, TextField, Button, InputAdornment, Box, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import '../Styles/Home.css';
+import PropTypes from 'prop-types';
 
 const Home = () => {
 
@@ -35,11 +36,11 @@ const Home = () => {
                 startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
               }}
             />
-            <Button variant="contained" className="buttonSearch">
+            <Button name="search" variant="contained" className="buttonSearch">
               buscar
             </Button>
           </form>
-          <Button variant="contained" className="buttonStores">
+          <Button name="viewStrores" variant="contained" className="buttonStores">
             ver tiendas
           </Button>
         </Grid>
@@ -50,7 +51,7 @@ const Home = () => {
   const StoreCategoriesList = () => {
     return categories.map(({ url, name }, i) => (
       <div className="item-categorie mt-20" key={i}>
-        <Box boxShadow={4} className="image-categorie">
+        <Box boxShadow={7} className="image-categorie">
           <img
             src={url}
             alt={"Categoria de " + name}
@@ -77,11 +78,49 @@ const Home = () => {
     );
   }
 
+  const InformationPaper = ({ title, description, nameButtom, marginValue }) => {
+    return (
+      <Paper className="infomation-paper" elevation={3} style={{ marginRight: marginValue }}>
+        <span className="title">
+          {title}
+        </span>
+        <p className="description">
+          {description}
+        </p>
+        <Button variant="contained">
+          {nameButtom}
+        </Button>
+      </Paper>
+    );
+  }
+  InformationPaper.prototype = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    nameButtom: PropTypes.string.isRequired,
+    marginValue: PropTypes.string,
+  };
+  InformationPaper.defaultProps = {
+    marginValue: '0',
+  };
+
   const Information = () => {
     return (
-      <div>
-        INFORMACION
-      </div>
+      <Grid container justify="center" direction="row">
+        {/* Offer */}
+        <InformationPaper
+          title="Ofertas"
+          description="No te pierdas las ultimas ofertas que las tiendas tienen para vos, y bla bla bla.."
+          nameButtom="ver ofertas"
+          marginValue="30px"
+        />
+        {/* Store */}
+        <InformationPaper
+          title="Publica tu tienda"
+          description="Texto motivador y convincente para publicar tu tienda, y bla bla bla.."
+          nameButtom="publicar tienda"
+        />
+        <div className="background-color" />
+      </Grid>
     );
   }
 
