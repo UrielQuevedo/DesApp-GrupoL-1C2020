@@ -81,7 +81,7 @@ const Home = () => {
         <p className="subtitle" >
           Lo mas cercano de tu casa
         </p>
-        <Grid container direction="row">
+        <Grid container direction="row" justify="center" alignContent="center" alignItems="center">
           <StoreCategoriesList />
         </Grid>
       </div>
@@ -113,7 +113,7 @@ const Home = () => {
 
   const Information = () => {
     return (
-      <Grid container justify="center">
+      <Grid container justify="center" style={{height:'10%'}}>
         {/* Offer */}
         <InformationPaper
           title="Ofertas"

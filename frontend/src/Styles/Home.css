@@ -153,8 +153,25 @@ div .storeCategories {
   }
 }
 
+@media(max-width: 530px) {
+  .searchLayout-container p {
+    font-size: 30px;
+  }
+  .item-categorie .image-categorie {
+    height: 130px;
+    width: 130px;
+  }
+}
+
 @media(max-width: 476px) {
   .searchLayout-container p {
     font-size: 30px;
+  }
+}
+
+@media(max-width: 321px) {
+  .item-categorie .image-categorie {
+    height: 110px;
+    width: 110px;
   }
 }
