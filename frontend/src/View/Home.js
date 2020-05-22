@@ -88,40 +88,37 @@ const Home = () => {
     );
   }
 
-  const InformationPaper = ({ title, description, nameButtom, marginValue }) => {
+  const InformationPaper = ({ title, description, nameButtom }) => {
     return (
-      <Paper className="infomation-paper" elevation={3} style={{ marginRight: marginValue }}>
-        <span className="title">
-          {title}
-        </span>
-        <p className="description">
-          {description}
-        </p>
-        <Button variant="contained">
-          {nameButtom}
-        </Button>
-      </Paper>
+      <Grid item container xs={12} md={6} justify="center">
+        <Paper className="infomation-paper mt-20" elevation={3}>
+          <span className="title">
+            {title}
+          </span>
+          <p className="description">
+            {description}
+          </p>
+          <Button variant="contained">
+            {nameButtom}
+          </Button>
+        </Paper>
+      </Grid>
     );
   }
   InformationPaper.prototype = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     nameButtom: PropTypes.string.isRequired,
-    marginValue: PropTypes.string,
-  };
-  InformationPaper.defaultProps = {
-    marginValue: '0',
   };
 
   const Information = () => {
     return (
-      <Grid container justify="center" direction="row">
+      <Grid container justify="center">
         {/* Offer */}
         <InformationPaper
           title="Ofertas"
           description="No te pierdas las ultimas ofertas que las tiendas tienen para vos, y bla bla bla.."
           nameButtom="ver ofertas"
-          marginValue="30px"
         />
         {/* Store */}
         <InformationPaper
