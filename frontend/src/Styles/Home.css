@@ -2,7 +2,7 @@
   background: #FB849D;
   height: 20rem;
   text-align: center;
-  font-family: Segoe UI;
+  font-family: 'Segoe UI';
 }
 
 .searchLayout-container p {
@@ -40,4 +40,69 @@
   background: #F3F3F3 !important;
   margin-top: 2rem;
   width: 10rem;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+div .storeCategories {
+  padding: 0 0 0 30px;
+}
+
+.storeCategories .title {
+  font-size: 40px;
+  font-weight: bold;
+  font-family: 'Segoe UI';
+  color: #332927;
+}
+
+.storeCategories .subtitle {
+  font-size: 16px;
+  font-family: 'Segoe UI semibold';
+  color: #706967;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.item-categorie {
+  margin-right: 30px;
+}
+
+.item-categorie p {
+  font-size: 15px;
+  font-family: 'Segoe UI';
+  text-transform: uppercase;
+  color: #000000;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.item-categorie .image-categorie {
+  height: 220px;
+  width: 220px;
+}
+
+.item-categorie .image-categorie img {
+  width: 100%;
+  height: auto;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.item-categorie .image-categorie img:hover {
+  transform: scale(1.05);
+}
+
+@supports(object-fit: cover) {
+  .item-categorie .image-categorie img {
+    height: 100%;
+      object-fit: cover;
+      object-position: center center;
+  }
+}
+
+.image-categorie, .image-categorie img {
+  border-radius: 8px !important;
 }
