@@ -15,6 +15,29 @@ const Home = () => {
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114819/dietetica_zcwr0l.jpg', name: 'dietetica' },
   ]
 
+  const SerachForm = () => {
+    return (
+      <Grid container>
+        <Grid item xs={12} sm={10} lg={10}>
+          <TextField
+            className="search"
+            placeholder="Busca cualquier producto"
+            variant="outlined"
+            required
+            InputProps={{
+              startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={2} lg={2}>
+          <Button name="search" variant="contained" className="buttonSearch">
+            buscar
+          </Button>
+        </Grid>
+      </Grid>
+    );
+  }
+
   const SearchLayout = () => {
     return (
       <Grid
@@ -22,24 +45,11 @@ const Home = () => {
         justify="center"
         className="searchLayout-container"
       >
-        <Grid item xs={7}>
+        <Grid item xs={12} sm={10} md={7}>
           <p>
             ¿Que estas buscando hoy?
           </p>
-          <form noValidate autoComplete="off">
-            <TextField
-              className="search"
-              placeholder="Busca cualquier producto"
-              variant="outlined"
-              required
-              InputProps={{
-                startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
-              }}
-            />
-            <Button name="search" variant="contained" className="buttonSearch">
-              buscar
-            </Button>
-          </form>
+          <SerachForm />
           <Button name="viewStrores" variant="contained" className="buttonStores">
             ver tiendas
           </Button>

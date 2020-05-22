@@ -7,11 +7,29 @@
 
 .searchLayout-container p {
   color: #ffffff;
+  font-family: 'Segoe UI semibold';
   font-size: 45px;
+}
+@media(max-width: 644px) {
+  .searchLayout-container p {
+    font-size: 40px;
+  }
+  .searchLayout-container .search {
+    width: 88% !important;
+  }
+  .searchLayout-container .buttonSearch {
+    margin: 10px 0 0 0 !important;
+  }
+}
+
+@media(max-width: 476px) {
+  .searchLayout-container p {
+    font-size: 30px;
+  }
 }
 
 .searchLayout-container .search {
-  width: 88% !important;
+  width: 100%;
 }
 
 .searchLayout-container .search div {
@@ -32,8 +50,9 @@
 }
 
 .searchLayout-container .buttonSearch {
-  margin-left: 10px !important;
   background: #F9E0E5 !important;
+  margin-left: 8px;
+  width: 88%;
 }
 
 .searchLayout-container .buttonStores {
@@ -134,6 +153,7 @@ div .storeCategories {
 
 .background-color {
   background: #FB849D;
+  color: #707070;
   width: 100%;
   height: 200px;
 }
