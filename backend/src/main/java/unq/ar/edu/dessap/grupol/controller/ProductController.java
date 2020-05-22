@@ -22,10 +22,10 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(value = "/{idStore}/products")
-    public ResponseEntity<Product> create(@PathVariable("idStore") Long idStore,
-                                          @RequestBody ProductDto productDto) {
-        Product product = productService.create(idStore, productDto);
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    public ResponseEntity<ProductDto> create(@PathVariable("idStore") Long idStore,
+                                          @RequestBody ProductDto _productDto) {
+        ProductDto productDto = productService.create(idStore, _productDto);
+        return new ResponseEntity<>(productDto, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{idStore}/products")

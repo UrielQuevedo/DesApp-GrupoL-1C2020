@@ -22,22 +22,28 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
-    @PostMapping(value = "/sellers/{id}/stores")
+    @PostMapping(value = "/users/{id}/stores")
     public ResponseEntity<Store> create(@PathVariable("id") Long id, @RequestBody StoreDto storeDto) {
         Store store = storeService.create(id, storeDto);
         return new ResponseEntity<>(store, HttpStatus.CREATED);
-    }
-
-    @GetMapping(value = "/stores")
-    public ResponseEntity<List<StoreDto>> getAll() {
-        List<StoreDto> storesDtos = storeService.getAll();
-        return new ResponseEntity<>(storesDtos, HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/{id}")
     public ResponseEntity<StoreDto> getById(@PathVariable("id") Long id) {
         StoreDto storeDto = storeService.getById(id);
         return new ResponseEntity<>(storeDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{idUser}/stores")
+    public ResponseEntity<StoreDto> getByUserId(@PathVariable("idUser") Long idUser) {
+        StoreDto storeDto = storeService.getByUserId(idUser);
+        return new ResponseEntity<>(storeDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/stores")
+    public ResponseEntity<List<StoreDto>> getAll() {
+        List<StoreDto> storesDtos = storeService.getAll();
+        return new ResponseEntity<>(storesDtos, HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/nearby")

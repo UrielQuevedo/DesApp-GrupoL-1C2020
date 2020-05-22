@@ -17,4 +17,6 @@ public interface StoreService  {
     StoreDto getById(Long id);
 
     List<Store> getStoresNearby(Location location);
+
+    StoreDto getByUserId(Long idUser);
 }

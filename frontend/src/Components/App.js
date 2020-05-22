@@ -4,6 +4,7 @@ import Login from '../View/Login';
 import ComingSoon from '../View/ComingSoon';
 import Register from '../View/Register';
 import Location from '../View/Location';
+import Store from '../View/Store'; 
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/login/location" exact component={Location} />
           <Route path = '/' exact component={ComingSoon} />
           <Route path = '/register' exact component={Register} />
+          <Route path = '/store' exact component={Store} />
         </Switch>
       </Router>
 );
