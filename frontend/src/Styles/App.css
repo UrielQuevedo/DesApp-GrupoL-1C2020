@@ -1,10 +1,9 @@
-.App {
-    height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 60px;
-    font-weight: 600;
-    font-family: monospace;
-    text-align: center;
+body {
+    padding: 0;
+    margin: 0;
+    background: #F5F7FA;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
