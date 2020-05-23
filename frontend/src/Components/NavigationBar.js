@@ -5,6 +5,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import '../Styles/NavigationBar.css';
+import { NavLink } from 'react-router-dom';
 
 const NavigationBar = () => {
   const trigger = useScrollTrigger();
@@ -13,7 +14,7 @@ const NavigationBar = () => {
     return (
       <Button className="userNavigation">
         <LocationOnIcon />
-          <Box textOverflow="ellipsis" className="test" overflow="hidden">
+          <Box textOverflow="ellipsis" className="address" overflow="hidden">
             Quilmes, Buenos Aires sadasdasdasdsad
           </Box>
         <ArrowDropDownIcon />
@@ -36,13 +37,17 @@ const NavigationBar = () => {
       <AppBar className="navbar-desktop" style={{background:'#ffff', color:'#000'}}>
         <Toolbar>
           <h2>
-            Compras en casa
+            <NavLink to='/' style={{textDecoration: 'none', color:'#000'}}>Compras en casa</NavLink>
           </h2>
-          <div style={{flexGrow:'1'}}><Button size="small" variant="contained">tu tienda</Button></div>
+          <div style={{flexGrow:'1'}}>
+            <Button size="small" variant="contained">
+              tu tienda
+            </Button>
+          </div>
           <UserLocationButton />
-          <span style={{marginRight:'20px'}}>
-            TIENDAS
-          </span>
+          <NavLink to="/" className="item">
+            tiendas
+          </NavLink>
           <UserMenu />
         </Toolbar>
       </AppBar>

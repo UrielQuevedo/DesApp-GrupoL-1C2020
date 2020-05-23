@@ -6,6 +6,7 @@
 
 .navbar-desktop h2 {
   margin-right: 20px;
+  text-decoration: none;
 }
 
 .navbar-desktop .prueba {
@@ -18,6 +19,22 @@
   white-space: nowrap;
 }
 
-.test {
+.userNavigation .address {
+  padding: 13px 0 13px 0;
   text-transform: capitalize;
+}
+
+.navbar-desktop .item {
+  margin-right: 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Segoe UI';
+  padding: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.5s;
+  color: #000000;
+}
+.navbar-desktop .item:hover {
+  background: #F3F3F3 ;
 }
