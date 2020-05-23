@@ -1,7 +1,7 @@
 .navbar-desktop {
-  background: #ffffff;
-  color: #000000;
-  font-family: 'Segoe UI';
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: 'Segoe UI' !important;
 }
 
 .navbar-desktop h2 {
@@ -9,7 +9,7 @@
   text-decoration: none;
 }
 
-.navbar-desktop .prueba {
+.navbar-desktop .myStoreButton {
   flex-grow: 1;
 }
 
@@ -37,4 +37,27 @@
 }
 .navbar-desktop .item:hover {
   background: #F3F3F3 ;
+}
+
+.icons {
+  color: #000000 !important;
+  min-width: 35px !important;
+}
+
+.userMenu {
+  width: 150px;
+  white-space: nowrap;
+}
+
+.userMenu .username {
+  padding: 13px 5px 13px 5px;
+  text-transform: capitalize;
+}
+
+.icons span {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
