@@ -5,18 +5,13 @@ import '../Styles/NavigationBar.css';
 import { NavLink } from 'react-router-dom';
 
 // Icons
-import LanguageIcon from '@material-ui/icons/Language';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Svg from './Svg';
+import UserMenuItems from './UserMenuItems';
 
 const NavigationBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
   const trigger = useScrollTrigger();
 
   const Logo = () => {
@@ -59,47 +54,6 @@ const NavigationBar = () => {
     setAnchorEl(null);
   };
 
-  const handleClickCollapse = () => {
-    setOpen(!open);
-  };
-
-  const LanguageSelector = () => {
-    return (
-      <>
-        <ListItem button onClick={handleClickCollapse}>
-          <ListItemIcon className="icons">
-            <LanguageIcon />
-          </ListItemIcon>
-          <ListItemText primary="Idioma" />
-          { open ? <ExpandLess /> : <ExpandMore /> }
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <Divider />
-            <ListItem button>
-              <ListItemIcon className="icons">
-                <span>
-                  <Svg xlink='/svg/Icons.svg#argentina-flag' />
-                </span>
-              </ListItemIcon>
-              <ListItemText primary="Español" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemIcon className="icons">
-                <span>
-                  <Svg xlink='/svg/Icons.svg#uk-flag' />
-                </span>
-              </ListItemIcon>
-              <ListItemText primary="Ingles" />
-            </ListItem>
-            <Divider />
-          </List>
-        </Collapse>
-      </>
-    );
-  }
-
   const UserMenu = () => {
     return (
       <>
@@ -120,27 +74,7 @@ const NavigationBar = () => {
           onClose={handleCloseMenu}
         >
           <List>
-            <ListItem button onClick={handleCloseMenu}>
-              <ListItemIcon className="icons">
-              <span>
-                <Svg xlink='/svg/Icons.svg#orders' />
-              </span>
-              </ListItemIcon>
-              <ListItemText primary="Mis ordenes" />
-            </ListItem>
-            <ListItem button onClick={handleCloseMenu}>
-              <ListItemIcon className="icons">
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Mis datos" />
-            </ListItem>
-            <LanguageSelector />
-            <ListItem button onClick={handleCloseMenu}>
-              <ListItemIcon className="icons">
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText primary="Salir" />
-            </ListItem>
+            <UserMenuItems handleCloseMenu={handleCloseMenu} />
           </List>
         </Menu>
       </>
