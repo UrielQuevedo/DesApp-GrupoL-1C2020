@@ -1,0 +1,23 @@
+.navbar-desktop {
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Segoe UI';
+}
+
+.navbar-desktop h2 {
+  margin-right: 20px;
+}
+
+.navbar-desktop .prueba {
+  flex-grow: 1;
+}
+
+.userNavigation {
+  margin-right: 20px !important;
+  width: 200px;
+  white-space: nowrap;
+}
+
+.test {
+  text-transform: capitalize;
+}
