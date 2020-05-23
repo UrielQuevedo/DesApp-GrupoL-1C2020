@@ -1,0 +1,63 @@
+.navbar-desktop {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: 'Segoe UI' !important;
+}
+
+.navbar-desktop h2 {
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+.navbar-desktop .myStoreButton {
+  flex-grow: 1;
+}
+
+.userNavigation {
+  margin-right: 20px !important;
+  width: 200px;
+  white-space: nowrap;
+}
+
+.userNavigation .address {
+  padding: 13px 0 13px 0;
+  text-transform: capitalize;
+}
+
+.navbar-desktop .item {
+  margin-right: 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Segoe UI';
+  padding: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.5s;
+  color: #000000;
+}
+.navbar-desktop .item:hover {
+  background: #F3F3F3 ;
+}
+
+.icons {
+  color: #000000 !important;
+  min-width: 35px !important;
+}
+
+.userMenu {
+  width: 150px;
+  white-space: nowrap;
+}
+
+.userMenu .username {
+  padding: 13px 5px 13px 5px;
+  text-transform: capitalize;
+}
+
+.icons span {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
