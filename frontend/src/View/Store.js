@@ -31,7 +31,7 @@ const Store = () => {
             <h1> {name} </h1>
             <DialogAddProduct setProducts={setProducts}/>
               { products  &&
-              <ListProduct products={products}/>
+              <ListProduct products={products} idStore={id}/>
               }
            
         </div>
