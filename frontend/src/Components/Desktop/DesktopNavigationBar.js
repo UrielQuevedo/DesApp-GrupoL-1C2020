@@ -5,9 +5,9 @@ import { NavLink } from 'react-router-dom';
 import UserMenuItems from '../NavigationBar/UserMenuItems';
 
 // Icons
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import UserLocationButton from '../NavigationBar/UserLocationButton';
 
 const NavigationBar = ({ trigger }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,18 +29,6 @@ const NavigationBar = ({ trigger }) => {
           tu tienda
         </Button>
       </div>
-    );
-  }
-
-  const UserLocationButton = () => {
-    return (
-      <Button className="userNavigation">
-        <LocationOnIcon />
-          <Box textOverflow="ellipsis" className="address" overflow="hidden">
-            quilmes, buenos aires
-          </Box>
-        <ArrowDropDownIcon />
-      </Button>
     );
   }
 

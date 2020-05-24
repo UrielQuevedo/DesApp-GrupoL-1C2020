@@ -7,6 +7,7 @@ import UserMenuItems from '../NavigationBar/UserMenuItems';
 
 // Icons
 import StoreIcon from '@material-ui/icons/Store';
+import UserLocationButton from '../NavigationBar/UserLocationButton';
 
 const MobileNavigationBar = ({ trigger }) => {
   const [open, setOpen] = useState(false);
@@ -42,11 +43,12 @@ const MobileNavigationBar = ({ trigger }) => {
   return (
     <>
       <Slide appear={false} in={!trigger} direction="down">
-        <AppBar>
+        <AppBar className="navbar-desktop">
           <Toolbar>
             <IconButton edge="start" onClick={handlerNavigationBarOpen}>
               <MenuIcon />
             </IconButton>
+            <UserLocationButton />
           </Toolbar>
         </AppBar>
       </Slide>
