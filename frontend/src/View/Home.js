@@ -5,9 +5,10 @@ import '../Styles/Home.css';
 import PropTypes from 'prop-types';
 import NavigationBar from '../Components/NavigationBar/NavigationBar';
 import ShoppingCart from '../Components/ShoppingCart';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
-
+  const { t } = useTranslation();
   const categories = [
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114819/carniceria_qehdne.jpg', name: 'carniceria' },
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114822/farmacia_oz38xp.jpg', name: 'farmacia' },
@@ -17,7 +18,7 @@ const Home = () => {
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114819/dietetica_zcwr0l.jpg', name: 'dietetica' },
   ]
 
-  const SerachForm = () => {
+  const SearchForm = () => {
     return (
       <Grid container>
         <Grid item xs={12} sm={10} lg={10}>
@@ -33,7 +34,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} sm={2} lg={2}>
           <Button name="search" variant="contained" className="buttonSearch">
-            buscar
+            {t('buscar')}
           </Button>
         </Grid>
       </Grid>
@@ -51,7 +52,7 @@ const Home = () => {
           <p>
             ¿Que estas buscando hoy?
           </p>
-          <SerachForm />
+          <SearchForm />
           <Button name="viewStrores" variant="contained" className="buttonStores">
             ver tiendas
           </Button>
