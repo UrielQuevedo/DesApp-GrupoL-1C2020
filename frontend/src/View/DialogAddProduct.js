@@ -33,14 +33,11 @@ const FormDialog = ( { setProducts }) => {
         handleClose();
     })
     .catch(error => console.log(error));
-
-  };
-
-
+   };
 
   return (
     <div>
-      <div className="button">
+      <div className="buttonM">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Agregar producto
       </Button>

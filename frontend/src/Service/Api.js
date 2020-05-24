@@ -17,4 +17,4 @@ export const loginRequest = (user_data) => request('POST', '/api/v1/auth/login',
 export const sendBuyerLocationRequest = (id, location) => request('PUT', `/api/v1/buyer/${id}/location`, location);
 export const getStoreByIdUserRequest = (idUser) => request('GET', `/api/${idUser}/stores`); 
 export const addProductRequest = (idStore, product_data) => request('POST', `/api/stores/${idStore}/products`, product_data);
-export const deleteProductRequest = (idStore, idProduct) => request('DELETE', `/api/stores/${idStore}/products/${idProduct}`, idProduct);
+export const deleteProductRequest = (idStore, idProduct) => request('DELETE', `/api/stores/${idStore}/products/${idProduct}`);

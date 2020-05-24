@@ -16,7 +16,7 @@ const DialogDeleteProduct = ( { idStore, idProduct} ) => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    
     const deleteProduct = () => {
         deleteProductRequest(idStore, idProduct)
         .then(() => {
