@@ -4,16 +4,15 @@ import '../../Styles/ShoppingCart.css';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useState } from 'react';
 
-const DesktopShoppingCart = () => {
+const DesktopShoppingCart = ({ stateStyle, totalPrice, totalAmount }) => {
   // correct, alert, danger son estados del color del boton dependiendo de si supera lo establecido
-  const [state, setstate] = useState("correct");
 
   return (
-    <Box className="desktop-shopping-cart" className={"button " + state} boxShadow={3}>
+    <Box className={`desktop-shopping-cart button ${stateStyle}`}  boxShadow={totalAmount}>
       <Badge badgeContent={3} className="shoppingCart">
         <ShoppingCartIcon style={{color:'#ffff'}} />
       </Badge>
-      <p className="price">10000 $</p>
+      <p className="price">${totalPrice}</p>
     </Box>
   );
 }

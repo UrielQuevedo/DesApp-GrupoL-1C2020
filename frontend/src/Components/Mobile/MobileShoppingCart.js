@@ -1,20 +1,20 @@
 import React from 'react';
-import { AppBar, Toolbar, Button, Badge } from '@material-ui/core';
+import { Button, Badge } from '@material-ui/core';
 import '../../Styles/ShoppingCart.css';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-const MobileShoppingCart = () => {
+const MobileShoppingCart = ({ stateStyle, totalPrice, totalAmount }) => {
   return (
     <div className="mobile-shopping-cart">
-      <Button variant="contained" size="large" className="correct">
-        <Badge badgeContent={3} className="shoppingCart">
+      <Button variant="contained" size="large" className={stateStyle}>
+        <Badge badgeContent={totalAmount} className="shoppingCart">
           <ShoppingCartIcon style={{color:'#ffff'}} />
         </Badge>
         <span>
           ver mi pedido
         </span>
         <span className="price">
-          $10.000
+          ${totalPrice}
         </span>
       </Button>
     </div>
