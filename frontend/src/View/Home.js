@@ -3,6 +3,8 @@ import { Grid, TextField, Button, InputAdornment, Box, Paper } from '@material-u
 import SearchIcon from '@material-ui/icons/Search';
 import '../Styles/Home.css';
 import PropTypes from 'prop-types';
+import NavigationBar from '../Components/NavigationBar/NavigationBar';
+import ShoppingCart from '../Components/ShoppingCart';
 
 const Home = () => {
 
@@ -133,6 +135,8 @@ const Home = () => {
 
   return (
     <>
+      <NavigationBar />
+      <ShoppingCart />
       <SearchLayout />
       <StoreCategories />
       <Information />

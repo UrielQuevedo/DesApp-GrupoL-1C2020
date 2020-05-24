@@ -4,6 +4,7 @@ import '../../Styles/NavigationBar.css';
 import { useState } from 'react';
 import UserMenuItems from '../NavigationBar/UserMenuItems';
 import UserLocationButton from '../NavigationBar/UserLocationButton';
+import PropTypes from 'prop-types';
 
 // Icons
 import StoreIcon from '@material-ui/icons/Store';
@@ -57,6 +58,9 @@ const MobileNavigationBar = ({ trigger }) => {
       <SideNavigationBar />
     </>
   );
+}
+MobileNavigationBar.prototype = {
+  trigger: PropTypes.bool.isRequired
 }
 
 export default MobileNavigationBar;
