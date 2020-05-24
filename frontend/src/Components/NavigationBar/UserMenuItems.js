@@ -82,7 +82,7 @@ const UserMenuItems = ({ handleCloseMenu }) => {
   );
 }
 UserMenuItems.prototype = {
-  handleCloseMenu: PropTypes.func
+  handleCloseMenu: PropTypes.func.isRequired
 }
 
 export default UserMenuItems;
