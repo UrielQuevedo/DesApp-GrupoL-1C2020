@@ -42,4 +42,8 @@
   <symbol id="orders" width="20" height="20" viewBox="0 0 27 27">
     <path id="Icon_ionic-md-list-box" data-name="Icon ionic-md-list-box" d="M28.688,4.5H7.313A2.812,2.812,0,0,0,4.5,7.313V28.688A2.812,2.812,0,0,0,7.313,31.5H28.688A2.812,2.812,0,0,0,31.5,28.688V7.313A2.812,2.812,0,0,0,28.688,4.5ZM21.375,25.875H10.125V22.5h11.25Zm4.5-6.187H10.125V16.313h15.75Zm0-6.187H10.125V10.125h15.75Z" transform="translate(-4.5 -4.5)"/>
   </symbol>
+
+  <symbol id="menu" width="18.569" height="18.504" viewBox="0 0 18.569 18.504">
+    <path id="Icon_material-menu" data-name="Icon material-menu" d="M4.5,27.5H15.166V24.42H4.5Zm0-7.71H23.069V16.71H4.5ZM4.5,9v3.084H19.719V9Z" transform="translate(-4.5 -9)"/>
+  </symbol>
 </svg>
