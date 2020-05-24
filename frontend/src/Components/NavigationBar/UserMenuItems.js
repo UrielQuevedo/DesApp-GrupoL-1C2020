@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ListItem, ListItemIcon, ListItemText, Collapse, List, Divider } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 // Icons
 import LanguageIcon from '@material-ui/icons/Language';
@@ -7,7 +8,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import Svg from './Svg';
+import Svg from '../Svg';
 
 const UserMenuItems = ({ handleCloseMenu }) => {
 
@@ -79,6 +80,9 @@ const UserMenuItems = ({ handleCloseMenu }) => {
       </ListItem>
     </>
   );
+}
+UserMenuItems.prototype = {
+  handleCloseMenu: PropTypes.func
 }
 
 export default UserMenuItems;

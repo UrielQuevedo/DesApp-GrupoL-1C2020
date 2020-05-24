@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Slide, Button, Box, Menu, Collapse, ListItem, ListItemIcon, ListItemText, List, Divider } from '@material-ui/core';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import '../Styles/NavigationBar.css';
+import { AppBar, Toolbar, Slide, Button, Box, Menu, List } from '@material-ui/core';
+import '../../Styles/NavigationBar.css';
 import { NavLink } from 'react-router-dom';
+import UserMenuItems from '../NavigationBar/UserMenuItems';
 
 // Icons
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import UserMenuItems from './UserMenuItems';
 
-const NavigationBar = () => {
+const NavigationBar = ({ trigger }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const trigger = useScrollTrigger();
 
   const Logo = () => {
     return (
