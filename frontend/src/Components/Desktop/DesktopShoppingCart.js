@@ -9,7 +9,7 @@ const DesktopShoppingCart = () => {
   const [state, setstate] = useState("correct");
 
   return (
-    <Box className={"button " + state} boxShadow={3}>
+    <Box className="desktop-shopping-cart" className={"button " + state} boxShadow={3}>
       <Badge badgeContent={3} className="shoppingCart">
         <ShoppingCartIcon style={{color:'#ffff'}} />
       </Badge>
