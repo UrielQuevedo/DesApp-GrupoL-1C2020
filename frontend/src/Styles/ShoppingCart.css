@@ -1,0 +1,57 @@
+.button {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  bottom: 0;
+  right: 0;
+  transform: translate(15px, -15px);
+  position: fixed;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.alert {
+  background: #D4DB1B;
+}
+
+.danger {
+  background: #EC4C4C;
+}
+
+.correct {
+  background: #4EEA5D;
+}
+
+.button span:nth-child(2) {
+  background-color: #332927;
+  color: #ffffff;
+}
+
+.shoppingCart {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+}
+
+.button:hover {
+  width: 150px;
+  border-radius: 60px;
+}
+
+.button:hover > .price{
+  opacity: 1;
+}
+
+.price {
+  transition: 0.4s;
+  opacity: 0;
+  position: absolute;
+  font-size: 15px;
+  font-weight: bolder;
+  font-family: Segoe UI;
+  color: #ffffff;
+  right: 0;
+  transform: translate(-19px, -19px);
+}
