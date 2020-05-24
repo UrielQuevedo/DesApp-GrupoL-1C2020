@@ -41,7 +41,7 @@ const DesktopNavigationBar = ({ trigger }) => {
     setAnchorEl(null);
   };
 
-  const UserMenu = () => {
+  const userMenu = () => {
     return (
       <>
         <Button className="userMenu" aria-controls="simple" aria-haspopup="true" onClick={handleClickMenu}>
@@ -53,9 +53,7 @@ const DesktopNavigationBar = ({ trigger }) => {
         </Button>
         <Menu
           id="simple"
-          getContentAnchorEl={null}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "center" }}
+          anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleCloseMenu}
@@ -78,7 +76,7 @@ const DesktopNavigationBar = ({ trigger }) => {
           <NavLink to="/" className="item">
             tiendas
           </NavLink>
-          <UserMenu />
+          {userMenu()}
         </Toolbar>
       </AppBar>
     </Slide>
