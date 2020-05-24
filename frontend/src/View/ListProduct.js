@@ -1,10 +1,8 @@
 import React from 'react';
 import Product from './Product';
 import DialogDeleteProduct from './DialogDeleteProduct';
-import '../Styles/Button.css';
 import Grid from '@material-ui/core/Grid';
 
-  
 const ListProduct = ({ products, idStore }) => {   
 
     return (

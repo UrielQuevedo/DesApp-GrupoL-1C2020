@@ -4,21 +4,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { deleteProductRequest } from '../Service/Api';
-import '../Styles/Button.css';
-import { makeStyles } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-      '& > *': {
-       background:red
-      },
-    },
-  }));
 
 const DialogDeleteProduct = ( { idStore, idProduct} ) => {
     
-    const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -57,7 +45,7 @@ const DialogDeleteProduct = ( { idStore, idProduct} ) => {
                 Cancelar
             </Button>
             <Button onClick={deleteProduct} color="primary" autoFocus>
-                Guardar
+                Eliminar
             </Button>
             </DialogActions>
         </Dialog>
