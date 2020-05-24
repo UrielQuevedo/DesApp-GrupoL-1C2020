@@ -24,7 +24,7 @@
   background: #4EEA5D !important;
 }
 
-.desktop-shopping-cart .button span:nth-child(2) {
+.desktop-shopping-cart .shoppingCart span{
   background-color: #332927;
   color: #ffffff;
 }
@@ -53,7 +53,7 @@
   font-family: Segoe UI;
   color: #ffffff;
   right: 0;
-  transform: translate(-19px, -19px);
+  transform: translate(-19px, 20px);
 }
 
 .mobile-shopping-cart {
