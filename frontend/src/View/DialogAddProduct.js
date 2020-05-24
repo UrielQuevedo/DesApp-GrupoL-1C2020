@@ -37,11 +37,9 @@ const FormDialog = ( { setProducts }) => {
 
   return (
     <div>
-      <div className="buttonM">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Agregar producto
       </Button>
-      </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Producto a agregar</DialogTitle>
         <DialogContent>

@@ -13,7 +13,7 @@ const ListProduct = ({ products, idStore }) => {
             <Grid item xs={3} key={product.id}>
                 <Product name={product.name} price={product.price} 
                 image_url ={product.image_url} brand={product.brand} stock={product.stock}/>
-                <div className="buttonM">
+                <div className="containerButton">
                     <button type="button" className="btn btn-primary">Modificar</button>
                 </div>
                 <DialogDeleteProduct idStore={idStore} idProduct={product.id} />
