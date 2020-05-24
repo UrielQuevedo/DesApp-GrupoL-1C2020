@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Badge } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import '../../Styles/ShoppingCart.css';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
@@ -19,6 +20,11 @@ const MobileShoppingCart = ({ stateStyle, totalPrice, totalAmount }) => {
       </Button>
     </div>
   );
+}
+MobileShoppingCart.prototype = {
+  stateStyle: PropTypes.string.isRequired,
+  totalPrice: PropTypes.string.isRequired,
+  totalAmount: PropTypes.number.isRequired
 }
 
 export default MobileShoppingCart;

@@ -4,12 +4,13 @@ import '../../Styles/NavigationBar.css';
 import { NavLink } from 'react-router-dom';
 import UserMenuItems from '../NavigationBar/UserMenuItems';
 import UserLocationButton from '../NavigationBar/UserLocationButton';
+import PropTypes from 'prop-types';
 
 // Icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const NavigationBar = ({ trigger }) => {
+const DesktopNavigationBar = ({ trigger }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const Logo = () => {
@@ -83,5 +84,8 @@ const NavigationBar = ({ trigger }) => {
     </Slide>
   );
 }
+DesktopNavigationBar.prototype = {
+  trigger: PropTypes.bool.isRequired
+}
 
-export default NavigationBar;
+export default DesktopNavigationBar;
