@@ -3,11 +3,11 @@ import { AppBar, Toolbar, Slide, Button, Box, Menu, List } from '@material-ui/co
 import '../../Styles/NavigationBar.css';
 import { NavLink } from 'react-router-dom';
 import UserMenuItems from '../NavigationBar/UserMenuItems';
+import UserLocationButton from '../NavigationBar/UserLocationButton';
 
 // Icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import UserLocationButton from '../NavigationBar/UserLocationButton';
 
 const NavigationBar = ({ trigger }) => {
   const [anchorEl, setAnchorEl] = useState(null);

@@ -1,13 +1,13 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, List, Drawer, ListItem, ListItemIcon, ListItemText, Slide } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Toolbar, IconButton, List, Drawer, ListItem, ListItemIcon, ListItemText, Slide, Grid } from '@material-ui/core';
 import '../../Styles/NavigationBar.css';
 import { useState } from 'react';
 import UserMenuItems from '../NavigationBar/UserMenuItems';
+import UserLocationButton from '../NavigationBar/UserLocationButton';
 
 // Icons
 import StoreIcon from '@material-ui/icons/Store';
-import UserLocationButton from '../NavigationBar/UserLocationButton';
+import Svg from '../Svg';
 
 const MobileNavigationBar = ({ trigger }) => {
   const [open, setOpen] = useState(false);
@@ -46,9 +46,11 @@ const MobileNavigationBar = ({ trigger }) => {
         <AppBar className="navbar-desktop">
           <Toolbar>
             <IconButton edge="start" onClick={handlerNavigationBarOpen}>
-              <MenuIcon />
+              <Svg xlink='/svg/Icons.svg#menu' />
             </IconButton>
-            <UserLocationButton />
+            <Grid container justify="center">
+              <UserLocationButton />
+            </Grid>
           </Toolbar>
         </AppBar>
       </Slide>
