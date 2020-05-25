@@ -30,7 +30,7 @@ const DialogDeleteProduct = ( { idStore, idProduct} ) => {
 
     return (
     <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen} style={ { width:'220px'}}>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen} style={ {width:'217px'}}>
             Eliminar
         </Button>
         <Dialog
