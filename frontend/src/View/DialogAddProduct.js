@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { addProductRequest } from '../Service/Api';
 
 const FormDialog = ( { setProducts }) => {
+  
   const [open, setOpen] = React.useState(false);
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');

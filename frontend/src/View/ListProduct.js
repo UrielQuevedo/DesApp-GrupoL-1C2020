@@ -12,7 +12,7 @@ const ListProduct = ({ products, idStore }) => {
             <Grid item xs={3} key={product.id}>
                 <Product name={product.name} price={product.price} 
                 image_url ={product.image_url} brand={product.brand} stock={product.stock}/>
-                <DialogUpdateProduct idStore={idStore} idProduct={product.id} />
+                <DialogUpdateProduct idStore={idStore} product={product} />
                 <DialogDeleteProduct idStore={idStore} idProduct={product.id} />
             </Grid>
         )}
