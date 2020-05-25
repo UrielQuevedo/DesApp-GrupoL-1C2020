@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/stores")
 @Component
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class ProductController {
 
     @Autowired
