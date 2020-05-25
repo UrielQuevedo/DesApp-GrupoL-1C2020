@@ -13,20 +13,39 @@
 }
 
 .alert {
-  background: #D4DB1B !important;
+  background: #F6FC5E !important;
+}
+
+.alert .shoppingCart span {
+  border: 1px solid #F6FC5E;
+}
+
+.alert .shoppingCart svg, .alert .price {
+  color: #000000 !important;
 }
 
 .danger {
   background: #EC4C4C !important;
 }
 
+.danger .shoppingCart span {
+  border: 1px solid #EC4C4C;
+}
+
 .correct {
   background: #4EEA5D !important;
 }
 
-.desktop-shopping-cart .shoppingCart span{
-  background-color: #332927;
-  color: #ffffff;
+.correct .shoppingCart span {
+  border: 1px solid #4EEA5D;
+}
+
+.danger .shoppingCart svg, .correct .shoppingCart svg, .danger .price {
+  color: #fff !important;
+}
+
+.correct .shoppingCart span, .danger .shoppingCart span, .alert .shoppingCart span {
+  background-color: #ffffff;
 }
 
 .desktop-shopping-cart .shoppingCart {
@@ -61,7 +80,7 @@
   position: fixed;
   bottom: 0;
   background: #fff;
-  height: 70px;
+  height: 80px;
   z-index: 1;
   display: flex;
   justify-content: center;
@@ -72,7 +91,6 @@
 .mobile-shopping-cart button {
   padding: 15px;
   width: 290px;
-  color: white;
 }
 
 .mobile-shopping-cart .shoppingCart {
@@ -81,8 +99,13 @@
   left: 10px;
 }
 
-.mobile-shopping-cart span span span {
-  background: #000000;
+.mobile-shopping-cart .danger, .mobile-shopping-cart .correct {
+  color: #fff !important;
+}
+
+.mobile-shopping-cart .danger .shoppingCart span,
+.mobile-shopping-cart .correct .shoppingCart span {
+  color: #000000;
 }
 
 .mobile-shopping-cart .price {
