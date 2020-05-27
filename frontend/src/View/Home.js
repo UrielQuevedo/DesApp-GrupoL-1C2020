@@ -48,7 +48,7 @@ const Home = () => {
         justify="center"
         className="searchLayout-container"
       >
-        <Grid item xs={12} sm={10} md={7}>
+        <Grid item xs={12} sm={10} md={7} style={{ transform: 'scale(0.9)' }}>
           <p>
             ¿Que estas buscando hoy?
           </p>
@@ -77,7 +77,7 @@ const Home = () => {
 
   const StoreCategories = () => {
     return (
-      <div className="mt-20 storeCategories">
+      <div className="storeCategories">
         <span className="title">
           Nuestros rubros
         </span>
@@ -116,7 +116,7 @@ const Home = () => {
 
   const Information = () => {
     return (
-      <Grid container justify="center" style={{height:'10%'}}>
+      <Grid container justify="center" style={{height:'10%', marginTop:'-4rem'}}>
         {/* Offer */}
         <InformationPaper
           title="Ofertas"

@@ -3,6 +3,7 @@
   height: 20rem;
   text-align: center;
   font-family: 'Segoe UI';
+  margin-top: 3.5rem;
 }
 
 .searchLayout-container p {
@@ -49,6 +50,7 @@
 }
 
 div .storeCategories {
+  transform: scale(0.9);
   padding: 0 0 0 30px;
 }
 
@@ -100,8 +102,8 @@ div .storeCategories {
 @supports(object-fit: cover) {
   .item-categorie .image-categorie img {
     height: 100%;
-      object-fit: cover;
-      object-position: center center;
+    object-fit: cover;
+    object-position: center center;
   }
 }
 
@@ -141,6 +143,12 @@ div .storeCategories {
   height: 200px;
 }
 
+@media(max-width: 960px) {
+  .infomation-paper {
+    margin-bottom: 30px;
+  }
+}
+
 @media(max-width: 644px) {
   .searchLayout-container p {
     font-size: 40px;
@@ -161,6 +169,10 @@ div .storeCategories {
     height: 130px;
     width: 130px;
   }
+  div .storeCategories {
+    margin-top: 20px;
+    transform: scale(1);
+  }
 }
 
 @media(max-width: 476px) {
@@ -173,5 +185,11 @@ div .storeCategories {
   .item-categorie .image-categorie {
     height: 110px;
     width: 110px;
+  }
+  .storeCategories .title {
+    font-size: 33px;
+  }
+  .infomation-paper .title {
+    font-size: 30px;
   }
 }
