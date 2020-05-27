@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { addProductRequest } from '../Service/Api';
-import '../Styles/Button.css';
 
 const FormDialog = ( { setProducts }) => {
   const [open, setOpen] = React.useState(false);
@@ -33,18 +32,13 @@ const FormDialog = ( { setProducts }) => {
         handleClose();
     })
     .catch(error => console.log(error));
-
-  };
-
-
+   };
 
   return (
     <div>
-      <div className="button">
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Agregar producto
       </Button>
-      </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Producto a agregar</DialogTitle>
         <DialogContent>
