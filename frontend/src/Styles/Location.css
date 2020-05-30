@@ -1,37 +1,89 @@
-.validated {
-  background:#4EEA5D !important;
+.leaflet-container {
+  height: 300px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
 }
 
-.notValidated {
-  background:#d56b6b !important;
+.color-strip {
+  height: 100vh;
+  width: 30%;
+  position: absolute;
+  left: 20%;
+  background: #FB849D;
+  z-index: -1;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
 }
 
-.validated, .notValidated{
+.location-container {
+  background: #ffffff;
+}
+
+.location-container h1 {
+  font-family: 'Segoe UI';
+  font-weight: bold;
+  font-size: 40px;
+  margin-top: 0px;
+}
+
+.continue-button {
+  background: #FB849D !important;
+  color: #ffffff !important;
+}
+
+.mt-30 {
   margin-top: 30px !important;
-  color:#ffff !important;
-  display:flex !important;
-  align-self:center !important;
-  box-shadow:0 3px 5px 0 rgba(0,0,0,.1) !important;
 }
 
-.location-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+.accept-button-container {
+  position: relative;
 }
 
-form .title {
-  font-size: 28px !important;
-  font-weight: 700 !important;
-  color: #000000;
-  text-align: center;
+.location-button {
+  border-bottom: 1px solid black !important;
+  white-space: nowrap;
+  width: 240px;
+  margin-top: 15px;
+  border-radius: 0px !important;
 }
 
-form .description {
+.location-button .location-address {
+  padding: 0 20px 0 20px;
+  color: #A2A2A2;
+  text-transform: capitalize;
+}
+
+.accept-button-container .circularProgress-pink {
+  height: 25px !important;
+  width: 25px !important;
+  color: #FB849D !important;
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+}
+
+.accept-button-container .validated-button {
+  background: #4EEA5D !important;
+  color: #ffffff !important;
+}
+
+.accept-button-container .arrow-icon {
+  transform: scale(0.7);
+}
+
+.continue-button-container .arrow-icon {
+  transform: scale(0.5) !important;
+}
+
+.accept-button-container .arrow-icon, .continue-button-container .arrow-icon {
+  position: relative;
+  bottom: 1;
+}
+
+.description-location {
+  font-family: 'Segoe UI semibold';
+  color: #40514E;
   font-size: 20px;
-  text-align: center;
-  display: flex;
-  align-self: center;
-  margin-top: 30px;
+  width: 80%;
+  margin: 60px 0 60px 0;
 }

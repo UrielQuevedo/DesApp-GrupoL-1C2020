@@ -10,7 +10,7 @@ const DesktopShoppingCart = ({ stateStyle, totalPrice, totalAmount }) => {
   return (
     <Box className={`desktop-shopping-cart button ${stateStyle}`}  boxShadow={totalAmount}>
       <Badge badgeContent={3} className="shoppingCart">
-        <ShoppingCartIcon style={{color:'#ffff'}} />
+        <ShoppingCartIcon />
       </Badge>
       <span className="price">
         ${totalPrice}
