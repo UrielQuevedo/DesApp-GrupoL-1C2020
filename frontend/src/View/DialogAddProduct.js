@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { addProductRequest } from '../Service/Api';
+import SaveIcon from '@material-ui/icons/Save';
 
 const DialogAddProduct = ( { setProducts }) => {
   
@@ -45,8 +46,7 @@ const DialogAddProduct = ( { setProducts }) => {
 
   return (
     <div>
-      {console.log("dialogAddProduct")}
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
         Agregar producto
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -100,7 +100,7 @@ const DialogAddProduct = ( { setProducts }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            Cancelar
           </Button>
           <Button onClick={addProduct} color="primary">
             Guardar
