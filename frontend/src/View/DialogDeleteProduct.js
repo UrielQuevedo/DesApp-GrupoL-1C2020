@@ -4,10 +4,22 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { deleteProductRequest } from '../Service/Api';
+import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
+import Icon from '@material-ui/core/Icon';
 
-const DialogDeleteProduct = ( { idStore, idProduct} ) => {
+const useStyles = makeStyles((theme) => ({
+    button: {
+      width: '217px'
+    },
+  }));
+
+const DialogDeleteProduct = ( { idStore, idProduct, setProducts } ) => {
     
     const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -19,9 +31,10 @@ const DialogDeleteProduct = ( { idStore, idProduct} ) => {
     
     const deleteProduct = () => {
         deleteProductRequest(idStore, idProduct)
-        .then(() => {
-            window.location.reload();
+        .then(data => {
+            console.log(data);
             handleClose();
+            setProducts(data);
         })
         .catch(error => {
             console.log(error.message);
@@ -30,9 +43,15 @@ const DialogDeleteProduct = ( { idStore, idProduct} ) => {
 
     return (
     <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen} style={ { width:'220px'}}>
+        <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleClickOpen}
+            className={classes.button}
+            startIcon={<DeleteIcon />}
+        >
             Eliminar
-        </Button>
+       </Button>
         <Dialog
             open={open}
             onClose={handleClose}

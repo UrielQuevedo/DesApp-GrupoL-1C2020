@@ -13,7 +13,7 @@ const useStyles = makeStyles({
       maxWidth: 345,
     },
     media: {
-      height: 230,
+      height: 200,
     },
   });
 
@@ -44,13 +44,3 @@ const Product = ( { name, price, image_url, brand, stock} ) => {
 }
 
 export default Product;
-
-
-/*    <div className="card" >
-                    <img src={image_url} height="200px" className="card-img-top"/>
-                    <div className="card-body"> 
-                        <h5 className="card-title">{brand} - {name}</h5>
-                        <p className="card-text">$ {price} </p>
-                        <p className="card-text">Stock: {stock} </p>
-                    </div>
-             </div>*/

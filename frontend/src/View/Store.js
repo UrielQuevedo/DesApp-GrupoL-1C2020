@@ -28,19 +28,19 @@ const Store = () => {
 
   useEffect(() => {
       if(!id) {
-      getStoreByIdUserRequest(1)
-      .then(data => {
-        console.log(data);
-        const { id, name, products } = data;
-        setId(id);
-        setName(name);
-        setProducts(products);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
-
+        console.log("componentDidMount")
+        getStoreByIdUserRequest(1)
+        .then(data => {
+          console.log(data);
+          const { id, name, products } = data;
+          setId(id);
+          setName(name);
+          setProducts(products);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+      }
   }, [])
 
     return (
@@ -56,7 +56,7 @@ const Store = () => {
           <DialogAddProduct setProducts={setProducts} />
         </Grid>
         { products  &&
-            <ListProduct products={products} idStore={id}/>
+            <ListProduct products={products} idStore={id} setProducts={setProducts}/>
         }     
       </Grid>
       </div>
