@@ -1,28 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import '../Styles/Auth.css';
 import { Typography, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline, CircularProgress, Box, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { loginRequest } from '../Service/Api';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import { AuthContext } from '../Context/AuthContext';
 
 const Login = () => {
 
   const { register, handleSubmit } = useForm();
-  const { push } = useHistory();
   //TODO el remember funcione
   const [ isRemember, setIsRemember ] = useState(false);
   const [ error, setError ] = useState();
   const [ loading, setLoading  ] = useState(false);
   const [ showPassword, setShowPassword ] = useState(false);
+  const { setAuth } = useContext(AuthContext);
 
   const sendLoginForm = async (data, e) => {
     setLoading(true);
     try {
-      const _ = await loginRequest(data);
-      push('/login/location');
+      const userData = await loginRequest(data);
+      setAuth({ type:'LOG_IN', isRemember:true, id: userData.id });
     } catch (error) {
       setError(error.response.data.message)
     }

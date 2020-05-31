@@ -1,24 +1,30 @@
-import React from 'react';
+import React  from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Login from '../View/Login';
 import ComingSoon from '../View/ComingSoon';
+import Store from '../View/Store';
+import '../Styles/App.css';
+import '../Utils/i18next';
+import AuthProvider from '../Context/AuthContext';
+import Login from '../View/Login';
+import UserProvider from '../Context/UserContext';
+import Home from '../View/Home';
 import Register from '../View/Register';
 import Location from '../View/Location';
-import Store from '../View/Store';
-import Home from '../View/Home';
-import '../Styles/App.css';
 
 function App() {
     return (
       <Router>
-        <Switch>
-          <Route path="/login" exact component={Login} />
-          <Route path="/login/location" exact component={Location} />
-          <Route path = '/' exact component={Home} />
-          <Route path = '/register' exact component={Register} />
-          <Route path = '/store' exact component={Store} />
-
-        </Switch>
+          <Switch>
+            <AuthProvider>
+                <Route path='/register' exact component={Register} />
+                <Route path="/login" exact component={Login} />
+              <UserProvider>
+                <Route path='/' exact component={Home} />
+                <Route path="/mylocation" exact component={Location} />
+                <Route path='/store' exact component={Store} />
+              </UserProvider>
+            </AuthProvider>
+          </Switch>
       </Router>
 );
 

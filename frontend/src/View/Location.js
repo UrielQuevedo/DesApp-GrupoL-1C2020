@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import LocationOn from '@material-ui/icons/LocationOn';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Box, Grid, Button, CircularProgress } from '@material-ui/core';
@@ -7,12 +7,17 @@ import '../Styles/Location.css';
 import { Map, Popup, TileLayer, Marker } from 'react-leaflet';
 import { useRef } from 'react';
 import { useHereMapService } from '../Service/HereMapService';
+import { sendBuyerLocationRequest } from '../Service/Api';
+import { useHistory } from 'react-router';
+import { UserContext } from '../Context/UserContext';
 
 const Location = () => {
   const refMarker = useRef();
   const [ isLocationChangeView, setIsLocationChangeView ] = useState(false);
   const [ actualCoords, setActualCoords ] = useState({});
   const { loading, location, fetchPositionsByCoords } = useHereMapService();
+  const { setUser } = useContext(UserContext);
+  const { push } = useHistory();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
@@ -20,12 +25,11 @@ const Location = () => {
     });
   }, [])
 
-  // const sendLocation = async (e) => {
-  //   TODO try catch falta
-  //   TODO enviar hacia el user
-  //   const user = await sendBuyerLocationRequest(1, location);
-  //   push('/')
-  // }
+  const sendLocation = async () => {
+    const userData = await sendBuyerLocationRequest(localStorage.id, location);
+    setUser(userData);
+    push('/');
+  }
 
   const handlerIsChangeLocation = () => {
     setIsLocationChangeView(true);
@@ -65,6 +69,7 @@ const Location = () => {
             type="submit"
             disabled={isDisabled}
             variant="contained"
+            onClick={sendLocation}
             className={isDisabled ? 'mt-30' : 'continue-button'}
           >
             continuar
