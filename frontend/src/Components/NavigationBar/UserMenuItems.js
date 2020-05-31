@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -8,10 +8,17 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Svg from '../Svg';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './LanguageSelector';
+import { AuthContext } from '../../Context/AuthContext';
 
 const UserMenuItems = ({ handleCloseMenu }) => {
 
   const { t } = useTranslation();
+  const { setAuth } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    handleCloseMenu();
+    setAuth({ type:'LOG_OUT' });
+  }
 
   return (
     <>
@@ -30,7 +37,7 @@ const UserMenuItems = ({ handleCloseMenu }) => {
         <ListItemText primary="Mis datos" />
       </ListItem>
       <LanguageSelector />
-      <ListItem button onClick={handleCloseMenu}>
+      <ListItem button onClick={handleLogOut}>
         <ListItemIcon className="icons">
           <ExitToAppIcon />
         </ListItemIcon>

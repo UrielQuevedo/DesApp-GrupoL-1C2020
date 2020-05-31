@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { AppBar, Toolbar, Slide, Button, Box, Menu, List } from '@material-ui/core';
 import '../../Styles/NavigationBar.css';
 import { NavLink } from 'react-router-dom';
@@ -9,9 +9,11 @@ import PropTypes from 'prop-types';
 // Icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { UserContext } from '../../Context/UserContext';
 
 const DesktopNavigationBar = ({ trigger }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const { user } = useContext(UserContext);
 
   const Logo = () => {
     return (
@@ -47,7 +49,7 @@ const DesktopNavigationBar = ({ trigger }) => {
         <Button className="userMenu" aria-controls="simple" aria-haspopup="true" onClick={handleClickMenu}>
           <AccountCircleIcon />
             <Box textOverflow="ellipsis" className="username" overflow="hidden">
-              Ricardo Fort
+              {user.username}
             </Box>
           <ArrowDropDownIcon />
         </Button>
@@ -72,9 +74,10 @@ const DesktopNavigationBar = ({ trigger }) => {
         <Toolbar>
           <Logo />
           <MyStoreButton />
-          <UserLocationButton />
+          <UserLocationButton address={user.location.address} />
           <NavLink to="/" className="item">
             tiendas
+            {console.log(user)}
           </NavLink>
           {userMenu()}
         </Toolbar>
