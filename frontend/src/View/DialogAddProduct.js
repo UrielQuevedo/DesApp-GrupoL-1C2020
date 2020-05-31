@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { addProductRequest } from '../Service/Api';
 
-const FormDialog = ( { setProducts }) => {
+const DialogAddProduct = ( { setProducts }) => {
   
   const [open, setOpen] = React.useState(false);
   const [name, setName] = useState('');
@@ -29,14 +29,23 @@ const FormDialog = ( { setProducts }) => {
     const product = { name, brand, price, stock, image_url }
     addProductRequest(2, product)
     .then(data => {
-        window.location.reload();
-        handleClose();
-    })
+          console.log(data);
+          handleClose();
+          setProducts(oldProducts => {
+          let productsUpdated = [];
+          oldProducts.forEach(product => {
+              productsUpdated.push(product);
+          });
+          productsUpdated.push(data);
+          return productsUpdated;
+        });
+     })
     .catch(error => console.log(error));
    };
 
   return (
     <div>
+      {console.log("dialogAddProduct")}
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Agregar producto
       </Button>
@@ -102,4 +111,4 @@ const FormDialog = ( { setProducts }) => {
   );
 }
 
-export default FormDialog;
+export default DialogAddProduct;

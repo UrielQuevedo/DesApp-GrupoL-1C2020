@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { deleteProductRequest } from '../Service/Api';
 
-const DialogDeleteProduct = ( { idStore, idProduct} ) => {
+const DialogDeleteProduct = ( { idStore, idProduct, setProducts } ) => {
     
     const [open, setOpen] = React.useState(false);
 
@@ -19,9 +19,10 @@ const DialogDeleteProduct = ( { idStore, idProduct} ) => {
     
     const deleteProduct = () => {
         deleteProductRequest(idStore, idProduct)
-        .then(() => {
-            window.location.reload();
+        .then(data => {
+            console.log(data);
             handleClose();
+            setProducts(data);
         })
         .catch(error => {
             console.log(error.message);

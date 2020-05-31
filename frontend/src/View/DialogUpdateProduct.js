@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { updateProductRequest } from '../Service/Api';
 
-const DialogUpdateProduct = ({ product }) => {
+const DialogUpdateProduct = ({ product, setProducts }) => {
 
     const { id, name, brand, price, stock, image_url } = product;
 
@@ -38,8 +38,19 @@ const DialogUpdateProduct = ({ product }) => {
 
       updateProductRequest(id, productUpdated)
       .then(data => {
-        window.location.reload();
+        console.log(data);
         handleClose();
+        setProducts(oldProducts => {
+          let productsUpdated = [];
+          oldProducts.forEach(product => productsUpdated.push(product));
+          let oldProduct = productsUpdated.find(product => product.id === data.id);
+          oldProduct.name = data.name;
+          oldProduct.brand = data.brand;
+          oldProduct.stock = data.stock;
+          oldProduct.price = data.price;
+          oldProduct.image_url = data.image_url;
+          return productsUpdated;
+        })
       })
       .catch(error => console.log(error));
     }
