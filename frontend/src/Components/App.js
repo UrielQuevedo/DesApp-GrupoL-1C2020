@@ -1,33 +1,40 @@
-import React  from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import ComingSoon from '../View/ComingSoon';
-import Store from '../View/Store';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import AuthProvider from '../Context/AuthContext';
+import UserProvider from '../Context/UserContext';
 import '../Styles/App.css';
 import '../Utils/i18next';
-import AuthProvider from '../Context/AuthContext';
-import Login from '../View/Login';
-import UserProvider from '../Context/UserContext';
 import Home from '../View/Home';
-import Register from '../View/Register';
 import Location from '../View/Location';
+import Login from '../View/Login';
+import MessagePage from '../View/MessagePage';
+import Register from '../View/Register';
+import Store from '../View/Store';
+import NavigationBar from './NavigationBar/NavigationBar';
+import Stores from '../View/Stores';
 
 function App() {
-    return (
-      <Router>
-          <Switch>
-            <AuthProvider>
-                <Route path='/register' exact component={Register} />
-                <Route path="/login" exact component={Login} />
-              <UserProvider>
-                <Route path='/' exact component={Home} />
-                <Route path="/mylocation" exact component={Location} />
-                <Route path='/store' exact component={Store} />
-              </UserProvider>
-            </AuthProvider>
-          </Switch>
-      </Router>
-);
-
+  return (
+    <BrowserRouter>
+      <Switch>
+        <AuthProvider>
+          <Route path='/register' exact component={Register} />
+          <Route path="/login" exact component={Login} />
+          <UserProvider>
+            <Route exact path="/mylocation" component={Location} />
+            <NavigationBar />
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/store' component={Store} />
+              <Route exact path='/stores'component={Stores} />
+              <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
+              <Route path='*' render={() => <MessagePage errorNumnber="404" title="Not Found" />} />
+            </Switch>
+          </UserProvider>
+        </AuthProvider>
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 export default App;

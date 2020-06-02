@@ -7,7 +7,7 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [ user, setUser ] = useState({});
-  const { authState } = useContext(AuthContext);
+  const { authState, setAuth } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,14 +17,18 @@ const UserProvider = ({ children }) => {
         .then(userData => {
           setUser(userData)
           setLoading(false);
+        })
+        .catch(() => {
+          setAuth({ type:'LOG_OUT' });
         });
     }
-  }, [authState]);
+  }, [authState, setAuth]);
+
+  const isMyLocationNow = window.location.pathname === '/mylocation';
 
   const handlerComponent = () => {
-    console.log(user)
-    if(authState.isAuth && !user.location && !window.location.pathname === '/mylocation') return <Redirect to='/mylocation' />;
-    if(authState.isAuth && user.location && window.location.pathname === '/mylocation') return <Redirect to='/' />
+    if(authState.isAuth && !user.location && !isMyLocationNow) return <Redirect to='/mylocation' />
+    if(authState.isAuth && user.location && isMyLocationNow) return <Redirect to='/' />
     return children;
   }
 

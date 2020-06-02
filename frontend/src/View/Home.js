@@ -1,11 +1,11 @@
-import React from 'react';
-import { Grid, TextField, Button, InputAdornment, Box, Paper } from '@material-ui/core';
+import { Box, Button, Grid, InputAdornment, Paper, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import '../Styles/Home.css';
 import PropTypes from 'prop-types';
-import NavigationBar from '../Components/NavigationBar/NavigationBar';
-import ShoppingCart from '../Components/ShoppingCart';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import ShoppingCart from '../Components/ShoppingCart';
+import '../Styles/Home.css';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ const Home = () => {
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114819/almacen_nksrfp.jpg', name: 'almacen' },
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114820/kiosco_icwjb0.jpg', name: 'kiosco' },
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114819/dietetica_zcwr0l.jpg', name: 'dietetica' },
-  ]
+  ];
 
   const SearchForm = () => {
     return (
@@ -49,13 +49,15 @@ const Home = () => {
         className="searchLayout-container"
       >
         <Grid item xs={12} sm={10} md={7} style={{ transform: 'scale(0.9)' }}>
-          <p>
+          <p title="¿Que estas buscando hoy?">
             ¿Que estas buscando hoy?
           </p>
           <SearchForm />
-          <Button name="viewStrores" variant="contained" className="buttonStores">
-            ver tiendas
-          </Button>
+          <Link style={{ textDecoration:'none' }} to="/stores">
+            <Button name="viewStrores" variant="contained" className="buttonStores">
+              ver tiendas
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     );
@@ -91,7 +93,7 @@ const Home = () => {
     );
   }
 
-  const InformationPaper = ({ title, description, nameButtom }) => {
+  const InformationPaper = ({ title, description, nameButtom, link }) => {
     return (
       <Grid item container xs={12} md={6} justify="center">
         <Paper className="infomation-paper mt-20" elevation={3}>
@@ -101,9 +103,11 @@ const Home = () => {
           <p className="description">
             {description}
           </p>
-          <Button variant="contained">
-            {nameButtom}
-          </Button>
+          <Link style={{ textDecoration:'none' }} to={link}>
+            <Button variant="contained">
+              {nameButtom}
+            </Button>
+          </Link>
         </Paper>
       </Grid>
     );
@@ -122,12 +126,14 @@ const Home = () => {
           title="Ofertas"
           description="No te pierdas las ultimas ofertas que las tiendas tienen para vos, y bla bla bla.."
           nameButtom="ver ofertas"
+          link="/stores"
         />
         {/* Store */}
         <InformationPaper
           title="Publica tu tienda"
           description="Texto motivador y convincente para publicar tu tienda, y bla bla bla.."
           nameButtom="publicar tienda"
+          link="/store"
         />
         <div className="background-color" />
       </Grid>
@@ -136,7 +142,6 @@ const Home = () => {
 
   return (
     <>
-      <NavigationBar />
       <ShoppingCart />
       <SearchLayout />
       <StoreCategories />

@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import '../Styles/Auth.css';
-import { Typography, Grid, Button, TextField, CssBaseline, InputAdornment, IconButton, CircularProgress, Box } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { Link, useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { registerRequest } from '../Service/Api';
+import { Box, Button, CircularProgress, CssBaseline, Grid, IconButton, InputAdornment, TextField, Typography } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import { Alert } from '@material-ui/lab';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useHistory } from 'react-router-dom';
+import { registerRequest } from '../Service/Api';
+import '../Styles/Auth.css';
 
 const Register = () => {
 

@@ -9,6 +9,7 @@ import Svg from '../Svg';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './LanguageSelector';
 import { AuthContext } from '../../Context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const UserMenuItems = ({ handleCloseMenu }) => {
 
@@ -22,20 +23,24 @@ const UserMenuItems = ({ handleCloseMenu }) => {
 
   return (
     <>
-      <ListItem button onClick={handleCloseMenu}>
-        <ListItemIcon className="icons">
-        <span>
-          <Svg xlink='/svg/Icons.svg#orders' />
-        </span>
-        </ListItemIcon>
-        <ListItemText primary="Mis ordenes" />
-      </ListItem>
-      <ListItem button onClick={handleCloseMenu}>
-        <ListItemIcon className="icons">
-          <AccountCircleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Mis datos" />
-      </ListItem>
+      <Link to="/profile" style={{ textDecoration:'none' }}>
+        <ListItem button onClick={handleCloseMenu}>
+          <ListItemIcon className="icons">
+          <span>
+            <Svg xlink='/svg/Icons.svg#orders' />
+          </span>
+          </ListItemIcon>
+          <ListItemText primary="Mis ordenes" style={{ color:'#000000de' }} />
+        </ListItem>
+      </Link>
+      <Link to='/profile' style={{ textDecoration:'none' }}>
+        <ListItem button onClick={handleCloseMenu}>
+          <ListItemIcon className="icons">
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Mis datos" style={{ color:'#000000de' }} />
+        </ListItem>
+      </Link>
       <LanguageSelector />
       <ListItem button onClick={handleLogOut}>
         <ListItemIcon className="icons">
