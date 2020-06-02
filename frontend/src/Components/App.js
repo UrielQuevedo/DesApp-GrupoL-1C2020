@@ -21,8 +21,8 @@ function App() {
           <Route path='/register' exact component={Register} />
           <Route path="/login" exact component={Login} />
           <UserProvider>
-            <Route exact path="/mylocation" component={Location} />
             <NavigationBar />
+            <Route exact path="/mylocation" component={Location} />
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/store' component={Store} />

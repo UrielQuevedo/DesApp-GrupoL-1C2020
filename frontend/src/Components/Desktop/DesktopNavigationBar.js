@@ -69,19 +69,17 @@ const DesktopNavigationBar = ({ trigger, user }) => {
   }
 
   return (
-    <Slide appear={false} in={!trigger} direction="down">
-      <AppBar className="navbar-desktop">
+      <AppBar className="navbar-desktop" position="fixed">
         <Toolbar>
           <Logo />
           <MyStoreButton />
           <UserLocationButton actualLocation={user.location} />
-          <NavLink to="/stores" className="item">
+          <NavLink to="/stores" activeClassName="item-actived" className="item">
             tiendas
           </NavLink>
           {userMenu()}
         </Toolbar>
       </AppBar>
-    </Slide>
   );
 }
 DesktopNavigationBar.prototype = {
