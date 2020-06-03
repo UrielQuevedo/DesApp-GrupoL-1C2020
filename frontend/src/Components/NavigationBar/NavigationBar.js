@@ -13,7 +13,7 @@ const NavigationBar = () => {
   return (
     <>
       <Hidden smDown>
-        <DesktopNavigationBar trigger={trigger} user={user} />
+        <DesktopNavigationBar user={user} />
       </Hidden>
       <Hidden mdUp>
         <MobileNavigationBar trigger={trigger} user={user} />

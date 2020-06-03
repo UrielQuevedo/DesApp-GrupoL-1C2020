@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, List, Menu, Slide, Toolbar } from '@material-ui/core';
+import { AppBar, Box, Button, List, Menu, Toolbar } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 // Icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -10,7 +10,7 @@ import UserLocationButton from '../NavigationBar/UserLocationButton';
 import UserMenuItems from '../NavigationBar/UserMenuItems';
 
 
-const DesktopNavigationBar = ({ trigger, user }) => {
+const DesktopNavigationBar = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const Logo = () => {
@@ -69,17 +69,17 @@ const DesktopNavigationBar = ({ trigger, user }) => {
   }
 
   return (
-      <AppBar className="navbar-desktop" position="fixed">
-        <Toolbar>
-          <Logo />
-          <MyStoreButton />
-          <UserLocationButton actualLocation={user.location} />
-          <NavLink to="/stores" activeClassName="item-actived" className="item">
-            tiendas
-          </NavLink>
-          {userMenu()}
-        </Toolbar>
-      </AppBar>
+    <AppBar className="navbar-desktop" position="fixed">
+      <Toolbar>
+        <Logo />
+        <MyStoreButton />
+        <UserLocationButton actualLocation={user.location} />
+        <NavLink to="/stores" activeClassName="item-actived" className="item">
+          tiendas
+        </NavLink>
+        {userMenu()}
+      </Toolbar>
+    </AppBar>
   );
 }
 DesktopNavigationBar.prototype = {

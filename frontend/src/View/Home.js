@@ -65,8 +65,8 @@ const Home = () => {
 
   const StoreCategoriesList = () => {
     return categories.map(({ url, name }, i) => (
-      <Link to={`/stores/category/${name}`} style={{ textDecoration:'none' }}>
-        <div className="item-categorie mt-20" key={i}>
+      <Link to={`/stores/category/${name}`} key={i} style={{ textDecoration:'none' }}>
+        <div className="item-categorie mt-20">
           <Box boxShadow={7} className="image-categorie">
             <img
               src={url}
