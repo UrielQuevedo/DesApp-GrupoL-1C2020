@@ -1,16 +1,16 @@
-import React from 'react';
-import { AppBar, Toolbar, IconButton, List, Drawer, ListItem, ListItemIcon, ListItemText, Slide, Grid } from '@material-ui/core';
-import '../../Styles/NavigationBar.css';
-import { useState } from 'react';
-import UserMenuItems from '../NavigationBar/UserMenuItems';
-import UserLocationButton from '../NavigationBar/UserLocationButton';
-import PropTypes from 'prop-types';
-
+import { AppBar, Drawer, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Slide, Toolbar } from '@material-ui/core';
 // Icons
 import StoreIcon from '@material-ui/icons/Store';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import '../../Styles/NavigationBar.css';
+import UserLocationButton from '../NavigationBar/UserLocationButton';
+import UserMenuItems from '../NavigationBar/UserMenuItems';
 import Svg from '../Svg';
 
-const MobileNavigationBar = ({ trigger }) => {
+
+const MobileNavigationBar = ({ trigger, user }) => {
   const [open, setOpen] = useState(false);
 
   const handlerNavigationBarOpen= () => {
@@ -29,12 +29,14 @@ const MobileNavigationBar = ({ trigger }) => {
         onClose={handlerNavigationBarClose}
       >
         <List style={{width:'200px'}}>
-          <ListItem button>
-            <ListItemIcon className="icons">
-              <StoreIcon />
-            </ListItemIcon>
-            <ListItemText primary="Mi tienda" />
-          </ListItem>
+          <Link to="/store" style={{ textDecoration:'none' }}>
+            <ListItem button>
+              <ListItemIcon className="icons">
+                <StoreIcon />
+              </ListItemIcon>
+              <ListItemText primary="Mi tienda" style={{ color:'#000000de' }} />
+            </ListItem>
+          </Link>
           <UserMenuItems handleCloseMenu={handlerNavigationBarClose} />
         </List>
       </Drawer>
@@ -50,7 +52,7 @@ const MobileNavigationBar = ({ trigger }) => {
               <Svg xlink='/svg/Icons.svg#menu' />
             </IconButton>
             <Grid container justify="center">
-              <UserLocationButton />
+              <UserLocationButton actualLocation={user.location} />
             </Grid>
           </Toolbar>
         </AppBar>

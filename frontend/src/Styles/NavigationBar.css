@@ -61,3 +61,22 @@
   justify-content: center;
   align-items: center;
 }
+
+.item-actived {
+  background: #F3F3F3;
+  border-top: 3px solid #FB849D;
+}
+
+.navlink-item {
+  text-decoration: none;
+}
+
+.navlink-item-selected .item{
+  border-left: 3px solid red;
+  background: #F5F7FA;
+  color: #000000 !important;
+}
+
+.navlink-item-selected .icon {
+  color: red !important;
+}

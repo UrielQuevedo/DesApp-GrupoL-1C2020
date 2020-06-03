@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react'
-import '../Styles/Auth.css';
-import { Typography, Grid, Button, TextField, FormControlLabel, Checkbox, CssBaseline, CircularProgress, Box, InputAdornment, IconButton } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { loginRequest } from '../Service/Api';
+import { Box, Button, Checkbox, CircularProgress, CssBaseline, FormControlLabel, Grid, IconButton, InputAdornment, TextField, Typography } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import { Alert } from '@material-ui/lab';
+import React, { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
+import { loginRequest } from '../Service/Api';
+import '../Styles/Auth.css';
 
 const Login = () => {
 

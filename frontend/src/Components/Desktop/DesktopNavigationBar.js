@@ -1,19 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { AppBar, Toolbar, Slide, Button, Box, Menu, List } from '@material-ui/core';
-import '../../Styles/NavigationBar.css';
-import { NavLink } from 'react-router-dom';
-import UserMenuItems from '../NavigationBar/UserMenuItems';
-import UserLocationButton from '../NavigationBar/UserLocationButton';
-import PropTypes from 'prop-types';
-
+import { AppBar, Box, Button, List, Menu, Toolbar } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 // Icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { UserContext } from '../../Context/UserContext';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import '../../Styles/NavigationBar.css';
+import UserLocationButton from '../NavigationBar/UserLocationButton';
+import UserMenuItems from '../NavigationBar/UserMenuItems';
 
-const DesktopNavigationBar = ({ trigger }) => {
+
+const DesktopNavigationBar = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { user } = useContext(UserContext);
 
   const Logo = () => {
     return (
@@ -28,9 +26,11 @@ const DesktopNavigationBar = ({ trigger }) => {
   const MyStoreButton = () => {
     return (
       <div className="myStoreButton">
-        <Button size="small" variant="contained">
-          tu tienda
-        </Button>
+        <Link style={{ textDecoration:'none' }} to='/store'>
+          <Button size="small" variant="contained">
+            tu tienda
+          </Button>
+        </Link>
       </div>
     );
   }
@@ -69,20 +69,17 @@ const DesktopNavigationBar = ({ trigger }) => {
   }
 
   return (
-    <Slide appear={false} in={!trigger} direction="down">
-      <AppBar className="navbar-desktop">
-        <Toolbar>
-          <Logo />
-          <MyStoreButton />
-          <UserLocationButton address={user.location.address} />
-          <NavLink to="/" className="item">
-            tiendas
-            {console.log(user)}
-          </NavLink>
-          {userMenu()}
-        </Toolbar>
-      </AppBar>
-    </Slide>
+    <AppBar className="navbar-desktop" position="fixed">
+      <Toolbar>
+        <Logo />
+        <MyStoreButton />
+        <UserLocationButton actualLocation={user.location} />
+        <NavLink to="/stores" activeClassName="item-actived" className="item">
+          tiendas
+        </NavLink>
+        {userMenu()}
+      </Toolbar>
+    </AppBar>
   );
 }
 DesktopNavigationBar.prototype = {

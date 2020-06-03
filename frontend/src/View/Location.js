@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react';
-import LocationOn from '@material-ui/icons/LocationOn';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { Box, Grid, Button, CircularProgress } from '@material-ui/core';
+import { Box, Button, CircularProgress, Grid } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import '../Styles/Location.css';
-import { Map, Popup, TileLayer, Marker } from 'react-leaflet';
-import { useRef } from 'react';
-import { useHereMapService } from '../Service/HereMapService';
-import { sendBuyerLocationRequest } from '../Service/Api';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import LocationOn from '@material-ui/icons/LocationOn';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import LocationMap from '../Components/LocationMap';
 import { UserContext } from '../Context/UserContext';
+import { sendBuyerLocationRequest } from '../Service/Api';
+import { useHereMapService } from '../Service/HereMapService';
+import '../Styles/Location.css';
 
 const Location = () => {
-  const refMarker = useRef();
   const [ isLocationChangeView, setIsLocationChangeView ] = useState(false);
   const [ actualCoords, setActualCoords ] = useState({});
-  const { loading, location, fetchPositionsByCoords } = useHereMapService();
+  const { loading, fetchPositionsByCoords } = useHereMapService();
+  const [ location, setLocation ] = useState({});
   const { setUser } = useContext(UserContext);
   const { push } = useHistory();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
-      setActualCoords({ lat: coords.latitude, lng: coords.longitude });
+      setActualCoords(coords);
     });
   }, [])
 
@@ -33,13 +32,6 @@ const Location = () => {
 
   const handlerIsChangeLocation = () => {
     setIsLocationChangeView(true);
-  }
-
-  const handlerUpdatePosition = () => {
-    const marker = refMarker.current;
-    if (marker != null) {
-      setActualCoords(marker.leafletElement.getLatLng());
-    };
   }
 
   const LocationView = () => {
@@ -80,31 +72,20 @@ const Location = () => {
     );
   }
 
-  const handlerChangeLocation = () => {
-    fetchPositionsByCoords(actualCoords, () => setIsLocationChangeView(false));
+  const handlerChangeLocation = (location) => {
+    setLocation(location);
+    setIsLocationChangeView(false);
+  }
+
+  const getLocationByCoords = () => {
+    const coords = { lat: actualCoords.latitude, lng: actualCoords.longitude };
+    fetchPositionsByCoords(coords, handlerChangeLocation);
   }
 
   const LocationChangeView = () => {
     return (
       <>
-        <Map center={actualCoords} zoom={16}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <Marker
-            position={actualCoords}
-            draggable={true}
-            ondragend={handlerUpdatePosition}
-            ref={refMarker}
-          >
-            <Popup minWidth={90}>
-              <span>
-                TU UBICACION
-              </span>
-            </Popup>
-          </Marker>
-        </Map>
+        <LocationMap currentCoords={actualCoords} setCurrentCoords={setActualCoords} />
         <Grid container justify="flex-end" className="accept-button-container">
           { loading && <CircularProgress className="circularProgress-pink" /> }
           <Button
@@ -114,7 +95,7 @@ const Location = () => {
             variant="contained"
             className={loading ? 'mt-30' : 'mt-30 validated-button'}
             endIcon={<ArrowForwardIosIcon className="arrow-icon" />}
-            onClick={handlerChangeLocation}
+            onClick={getLocationByCoords}
           >
             aceptar
           </Button>

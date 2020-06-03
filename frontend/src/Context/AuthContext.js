@@ -50,7 +50,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const pathname = window.location.pathname;
   const toCheckPathnames = ['/login', '/register'];
-  const [authState, setAuth, loading] = useAuth();
+  const [authState, setAuth] = useAuth();
 
   const handlerComponent = () => {
     if(authState.isAuth && toCheckPathnames.includes(pathname)) return <Redirect to='/mylocation' />;
@@ -58,27 +58,25 @@ const AuthProvider = ({ children }) => {
     return children;
   }
 
+  if(!authState) return null;
+
   return (
     <AuthContext.Provider value={{ authState, setAuth }}>
-      { !loading && handlerComponent() }
+      { handlerComponent() }
     </AuthContext.Provider>
   );
-
 }
 
 const useAuth = () => {
-  const [ loading, setLoading ] = useState(true);
-  const [ authState, setAuthState ] = useState({});
+  const [ authState, setAuthState ] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    checkAuth(setAuthState)
-    setLoading(false);
+    checkAuth(setAuthState);
   }, []);
 
   const setAuth = (action) => reducer(setAuthState, action);
 
-  return [authState, setAuth, loading];
+  return [authState, setAuth];
 }
 
 export default AuthProvider;

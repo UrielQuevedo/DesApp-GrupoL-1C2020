@@ -1,0 +1,91 @@
+.container-lateral-menu {
+  background: #FB849D;
+  width: 20%;
+  padding: 15px;
+  font-family: 'Segoe UI';
+  text-transform: capitalize;
+  position: relative;
+}
+
+.container-lateral-menu .container-menu {
+  position: fixed;
+  background: #ffffff;
+  width: 16.2vw;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  padding: 10px 0 5rem 0;
+}
+
+.container-lateral-menu .container-menu .item {
+  padding: 14px 16px 14px 25px;
+  color: #909695;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.container-lateral-menu .container-menu .item .icon {
+  position: absolute !important;
+  right: 0;
+  transform: translateX(-15px) scale(0.7);
+  color: #FB849D;
+}
+
+.container-lateral-menu .container-menu .item:hover {
+  background: #F5F7FA;
+  color: black;
+}
+
+.filter-item {
+  border: 1px solid #E1D4D4;
+  padding: 10px;
+  width: 80%;
+  text-align: center;
+  margin-bottom: 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  color: #40514E;
+  font-family: 'Segoe UI semibold';
+  transition: 0.4s;
+}
+
+.filter-item:hover, .filter-item-selected {
+  background: #F9E0E5;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+.search-container {
+  background: #f9f8f8;
+  padding: 15px;
+  height: 7rem;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+}
+
+.stores-container {
+  background: #ffffff;
+  margin-top: 15px;
+  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+  font-family: 'Segoe UI';
+  height: 100vh;
+}
+
+.search-container h1 {
+  margin: 0;
+  font-weight: bold;
+  font-family: 'Segoe UI semibold';
+}
+
+.search-container h1 span {
+  font-size: 18px;
+  margin-left: 10px;
+  color: #706967;
+}
+
+.search-container .search-button {
+  margin-top: 20px;
+  width: 40%;
+  background: #ffffff;
+}
+
+.stores-container .pagination-container {
+  transform: translateY(-4px);
+}
