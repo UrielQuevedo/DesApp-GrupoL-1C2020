@@ -12,7 +12,7 @@ import { addProductRequest } from '../Service/Api';
 const DialogAddProduct = ( { setProducts }) => {
   
   const [open, setOpen] = React.useState(false);
-  const { register, errors, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,10 +20,6 @@ const DialogAddProduct = ( { setProducts }) => {
 
   const handleClose = () => {
     setOpen(false);
-  }
-
-  const onSubmit = (data) => {
-    console.log(data);
   }
 
   const addProduct = (product, e) => {
