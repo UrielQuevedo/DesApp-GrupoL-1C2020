@@ -19,17 +19,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Store = () => {
+const Store = ({ idUser }) => {
 
   const classes = useStyles();
+  // setear idUser que me llega del home
   const [ id, setId ] = useState(null); 
   const [ name, setName ] = useState(null); 
   const [ products, setProducts] = useState(null);
 
   useEffect(() => {
       if(!id) {
-        console.log("componentDidMount")
-        getStoreByIdUserRequest(1)
+        getStoreByIdUserRequest(2)
         .then(data => {
           console.log(data);
           const { id, name, products } = data;

@@ -1,4 +1,5 @@
 import React , { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,42 +8,41 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { addProductRequest } from '../Service/Api';
-import SaveIcon from '@material-ui/icons/Save';
 
 const DialogAddProduct = ( { setProducts }) => {
   
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = useState('');
-  const [brand, setBrand] = useState('');
-  const [price, setPrice] = useState(0);
-  const [stock, setStock] = useState(0);
-  const [image_url, setImageUrl] = useState('');
+  const { register, errors, handleSubmit } = useForm();
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
+  }
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }
 
-  const addProduct = () => {
-    const product = { name, brand, price, stock, image_url }
-    addProductRequest(2, product)
-    .then(data => {
-          console.log(data);
-          handleClose();
-          setProducts(oldProducts => {
-          let productsUpdated = [];
-          oldProducts.forEach(product => {
-              productsUpdated.push(product);
+  const onSubmit = (data) => {
+    console.log(data);
+  }
+
+  const addProduct = (product, e) => {
+      addProductRequest(3, product)
+      .then(data => {
+            console.log(data);
+            handleClose();
+            setProducts(oldProducts => {
+            let productsUpdated = [];
+            oldProducts.forEach(product => {
+                productsUpdated.push(product);
+            });
+            productsUpdated.push(data);
+            e.target.reset()
+            return productsUpdated;
           });
-          productsUpdated.push(data);
-          return productsUpdated;
-        });
-     })
-    .catch(error => console.log(error));
-   };
+        })
+       .catch(error => console.log(error));
+  } 
 
   return (
     <div>
@@ -50,62 +50,74 @@ const DialogAddProduct = ( { setProducts }) => {
         Agregar producto
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <form onSubmit={handleSubmit(addProduct)}>
         <DialogTitle id="form-dialog-title">Producto a agregar</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
+            required
             id="name"
             label="Nombre"
             type="text"
+            name="name"
             fullWidth
-            onChange= {(e) => setName(e.target.value)}
+            inputRef={register}
           /> 
             <TextField
             autoFocus
             margin="dense"
+            required
             id="brand"
             label="Marca"
             type="text"
+            name="brand"
             fullWidth
-            onChange= {(e) => setBrand(e.target.value)}
+            inputRef={register}        
           />
             <TextField
             autoFocus
             margin="dense"
+            required
             id="price"
             label="Precio"
             type="number"
+            name="price"
             fullWidth
-            onChange= {(e) => setPrice(e.target.value)}
+            inputRef={register}
           />
             <TextField
             autoFocus
             margin="dense"
             id="stock"
-            label="stock"
+            required
+            label="Stock"
             type="number"
+            name="stock"
             fullWidth
-            onChange= {(e) => setStock(e.target.value)}
+            inputRef={register}
           />
             <TextField
             autoFocus
             margin="dense"
             id="image_url"
+            required
             label="URL de imagen"
             type="text"
+            name="image_url"
             fullWidth
-            onChange= {(e) => setImageUrl(e.target.value)}
+            inputRef={register}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button onClick={addProduct} color="primary">
+          <Button type="submit" color="primary">
             Guardar
           </Button>
         </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
