@@ -65,15 +65,17 @@ const Home = () => {
 
   const StoreCategoriesList = () => {
     return categories.map(({ url, name }, i) => (
-      <div className="item-categorie mt-20" key={i}>
-        <Box boxShadow={7} className="image-categorie">
-          <img
-            src={url}
-            alt={"Categoria de " + name}
-          />
-        </Box>
-        <p>{name}</p>
-      </div>
+      <Link to={`/stores/category/${name}`} style={{ textDecoration:'none' }}>
+        <div className="item-categorie mt-20" key={i}>
+          <Box boxShadow={7} className="image-categorie">
+            <img
+              src={url}
+              alt={"Categoria de " + name}
+            />
+          </Box>
+          <p>{name}</p>
+        </div>
+      </Link>
     ));
   }
 
@@ -126,7 +128,7 @@ const Home = () => {
           title="Ofertas"
           description="No te pierdas las ultimas ofertas que las tiendas tienen para vos, y bla bla bla.."
           nameButtom="ver ofertas"
-          link="/stores"
+          link="/stores/category/offer"
         />
         {/* Store */}
         <InformationPaper

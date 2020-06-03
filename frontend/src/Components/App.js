@@ -12,6 +12,7 @@ import Register from '../View/Register';
 import Store from '../View/Store';
 import NavigationBar from './NavigationBar/NavigationBar';
 import Stores from '../View/Stores';
+import ScrollToTop from './ScrollToTop';
 
 function App() {
   return (
@@ -21,15 +22,18 @@ function App() {
           <Route path='/register' exact component={Register} />
           <Route path="/login" exact component={Login} />
           <UserProvider>
-            <NavigationBar />
             <Route exact path="/mylocation" component={Location} />
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route exact path='/store' component={Store} />
-              <Route exact path='/stores'component={Stores} />
-              <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
-              <Route path='*' render={() => <MessagePage errorNumnber="404" title="Not Found" />} />
-            </Switch>
+            <NavigationBar />
+            <ScrollToTop>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path='/store' component={Store} />
+                <Route exact path='/stores' component={Stores} />
+                <Route exact path='/stores/category/:category' component={Stores} />
+                <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
+                <Route path='*' render={() => <MessagePage errorNumnber="404" title="Not Found" />} />
+              </Switch>
+            </ScrollToTop>
           </UserProvider>
         </AuthProvider>
       </Switch>

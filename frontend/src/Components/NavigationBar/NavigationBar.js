@@ -8,7 +8,7 @@ const NavigationBar = () => {
   const trigger = useScrollTrigger();
   const { user } = useContext(UserContext);
 
-  if(!user.location) return null;
+  if (!user.location) return null;
 
   return (
     <>

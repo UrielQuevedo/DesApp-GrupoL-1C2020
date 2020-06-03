@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import { getUserById } from "../Service/Api";
@@ -22,7 +23,7 @@ const UserProvider = ({ children }) => {
           setAuth({ type:'LOG_OUT' });
         });
     }
-  }, [authState, setAuth]);
+  }, []);
 
   const isMyLocationNow = window.location.pathname === '/mylocation';
 
