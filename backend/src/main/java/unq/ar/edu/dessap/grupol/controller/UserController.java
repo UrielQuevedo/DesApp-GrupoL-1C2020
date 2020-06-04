@@ -19,7 +19,6 @@ import java.util.List;
 @Validated
 @RequestMapping(value = "/api/v1/users")
 @Component
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class UserController {
     @Autowired
     private UserService userService;
