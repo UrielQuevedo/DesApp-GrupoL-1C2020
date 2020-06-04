@@ -18,4 +18,9 @@ public interface StoreRepository extends JpaRepository<Store, Long>  {
             "and (s.location.longitude = ?2)")
     Store findByLatitudeAndLongitude(Double latitude, Double longitude);
 
+    @Query("SELECT s FROM Store s INNER JOIN Product p ON s.id = p.store.id " +
+            "WHERE lower(s.name) like lower(concat('%',?1,'%')) OR lower(p.name) like lower(concat('%',?1,'%'))")
+    List<Store> getStoresFindByNameOrProductsName(String name);
+
+    //List<Store> getStoresFindByNameAndSectorAndFilter();
 }

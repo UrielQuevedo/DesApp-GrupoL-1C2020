@@ -1,6 +1,7 @@
 package unq.ar.edu.dessap.grupol.persistence.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.persistence.StoreDao;
@@ -33,5 +34,10 @@ public class StoreDaoImpl implements StoreDao {
     @Override
     public Optional<Store> findById(Long id) {
         return storeRepository.findById(id);
+    }
+
+    @Override
+    public List<Store> getFiltered(String name) {
+        return storeRepository.getStoresFindByNameOrProductsName(name);
     }
 }

@@ -19,4 +19,6 @@ public interface StoreService  {
     List<Store> getStoresNearby(Location location);
 
     StoreDto getByUserId(Long idUser);
+
+    List<Store> getFiltered(String name);
 }

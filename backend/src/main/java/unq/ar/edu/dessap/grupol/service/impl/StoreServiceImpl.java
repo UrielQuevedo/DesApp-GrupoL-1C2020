@@ -66,13 +66,14 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public List<Store> getStoresNearby(Location location) {
-        return storeDao.getAll()
-                .stream()
-                .filter(
-                        store ->
-                                geoDistanceService.calculateMaxDistanceBetweenTwoLocation(location, store.getLocation())
-                                        > store.getMaxDistance()
-                ).collect(Collectors.toList());
+    return null;
+        //        return storeDao.getAll()
+//                .stream()
+//                .filter(
+//                        store ->
+//                                geoDistanceService.calculateMaxDistanceBetweenTwoLocation(location, store.getLocation())
+//                                        > store.getMaxDistance()
+//                ).collect(Collectors.toList());
     }
 
     @Override
@@ -81,6 +82,11 @@ public class StoreServiceImpl implements StoreService {
         User user = userDao.getUserById(idUser);
 
         return Converter.toStoreDto(user.getStore());
+    }
+
+    @Override
+    public List<Store> getFiltered(String name) {
+        return storeDao.getFiltered(name);
     }
 
 }

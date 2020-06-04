@@ -16,4 +16,6 @@ public interface StoreDao {
     List<Store> getAll();
 
     Optional<Store> findById(Long id);
+
+    List<Store> getFiltered(String name);
 }

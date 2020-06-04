@@ -56,4 +56,9 @@ public class StoreController {
         }
     }
 
+    @GetMapping(value = "/stores/filter/{name}")
+    public ResponseEntity<List<Store>> getStoresFilter(@PathVariable("name") String name) {
+        return new ResponseEntity<List<Store>>(storeService.getFiltered(name), HttpStatus.OK);
+    }
+
 }
