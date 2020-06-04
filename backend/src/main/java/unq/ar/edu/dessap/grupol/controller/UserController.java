@@ -8,13 +8,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
 import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Order;
+import unq.ar.edu.dessap.grupol.model.OrderHistory;
 import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @RestController
@@ -35,8 +33,8 @@ public class UserController {
 
     @GetMapping(value = "/{id}/orders")
     @ExceptionHandling
-    public ResponseEntity<List<Order>> getOrders(@PathVariable("id") long id) {
-        List<Order> orders = userService.getUserOrdersById(id);
+    public ResponseEntity<List<OrderHistory>> getOrders(@PathVariable("id") long id) {
+        List<OrderHistory> orders = userService.getUserOrdersById(id);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 

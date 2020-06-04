@@ -84,8 +84,8 @@ public class UserTest {
     @Test
     public void testSetterUser() {
 
-        List<Order> orders = new ArrayList<>();
-        orders.add(mock(Order.class));
+        List<OrderHistory> orders = new ArrayList<>();
+        orders.add(mock(OrderHistory.class));
 
         Location location = mock(Location.class);
 
@@ -110,8 +110,8 @@ public class UserTest {
     @Test
     public void testGivenAUserWithOrdersWhenReceiveSizeGetOrdersThenGiveTheSizeFromOrders() {
 
-        List<Order> orders = new ArrayList<>();
-        orders.add(mock(Order.class));
+        List<OrderHistory> orders = new ArrayList<>();
+        orders.add(mock(OrderHistory.class));
 
         User user = UserBuilder.aUser().
                 withOrders(orders).build();

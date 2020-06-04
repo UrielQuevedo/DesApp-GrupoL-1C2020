@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Order;
+import unq.ar.edu.dessap.grupol.model.OrderHistory;
 import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Order> getUserOrdersById(long id) {
+    public List<OrderHistory> getUserOrdersById(long id) {
         User user = userDao.getUserById(id);
         return user.getOrders();
     }

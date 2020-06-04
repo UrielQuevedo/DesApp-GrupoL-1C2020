@@ -3,8 +3,6 @@ package unq.ar.edu.dessap.grupol.service.builder;
 import unq.ar.edu.dessap.grupol.model.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 public class OrderBuilder {
 
@@ -19,8 +17,8 @@ public class OrderBuilder {
         return new OrderBuilder();
     }
 
-    public Order build() {
-        return new Order(this.id, this.user, this.product, this.amount, this.store, this.date);
+    public OrderHistory build() {
+        return new OrderHistory(this.id, this.user, this.product, this.amount, this.store, this.date);
     }
 
     public OrderBuilder withId(int id) {
@@ -53,6 +51,4 @@ public class OrderBuilder {
         this.date = date;
         return this;
     }
-
-
 }

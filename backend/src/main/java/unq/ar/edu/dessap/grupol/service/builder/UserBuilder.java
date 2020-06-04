@@ -1,7 +1,7 @@
 package unq.ar.edu.dessap.grupol.service.builder;
 
 import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Order;
+import unq.ar.edu.dessap.grupol.model.OrderHistory;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.model.User;
 
@@ -14,7 +14,7 @@ public class UserBuilder {
     private String password;
     private String email;
     private String role;
-    private List<Order> orders;
+    private List<OrderHistory> orders;
     private Location location;
     private Store store;
 
@@ -47,7 +47,7 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder withOrders(final List<Order> orders) {
+    public UserBuilder withOrders(final List<OrderHistory> orders) {
         this.orders = orders;
         return this;
     }
