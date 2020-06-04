@@ -2,7 +2,6 @@ package unq.ar.edu.dessap.grupol.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import unq.ar.edu.dessap.grupol.service.builder.ProductBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +12,18 @@ public class ProductTest {
 
     @Test
     public void testGivenAProductWithIdWhenTheyRecieveGetIdThenGiveHisId() {
-        Product product = ProductBuilder.aProduct()
-                            .withId(1).build();
+        Product product = Product.builder()
+                            .id(1).build();
 
         Assert.assertEquals(1, product.getId());
     }
 
     @Test
     public void testGivenAProductWithNameAndOtherProductWithNameWhenTheyRecieveGetNameThenTheyGiveTheirNames() {
-        Product product1 = ProductBuilder.aProduct()
-                .withName("product1").build();
-        Product product2 = ProductBuilder.aProduct()
-                .withName("product2").build();
+        Product product1 = Product.builder()
+                .name("product1").build();
+        Product product2 = Product.builder()
+                .name("product2").build();
 
         Assert.assertEquals("product1", product1.getName());
         Assert.assertEquals("product2", product2.getName());
@@ -32,10 +31,10 @@ public class ProductTest {
 
     @Test
     public void testGivenAProductWithBrandAndOtherProductWithBrandWhenTheyRecieveGetBrandThenTheyGiveTheirBrands() {
-        Product product1 = ProductBuilder.aProduct()
-                .withBrand("milka").build();
-        Product product2 = ProductBuilder.aProduct()
-                .withBrand("block").build();
+        Product product1 = Product.builder()
+                .brand("milka").build();
+        Product product2 = Product.builder()
+                .brand("block").build();
 
         Assert.assertEquals("milka", product1.getBrand());
         Assert.assertEquals("block", product2.getBrand());
@@ -43,10 +42,10 @@ public class ProductTest {
 
     @Test
     public void testGivenAProductWithStockAndOtherProductWithStockWhenTheyRecieveGetStockThenTheyGiveTheirStocks() {
-        Product product1 = ProductBuilder.aProduct()
-                .withStock(1).build();
-        Product product2 = ProductBuilder.aProduct()
-                .withStock(2).build();
+        Product product1 = Product.builder()
+                .stock(1).build();
+        Product product2 = Product.builder()
+                .stock(2).build();
 
         Assert.assertEquals(1, product1.getStock());
         Assert.assertEquals(2, product2.getStock());
@@ -54,10 +53,10 @@ public class ProductTest {
 
     @Test
     public void testGivenAProductWithImage_urlAndOtherProductWithImage_urlWhenTheyRecieveGetImage_urlThenTheyGiveTheirImage_urls() {
-        Product product1 = ProductBuilder.aProduct()
-                .withImage_url("image1.com").build();
-        Product product2 = ProductBuilder.aProduct()
-                .withImage_url("image2.com").build();
+        Product product1 = Product.builder()
+                .image_url("image1.com").build();
+        Product product2 = Product.builder()
+                .image_url("image2.com").build();
 
         Assert.assertEquals("image1.com", product1.getImage_url());
         Assert.assertEquals("image2.com", product2.getImage_url());
@@ -65,10 +64,10 @@ public class ProductTest {
 
     @Test
     public void testGivenAProductWithPriceAndOtherProductWithPriceWhenTheyRecieveGetPriceThenTheyGiveTheirPrices() {
-        Product product1 = ProductBuilder.aProduct()
-                .withPrice(300.00).build();
-        Product product2 = ProductBuilder.aProduct()
-                .withPrice(200.00).build();
+        Product product1 = Product.builder()
+                .price(300.00).build();
+        Product product2 = Product.builder()
+                .price(200.00).build();
 
         Assert.assertEquals(300.00, product1.getPrice(), 00.1);
         Assert.assertEquals(200.00, product2.getPrice(), 00.1);
@@ -76,7 +75,7 @@ public class ProductTest {
 
     @Test
     public void testSetterProduct() {
-        Product product = ProductBuilder.aProduct().build();
+        Product product = Product.builder().build();
 
         product.setId(1);
         product.setBrand("milka");
@@ -96,13 +95,12 @@ public class ProductTest {
     @Test
     public void testGiveAProductWithStoresWhenReceiveSizeGetStoresThenGiveHisSize() {
 
-        List<Store> stores = new ArrayList<>();
-        stores.add(mock(Store.class));
+        Store store = mock(Store.class);
 
-        Product product = ProductBuilder.aProduct()
-                            .withStores(stores).build();
+        Product product = Product.builder()
+                            .store(store).build();
 
-        Assert.assertEquals(1, product.getStores().size());
+        Assert.assertEquals(store, product.getStore());
     }
 
 }

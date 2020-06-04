@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
-import unq.ar.edu.dessap.grupol.service.builder.UserBuilder;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -28,10 +27,10 @@ public class InitService {
     private void createUsers() {
         List<String> names = new ArrayList<>(Arrays.asList("test","chino","24Open","Chino Saran"));
         for (String name : names) {
-            User user = UserBuilder.aUser()
-                    .withEmail(name + "@gmail.com")
-                    .withPassword("test")
-                    .withUsername(name)
+            User user = User.builder()
+                    .email(name + "@gmail.com")
+                    .password("test")
+                    .username(name)
                     .build();
             userDao.save(user);
         }
