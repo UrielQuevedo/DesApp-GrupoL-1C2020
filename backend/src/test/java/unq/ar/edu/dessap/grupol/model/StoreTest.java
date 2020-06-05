@@ -2,7 +2,6 @@ package unq.ar.edu.dessap.grupol.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import unq.ar.edu.dessap.grupol.service.builder.StoreBuilder;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -15,8 +14,8 @@ public class StoreTest {
 
     @Test
     public void testGivenAStoreWithNameWhenReceiveGetNameThenGiveHisName() {
-        Store Store1 = StoreBuilder.aStore()
-                .withName("store1").build();
+        Store Store1 = Store.builder()
+                .name("store1").build();
 
         Assert.assertEquals("store1", Store1.getName());
     }
@@ -24,16 +23,16 @@ public class StoreTest {
     @Test
     public void testGivenAStoreWithAddressWhenReceiveGetAddressThenGiveHisAddress() {
         Location location = mock(Location.class);
-        Store Store1 = StoreBuilder.aStore()
-                .withAddress(location).build();
+        Store Store1 = Store.builder()
+                .location(location).build();
 
         Assert.assertEquals(location, Store1.getLocation());
     }
 
     @Test
     public void testGivenAStoreWithMaxDistanceWhenReceiveGetMaxDistanceThenGiveHisMaxDistance() {
-        Store Store1 = StoreBuilder.aStore()
-                .withMaxDistance(new Double(100.1)).build();
+        Store Store1 = Store.builder()
+                .maxDistance(new Double(100.1)).build();
 
         Assert.assertEquals(new Double(100.1), Store1.getMaxDistance());
     }
@@ -41,13 +40,10 @@ public class StoreTest {
     @Test
     public void testGivenAStoreWithOneSectorWhenReceiveSizeGetSectorsThenGiveTheSizeFromSectors() {
 
-        List<Sector> sectors = new ArrayList<>();
-        sectors.add(new Sector());
+        Store Store1 = Store.builder()
+                .sector(Sector.VERDULERIA).build();
 
-        Store Store1 = StoreBuilder.aStore()
-                .withSectors(sectors).build();
-
-        Assert.assertEquals(1, Store1.getSectors().size());
+        Assert.assertEquals(Sector.VERDULERIA, Store1.getSector());
     }
 
     @Test
@@ -58,8 +54,8 @@ public class StoreTest {
         days.add(DayOfWeek.WEDNESDAY);
         days.add(DayOfWeek.FRIDAY);
 
-        Store Store1 = StoreBuilder.aStore()
-                .withOpenDays(days).build();
+        Store Store1 = Store.builder()
+                .openDays(days).build();
 
         Assert.assertEquals(3, Store1.getOpenDays().size());
     }
@@ -70,8 +66,8 @@ public class StoreTest {
         List<Payment> payments = new ArrayList<>();
         payments.add(Payment.EFECTIVO);
 
-        Store Store1 = StoreBuilder.aStore()
-                .withPayments(payments).build();
+        Store Store1 = Store.builder()
+                .payments(payments).build();
 
         Assert.assertEquals(1, Store1.getPayments().size());
     }
@@ -82,8 +78,8 @@ public class StoreTest {
         List<Time> times = new ArrayList<>();
         times.add(mock(Time.class));
 
-        Store Store1 = StoreBuilder.aStore()
-                .withTimes(times).build();
+        Store Store1 = Store.builder()
+                .times(times).build();
 
         Assert.assertEquals(1, Store1.getTimes().size());
     }
@@ -94,15 +90,15 @@ public class StoreTest {
         List<Product> products = new ArrayList<>();
         products.add(mock(Product.class));
 
-        Store Store1 = StoreBuilder.aStore()
-                .withProducts(products).build();
+        Store Store1 = Store.builder()
+                .products(products).build();
 
         Assert.assertEquals(1, Store1.getProducts().size());
     }
 
     @Test
     public void testSetterStore() {
-        Store store = StoreBuilder.aStore().build();
+        Store store = Store.builder().build();
         Location location = mock(Location.class);
 
         List<DayOfWeek> days = new ArrayList<>();
@@ -115,15 +111,9 @@ public class StoreTest {
         List<Product> products = new ArrayList<>();
         products.add(product);
 
-        Sector sector = mock(Sector.class);
-        List<Sector> sectors = new ArrayList<>();
-        sectors.add(sector);
-
         Time time = mock(Time.class);
         List<Time> times = new ArrayList<>();
         times.add(time);
-
-        User seller = mock(User.class);
 
         Turn turn = mock(Turn.class);
         List<Turn> turns = new ArrayList<>();
@@ -136,9 +126,8 @@ public class StoreTest {
         store.setOpenDays(days);
         store.setPayments(payments);
         store.setProducts(products);
-        store.setSectors(sectors);
+        store.setSector(Sector.VERDULERIA);
         store.setTimes(times);
-        store.setUser(seller);
         store.setTurns(turns);
 
         Assert.assertEquals(1, store.getId());
@@ -148,38 +137,23 @@ public class StoreTest {
         Assert.assertEquals(DayOfWeek.MONDAY, store.getOpenDays().get(0));
         Assert.assertEquals(Payment.TARJETA_DE_DEBITO, store.getPayments().get(0));
         Assert.assertEquals(product, store.getProducts().get(0));
-        Assert.assertEquals(sector, store.getSectors().get(0));
+        Assert.assertEquals(Sector.VERDULERIA, store.getSector());
         Assert.assertEquals(time, store.getTimes().get(0));
-        Assert.assertEquals(seller, store.getUser());
         Assert.assertEquals(turn, store.getTurns().get(0));
     }
 
     @Test
     public void testAddsStore() {
-        Store store = StoreBuilder.aStore().build();
-        Sector sector = mock(Sector.class);
+        Store store = Store.builder().build();
         Time time = mock(Time.class);
 
         store.addDay(DayOfWeek.MONDAY);
         store.addPayments(Payment.MERCADO_PAGO);
-        store.addSector(sector);
         store.addTimes(time);
 
         Assert.assertEquals(DayOfWeek.MONDAY, store.getOpenDays().get(0));
         Assert.assertEquals(Payment.MERCADO_PAGO, store.getPayments().get(0));
-        Assert.assertEquals(sector, store.getSectors().get(0));
         Assert.assertEquals(time, store.getTimes().get(0));
-    }
-
-    @Test
-    public void testGivenAStoreWithUserWhenReceiveGetUserThenGiveAUser() {
-
-        User seller = mock(User.class);
-
-        Store store = StoreBuilder.aStore()
-                            .withUser(seller).build();
-
-        Assert.assertEquals(seller, store.getUser());
     }
 
     @Test
@@ -188,8 +162,8 @@ public class StoreTest {
         List<Turn> turns = new ArrayList<>();
         turns.add(mock(Turn.class));
 
-        Store store = StoreBuilder.aStore()
-                         .withTurns(turns).build();
+        Store store = Store.builder()
+                         .turns(turns).build();
 
         Assert.assertEquals(1, store.getTurns().size());
     }
@@ -197,7 +171,7 @@ public class StoreTest {
     @Test
     public void testGivenAStoreWithProductWhenReceiveSizeGetTurnsThenGiveHisSize() {
 
-        Store store = StoreBuilder.aStore().build();
+        Store store = Store.builder().build();
 
         store.addProduct(mock(Product.class));
 

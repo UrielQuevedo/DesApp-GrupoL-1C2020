@@ -1,11 +1,14 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder
 @Table(name = "stores")
 public class Store {
 
@@ -16,13 +19,9 @@ public class Store {
     @Column(nullable = false)
     private String name;
 
-    @JoinTable(
-            name = "rel_stores_sectors",
-            joinColumns = @JoinColumn(name = "fk_store", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="fk_sector", nullable = false)
-    )
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Sector> sectors;
+    @JoinColumn(name = "sector_name")
+    @Enumerated(value = EnumType.STRING)
+    private Sector sector;
 
     @Column(nullable = false)
     private Location location;
@@ -32,7 +31,8 @@ public class Store {
     @JoinColumn(name = "fk_store", nullable = false))
     @Column(name = "day", nullable = false)
     @Enumerated(EnumType.STRING)
-    private List<DayOfWeek> openDays;
+    @Builder.Default
+    private List<DayOfWeek> openDays = new ArrayList<>();
 
     @JoinTable(
             name = "rel_stores_times",
@@ -40,159 +40,40 @@ public class Store {
             inverseJoinColumns = @JoinColumn(name="fk_time", nullable = false)
     )
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Time> times;
-
+    @Builder.Default
+    private List<Time> times = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @JoinTable(name = "rel_stores_payments", joinColumns =
     @JoinColumn(name = "fk_store", nullable = false))
     @Column(name = "payment", nullable = false)
     @Enumerated(EnumType.STRING)
-    private List<Payment> payments;
+    @Builder.Default
+    private List<Payment> payments = new ArrayList<>();
 
     @Column(nullable = false)
     private Double maxDistance;
 
-    @JoinTable(
-            name = "rel_stores_products",
-            joinColumns = @JoinColumn(name = "fk_store", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="fk_product", nullable = false)
-    )
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Product> products;
-
-    @OneToOne
-    @JoinColumn(name = "fk_user", updatable = false, nullable = false)
-    private User user;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "store")
+    @Builder.Default
+    private List<Product> products = new ArrayList<>();
 
     @Transient
     private List<Turn> turns;
 
-    public Store(){}
-
-    public Store(long id, String name, List<Sector> sectors,  Location location,
-                 List<DayOfWeek> openDays, List<Time> times, List<Payment> payments,
-                 Double maxDistance, List<Product> products, User user,
-                 List<Turn> turns) {
-        this.id = id;
-        this.name = name;
-        this.sectors = sectors;
-        this.location = location;
-        this.openDays = openDays;
-        this.times = times;
-        this.payments = payments;
-        this.maxDistance = maxDistance;
-        this.products = products;
-        this.user = user;
-        this.turns = turns;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public List<Sector> getSectors() {
-        return sectors;
-    }
-
-    public void setSectors(List<Sector> sectors) {
-        this.sectors = sectors;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public List<DayOfWeek> getOpenDays() {
-        return openDays;
-    }
-
-    public void setOpenDays(List<DayOfWeek> openDays) {
-        this.openDays = openDays;
-    }
-
-    public List<Time> getTimes() {
-        return times;
-    }
-
-    public void setTimes(List<Time> times) {
-        this.times = times;
-    }
-
-    public List<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
-    }
-
-    public Double getMaxDistance() {
-        return maxDistance;
-    }
-
-    public void setMaxDistance(Double maxDistance) {
-        this.maxDistance = maxDistance;
-    }
-
-    public void addSector(Sector sector) {
-        this.sectors.add(sector);
+    public void addProduct(Product product) {
+        this.products.add(product);
     }
 
     public void addDay(DayOfWeek day) {
         this.openDays.add(day);
     }
 
-    public void addTimes(Time time) {
-        this.times.add(time);
-    }
-
     public void addPayments(Payment payment) {
         this.payments.add(payment);
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-
-    public List<Turn> getTurns() {
-        return turns;
-    }
-
-    public void setTurns(List<Turn> turns) {
-        this.turns = turns;
-    }
-
-    public void addProduct(Product product) {
-        this.products.add(product);
+    public void addTimes(Time time) {
+        this.times.add(time);
     }
 }

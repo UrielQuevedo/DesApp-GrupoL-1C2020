@@ -2,7 +2,6 @@ package unq.ar.edu.dessap.grupol.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import unq.ar.edu.dessap.grupol.service.builder.TurnBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,8 +12,8 @@ public class TurnTest {
 
     @Test
     public void testGivenATurnWithIdWhenReceiveGetIdThenGiveHisId() {
-        Turn turn = TurnBuilder.aTurn()
-                    .withId(1).build();
+        Turn turn = Turn.builder()
+                    .id(1).build();
 
         Assert.assertEquals(1, turn.getId());
     }
@@ -24,8 +23,8 @@ public class TurnTest {
 
         Store storeMock = mock(Store.class);
 
-        Turn turn = TurnBuilder.aTurn()
-                    .withStore(storeMock).build();
+        Turn turn = Turn.builder()
+                    .store(storeMock).build();
 
         Assert.assertEquals(storeMock, turn.getStore());
     }
@@ -35,8 +34,8 @@ public class TurnTest {
 
         User userMock = mock(User.class);
 
-        Turn turn = TurnBuilder.aTurn()
-                    .withUser(userMock).build();
+        Turn turn = Turn.builder()
+                    .user(userMock).build();
 
         Assert.assertEquals(userMock, turn.getUser());
     }
@@ -46,8 +45,8 @@ public class TurnTest {
 
         LocalDateTime date = LocalDateTime.now();
 
-        Turn turn = TurnBuilder.aTurn()
-                    .withLocalDateTime(date).build();
+        Turn turn = Turn.builder()
+                    .date(date).build();
 
         Assert.assertEquals(date, turn.getDate());
     }
@@ -59,7 +58,7 @@ public class TurnTest {
         Store storeMock = mock(Store.class);
         LocalDateTime date = LocalDateTime.now();
 
-        Turn turn = TurnBuilder.aTurn().build();
+        Turn turn = Turn.builder().build();
         turn.setId(1);
         turn.setUser(userMock);
         turn.setStore(storeMock);
@@ -73,7 +72,7 @@ public class TurnTest {
 
     @Test
     public void testTurnEmptyBuilder() {
-        Turn turn1 = TurnBuilder.aTurn().build();
+        Turn turn1 = Turn.builder().build();
         Turn turn2 = new Turn();
 
         Assert.assertNull(turn1.getDate());
