@@ -25,7 +25,7 @@ public class Product {
     private String image_url;
     @Enumerated(value = EnumType.STRING)
     private Category category;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_store_id")
     private Store store;
     @OneToOne()
