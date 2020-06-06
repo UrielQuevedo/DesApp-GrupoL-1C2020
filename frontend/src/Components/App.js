@@ -12,8 +12,8 @@ import Register from '../View/Register';
 import Store from '../View/Store';
 import NavigationBar from './NavigationBar/NavigationBar';
 import ScrollToTop from './ScrollToTop';
-import StoresCategoriesView from './StoresCategoriesView';
-import AllStoresView from './AllStoresView';
+import StoresCategoriesView from './StoresView/StoresCategoriesView';
+import AllStoresView from './StoresView/AllStoresView';
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
                 <Route exact path='/store' component={Store} />
                 <Route exact path='/stores' component={AllStoresView} />
                 <Route exact path='/stores/category/:category' component={StoresCategoriesView} />
+                <Route exact path='/stores/:store_id/products' render={() => <MessagePage title="Coming Soon" />} />
                 <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
                 <Route path='*' render={() => <MessagePage errorNumnber="404" title="Not Found" />} />
               </Switch>

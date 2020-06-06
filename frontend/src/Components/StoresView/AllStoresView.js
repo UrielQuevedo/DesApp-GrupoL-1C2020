@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import Stores from '../View/Stores';
+import Stores from '../../View/Stores';
 import { useEffect } from 'react';
-import { UserContext } from '../Context/UserContext';
+import { UserContext } from '../../Context/UserContext';
 import Axios from 'axios';
 
 const AllStoresView = () => {
@@ -17,14 +17,14 @@ const AllStoresView = () => {
       Axios.get('http://localhost:8080/api/stores')
         .then(r => setStores(r.data))
     } else {
-      Axios.get('http://localhost:8080/api/stores/filter/' + search)
+      Axios.get('http://localhost:8080/api/stores/all?search=' + search)
       .then(r => setStores(r.data));
     }
     setLoading(false);
   }, [search]);
 
   return (
-    <Stores stores={stores} user={user} loading={loading} />
+    <Stores stores={stores} user={user} loading={loading} query={query} search={search} />
   );
 }
 

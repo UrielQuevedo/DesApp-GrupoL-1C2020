@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
-import Stores from '../View/Stores';
+import Stores from '../../View/Stores';
 import { useEffect } from 'react';
-import { UserContext } from '../Context/UserContext';
+import { UserContext } from '../../Context/UserContext';
 import Axios from 'axios';
 import { useParams } from 'react-router';
 
 const StoresCategoriesView = () => {
-  const query = new URLSearchParams(window.location.search);
+  const query = new URLSearchParams(window.location.search.slice(1));
   const { category } = useParams();
-  const filter = query.get('filter');
+  const payment = query.get('payment');
   const search = query.get('search');
   const [ stores, setStores ] = useState([]);
   const [ loading, setLoading ] = useState(true);
@@ -16,14 +16,14 @@ const StoresCategoriesView = () => {
 
   useEffect(() => {
     setLoading(true);
-    // Axios.get(`http://localhost:8080/api/stores?search=${search}&filter=${filter}&category=${category}`)
-    //   .then(r => setStores(r.data));
-    console.log(filter, search, category);
+    Axios.get(`http://localhost:8080/api/stores/filter?category=${category}&${query}`)
+      .then((r) => setStores(r.data))
+      .catch((e) => console.log(e.response.data));
     setLoading(false);
-  }, [filter, search, category]);
+  }, [category, payment, search]);
 
   return (
-    <Stores stores={stores} user={user} loading={loading} />
+    <Stores stores={stores} user={user} loading={loading} query={query} search={search} category={category} />
   );
 }
 

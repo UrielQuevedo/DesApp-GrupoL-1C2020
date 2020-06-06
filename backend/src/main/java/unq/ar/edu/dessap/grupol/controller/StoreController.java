@@ -64,8 +64,8 @@ public class StoreController {
     }
 
     @GetMapping(value = "/stores/all")
-    public ResponseEntity<List<Store>> getStoresFilter(@RequestParam String name) {
-        return new ResponseEntity<List<Store>>(storeService.getFilteredByName(name), HttpStatus.OK);
+    public ResponseEntity<List<Store>> getStoresFilter(@RequestParam String search) {
+        return new ResponseEntity<List<Store>>(storeService.getFilteredByName(search), HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/filter")
