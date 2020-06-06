@@ -8,11 +8,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { addProductRequest } from '../Service/Api';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const DialogAddProduct = ( { setProducts }) => {
   
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const { register, handleSubmit } = useForm();
+  const [category, setCategory] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,7 +27,12 @@ const DialogAddProduct = ( { setProducts }) => {
     setOpen(false);
   }
 
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+  }
+
   const addProduct = (product, e) => {
+      console.log(product);
       addProductRequest(3, product)
       .then(data => {
             console.log(data);
@@ -104,6 +114,21 @@ const DialogAddProduct = ( { setProducts }) => {
             fullWidth
             inputRef={register}
           />
+          <FormControl fullWidth>
+            <InputLabel id="select-category">Categoria</InputLabel>
+            <Select
+              required
+              labelId="select-category"
+              id="category"
+              value={category}
+              onChange={handleChange}
+              >
+              <MenuItem value={10}>BEBIDAS</MenuItem>
+              <MenuItem value={20}>GALLETITAS</MenuItem>
+              <MenuItem value={30}>FIAMBRE</MenuItem>
+              <MenuItem value={40}>FIDEOS</MenuItem>
+            </Select>
+            </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
