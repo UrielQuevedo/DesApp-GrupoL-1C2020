@@ -79,8 +79,4 @@ public class Store {
     public void addTimes(Time time) {
         this.times.add(time);
     }
-    
-    public List<String> getPayments() {
-        return payments.stream().map(Enum::name).collect(Collectors.toList());
-    }
 }
