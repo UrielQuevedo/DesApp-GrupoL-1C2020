@@ -17,12 +17,19 @@ public interface StoreRepository extends JpaRepository<Store, Long>  {
             "and (s.location.longitude = ?2)")
     Store findByLatitudeAndLongitude(Double latitude, Double longitude);
 
-    @Query("SELECT s FROM Store s INNER JOIN Product p ON s.id = p.store.id " +
-            "WHERE lower(s.name) like lower(concat('%',:name,'%')) OR lower(p.name) like lower(concat('%',:name,'%'))")
-    List<Store> getStoresFindByNameOrProductsName(@Param("name") String name);
+    @Query("SELECT s FROM Store s LEFT JOIN s.products p " +
+            "WHERE (lower(s.name) like lower(concat('%',:name,'%')) OR lower(p.name) like lower(concat('%',:name,'%'))) " +
+            "AND (:payment IS NULL OR :payment MEMBER s.payments) ")
+    List<Store> getStoresFindByNameOrProductsNameAndPayment(@Param("name") String name, @Param("payment") Payment payment);
 
     @Query("SELECT s FROM Store s WHERE s.sector = :sector " +
             "AND lower(s.name) LIKE lower(concat('%',:search,'%')) " +
             "AND (:payment IS NULL OR :payment MEMBER s.payments)")
     List<Store> getStoresFindByNameAndSectorAndFilter(@Param("sector") Sector sector, @Param("search") String search, @Param("payment") Payment payment);
+
+    @Query("SELECT s FROM Store s LEFT JOIN s.products p WHERE p.offerToApply IS NOT NULL " +
+            "AND lower(s.name) LIKE lower(concat('%',:search,'%')) " +
+            "AND (:payment IS NULL OR :payment MEMBER s.payments)")
+    List<Store> getStoresThatHaveOffer(@Param("search") String search, @Param("payment") Payment payment);
+
 }

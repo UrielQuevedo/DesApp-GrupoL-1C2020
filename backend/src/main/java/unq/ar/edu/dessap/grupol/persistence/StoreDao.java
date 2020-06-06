@@ -19,7 +19,9 @@ public interface StoreDao {
 
     Optional<Store> findById(Long id);
 
-    List<Store> getFilteredByName(String name);
+    List<Store> getFilteredByNameAndPayment(String name, Payment payment);
 
     List<Store> getStoresFiltered(Sector category, String search, Payment payment);
+
+    List<Store> getStoresThatHaveOffer(String search, Payment payment);
 }

@@ -5,6 +5,7 @@ const LocationMap = ({ currentCoords, setCurrentCoords }) => {
   const refMarker = useRef();
   const [actualCoords, setActualCoords] = useState({ lat: currentCoords.latitude, lng: currentCoords.longitude });
 
+  console.log(currentCoords)
   const handlerUpdatePosition = () => {
     const marker = refMarker.current;
     if (marker != null) {

@@ -1,5 +1,6 @@
 package unq.ar.edu.dessap.grupol.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.model.Location;
@@ -23,7 +24,9 @@ public interface StoreService  {
 
     StoreDto getByUserId(Long idUser);
 
-    List<Store> getFilteredByName(String name);
+    List<Store> getFilteredByNameAndPayment(Optional<String> name, Optional<Payment> payment);
 
     List<Store> getStoresFiltered(Sector category, Optional<String> search, Optional<Payment> payment);
+
+    List<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment);
 }
