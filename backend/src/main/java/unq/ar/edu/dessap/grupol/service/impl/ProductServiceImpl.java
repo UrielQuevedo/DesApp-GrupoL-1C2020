@@ -64,20 +64,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> delete(Long idStore, Long idProduct) {
+    public ProductDto delete(Long id) {
 
-        Store store = storeDao.findById(idStore)
-                        .orElseThrow(NotFound::new);
-
-        Product product = productDao.findById(idProduct)
+        Product product = productDao.findById(id)
                             .orElseThrow(NotFound::new);
 
-        List<Product> products = store.getProducts().stream().filter(p -> p.getId() != product.getId())
-                                        .collect(Collectors.toList());
-        store.setProducts(products);
-        productDao.deleteById(product.getId());
-        storeDao.save(store);
-        return Converter.toProductsDtos(products);
+        productDao.deleteById(id);
+        return Converter.toProductDto(product);
     }
 
 }
