@@ -64,8 +64,9 @@ public class StoreController {
     }
 
     @GetMapping(value = "/stores/all")
-    public ResponseEntity<List<Store>> getStoresFilter(@RequestParam String search) {
-        return new ResponseEntity<List<Store>>(storeService.getFilteredByName(search), HttpStatus.OK);
+    public ResponseEntity<List<Store>> getStoresFilter(@RequestParam Optional<String> search,
+                                                       @RequestParam Optional<Payment> payment) {
+        return new ResponseEntity<List<Store>>(storeService.getFilteredByNameAndPayment(search, payment), HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/filter")
@@ -73,5 +74,11 @@ public class StoreController {
                                                          @RequestParam Optional<String> search,
                                                          @RequestParam Optional<Payment> payment) {
         return new ResponseEntity<List<Store>>(storeService.getStoresFiltered(category, search, payment), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/stores/offers")
+    public ResponseEntity<List<Store>> getStoresThatHaveOffer(@RequestParam Optional<String> search,
+                                                              @RequestParam Optional<Payment> payment) {
+        return new ResponseEntity<List<Store>>(storeService.getStoresThatHaveOffer(search, payment), HttpStatus.OK);
     }
 }

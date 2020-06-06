@@ -7,21 +7,17 @@ import Axios from 'axios';
 const AllStoresView = () => {
   const query = new URLSearchParams(window.location.search);
   const search = query.get('search');
+  const payment = query.get('payment');
   const [ stores, setStores ] = useState([]);
   const [ loading, setLoading ] = useState(true);
   const { user } = useContext(UserContext);
 
   useEffect(() => {
     setLoading(true);
-    if(!search || search === ' ') {
-      Axios.get('http://localhost:8080/api/stores')
-        .then(r => setStores(r.data))
-    } else {
-      Axios.get('http://localhost:8080/api/stores/all?search=' + search)
+    Axios.get(`http://localhost:8080/api/stores/all?${query}`)
       .then(r => setStores(r.data));
-    }
     setLoading(false);
-  }, [search]);
+  }, [search, payment]);
 
   return (
     <Stores stores={stores} user={user} loading={loading} query={query} search={search} />

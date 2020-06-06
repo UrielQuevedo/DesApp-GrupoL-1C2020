@@ -39,12 +39,17 @@ public class StoreDaoImpl implements StoreDao {
     }
 
     @Override
-    public List<Store> getFilteredByName(String name) {
-        return storeRepository.getStoresFindByNameOrProductsName(name);
+    public List<Store> getFilteredByNameAndPayment(String name, Payment payment) {
+        return storeRepository.getStoresFindByNameOrProductsNameAndPayment(name, payment);
     }
 
     @Override
     public List<Store> getStoresFiltered(Sector category, String search, Payment payment) {
         return storeRepository.getStoresFindByNameAndSectorAndFilter(category, search, payment);
+    }
+
+    @Override
+    public List<Store> getStoresThatHaveOffer(String search, Payment payment) {
+        return storeRepository.getStoresThatHaveOffer(search, payment);
     }
 }

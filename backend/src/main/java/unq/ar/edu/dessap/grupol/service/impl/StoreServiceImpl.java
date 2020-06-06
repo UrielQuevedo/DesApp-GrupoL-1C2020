@@ -84,13 +84,18 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Store> getFilteredByName(String name) {
-        return storeDao.getFilteredByName(name);
+    public List<Store> getFilteredByNameAndPayment(Optional<String> search, Optional<Payment> payment) {
+        return storeDao.getFilteredByNameAndPayment(search.orElse(""), payment.orElse(null));
     }
 
     @Override
     public List<Store> getStoresFiltered(Sector category, Optional<String> search,  Optional<Payment> payment) {
         return storeDao.getStoresFiltered(category, search.orElse(""), payment.orElse(null));
+    }
+
+    @Override
+    public List<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment) {
+        return storeDao.getStoresThatHaveOffer(search.orElse(""), payment.orElse(null));
     }
 
 }

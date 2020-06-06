@@ -16,9 +16,15 @@ const StoresCategoriesView = () => {
 
   useEffect(() => {
     setLoading(true);
-    Axios.get(`http://localhost:8080/api/stores/filter?category=${category}&${query}`)
-      .then((r) => setStores(r.data))
-      .catch((e) => console.log(e.response.data));
+    if(category === 'offer') {
+      Axios.get(`http://localhost:8080/api/stores/offers?${query}`)
+        .then((r) => setStores(r.data))
+        .catch((e) => console.log(e.response.data));
+    } else {
+      Axios.get(`http://localhost:8080/api/stores/filter?category=${category}&${query}`)
+        .then((r) => setStores(r.data))
+        .catch((e) => console.log(e.response.data));
+    }
     setLoading(false);
   }, [category, payment, search]);
 

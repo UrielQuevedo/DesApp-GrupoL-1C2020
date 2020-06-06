@@ -12,7 +12,7 @@ import '../../Styles/Location.css';
 const UserLocationButton = ({ actualLocation }) => {
   const [ open, setOpen ] = useState(false);
   const { address } = actualLocation;
-  const [ currentCoords, setCurrentCoords ] = useState();
+  const [ currentCoords, setCurrentCoords ] = useState(actualLocation);
   const { loading, fetchPositionsByCoords } = useHereMapService();
   const { setUser } = useContext(UserContext);
 

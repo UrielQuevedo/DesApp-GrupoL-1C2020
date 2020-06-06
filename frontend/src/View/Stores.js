@@ -99,6 +99,7 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
   const handlerSearchStores = (e) => {
     e.preventDefault();
     const data = searchDataToSend.value;
+    console.log(data)
     query.set('search', data);
     push(`${window.location.pathname}?${query}`);
     searchDataToSend.value = '';
