@@ -3,9 +3,12 @@ package unq.ar.edu.dessap.grupol.service;
 import org.springframework.stereotype.Service;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.model.Location;
+import unq.ar.edu.dessap.grupol.model.Payment;
+import unq.ar.edu.dessap.grupol.model.Sector;
 import unq.ar.edu.dessap.grupol.model.Store;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface StoreService  {
@@ -19,4 +22,8 @@ public interface StoreService  {
     List<Store> getStoresNearby(Location location);
 
     StoreDto getByUserId(Long idUser);
+
+    List<Store> getFilteredByName(String name);
+
+    List<Store> getStoresFiltered(Sector category, Optional<String> search, Optional<Payment> payment);
 }

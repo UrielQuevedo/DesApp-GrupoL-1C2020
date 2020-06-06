@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Hidden } from '@material-ui/core';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Hidden, CircularProgress } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import React, { useState } from 'react';
@@ -64,7 +64,7 @@ const UserLocationButton = ({ actualLocation }) => {
           <LocationMap currentCoords={actualLocation} setCurrentCoords={setCurrentCoords} />
         </DialogContent>
         <DialogActions>
-          {loading && <div>Loading ....</div>}
+          {loading && <CircularProgress style={{color:'#FB849D'}} />}
           <Button onClick={handleClose} color="secondary">
             cancelar
           </Button>

@@ -1,5 +1,6 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import unq.ar.edu.dessap.grupol.model.offer.Offer;
 
@@ -27,6 +28,7 @@ public class Product {
     private Category category;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_store_id")
+    @JsonIgnore
     private Store store;
     @OneToOne()
     @JoinColumn(name = "fk_offer_id")

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class StoreTest {
 
@@ -105,7 +104,7 @@ public class StoreTest {
         days.add(DayOfWeek.MONDAY);
 
         List<Payment> payments = new ArrayList<>();
-        payments.add(Payment.TARJETA_DE_DEBITO);
+        payments.add(Payment.TARJETA);
 
         Product product = mock(Product.class);
         List<Product> products = new ArrayList<>();
@@ -135,7 +134,7 @@ public class StoreTest {
         Assert.assertEquals(2.0, store.getMaxDistance(), 0.0);
         Assert.assertEquals("La Flauta", store.getName());
         Assert.assertEquals(DayOfWeek.MONDAY, store.getOpenDays().get(0));
-        Assert.assertEquals(Payment.TARJETA_DE_DEBITO, store.getPayments().get(0));
+        Assert.assertEquals(Payment.TARJETA, store.getPayments().get(0));
         Assert.assertEquals(product, store.getProducts().get(0));
         Assert.assertEquals(Sector.VERDULERIA, store.getSector());
         Assert.assertEquals(time, store.getTimes().get(0));
@@ -148,11 +147,11 @@ public class StoreTest {
         Time time = mock(Time.class);
 
         store.addDay(DayOfWeek.MONDAY);
-        store.addPayments(Payment.MERCADO_PAGO);
+        store.addPayments(Payment.EFECTIVO);
         store.addTimes(time);
 
         Assert.assertEquals(DayOfWeek.MONDAY, store.getOpenDays().get(0));
-        Assert.assertEquals(Payment.MERCADO_PAGO, store.getPayments().get(0));
+        Assert.assertEquals(Payment.EFECTIVO, store.getPayments().get(0));
         Assert.assertEquals(time, store.getTimes().get(0));
     }
 

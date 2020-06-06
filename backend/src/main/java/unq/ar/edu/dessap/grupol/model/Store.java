@@ -1,11 +1,13 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder
@@ -23,30 +25,30 @@ public class Store {
     @Enumerated(value = EnumType.STRING)
     private Sector sector;
 
-    @Column(nullable = false)
+    @Column
     private Location location;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "rel_stores_days", joinColumns =
     @JoinColumn(name = "fk_store", nullable = false))
-    @Column(name = "day", nullable = false)
+    @Column(name = "day")
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private List<DayOfWeek> openDays = new ArrayList<>();
 
     @JoinTable(
             name = "rel_stores_times",
-            joinColumns = @JoinColumn(name = "fk_store", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="fk_time", nullable = false)
+            joinColumns = @JoinColumn(name = "fk_store"),
+            inverseJoinColumns = @JoinColumn(name="fk_time")
     )
     @ManyToMany(cascade = CascadeType.ALL)
     @Builder.Default
     private List<Time> times = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @JoinTable(name = "rel_stores_payments", joinColumns =
-    @JoinColumn(name = "fk_store", nullable = false))
-    @Column(name = "payment", nullable = false)
+    @CollectionTable(name = "rel_stores_payments", joinColumns =
+    @JoinColumn(name = "fk_store"))
+    @Column(name = "payment")
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private List<Payment> payments = new ArrayList<>();
@@ -56,6 +58,7 @@ public class Store {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "store")
     @Builder.Default
+    @JsonIgnore
     private List<Product> products = new ArrayList<>();
 
     @Transient

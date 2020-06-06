@@ -1,8 +1,9 @@
 .container-lateral-menu {
   background: #FB849D;
-  width: 20%;
+  width: 257px;
   padding: 15px;
   font-family: 'Segoe UI';
+  min-height: 87vh;
   text-transform: capitalize;
   position: relative;
 }
@@ -55,17 +56,17 @@
 .search-container {
   background: #f9f8f8;
   padding: 15px;
-  height: 7rem;
+  margin-bottom: 15px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
 }
 
 .stores-container {
   background: #ffffff;
+  min-height: 70vh;
   margin-top: 15px;
   padding: 15px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
   font-family: 'Segoe UI';
-  height: 100vh;
 }
 
 .search-container h1 {
@@ -88,4 +89,56 @@
 
 .stores-container .pagination-container {
   transform: translateY(-4px);
+}
+
+.stores-container .icon {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.stores-container .icon-selected {
+  color: #FB849D;
+}
+
+.store-item-container {
+  margin: 0 30px 30px 0;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.store-item-container .name,
+.store-item-container .address,
+.store-item-container .sector {
+  text-transform: capitalize;
+}
+
+.store-item-container .name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.store-item-container .sector {
+  font-size: 11px;
+  color: #6d6464;
+  margin: 2px 0 3px 0;
+}
+
+.store-item-container .address {
+  font-size: 14px;
+}
+
+.store-item-container:hover {
+  -webkit-box-shadow: 0px 2px 0px 0px rgba(251,132,157,1);
+  -moz-box-shadow: 0px 2px 0px 0px rgba(251,132,157,1);
+  box-shadow: 0px 2px 0px 0px rgba(251,132,157,1);
+}
+
+.stores-loading-data {
+  position: relative;
+  left: 45%;
+  color: #FB849D !important;
+}
+
+.mt-20 {
+  margin-top: 20px;
 }
