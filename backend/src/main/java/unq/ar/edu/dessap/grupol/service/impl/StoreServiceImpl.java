@@ -34,8 +34,6 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store create(Long id, StoreDto storeDto) {
 
-        User user = userDao.getUserById(id);
-
         Store storedb = storeDao
                             .findByLatitudeAndLongitude(storeDto.getLocation().getLatitude(),
                                     storeDto.getLocation().getLongitude());
@@ -44,7 +42,7 @@ public class StoreServiceImpl implements StoreService {
             throw new DuplicatedLocationException();
         }
 
-        Store store = Converter.toStore(storeDto, user);
+        Store store = Converter.toStore(storeDto);
         storeDao.save(store);
         return store;
     }

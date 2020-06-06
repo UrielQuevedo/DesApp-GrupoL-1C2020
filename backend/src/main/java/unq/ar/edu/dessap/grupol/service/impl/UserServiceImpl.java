@@ -6,11 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Order;
+import unq.ar.edu.dessap.grupol.model.OrderHistory;
 import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
-import unq.ar.edu.dessap.grupol.service.builder.UserBuilder;
 
 import java.util.List;
 
@@ -25,10 +24,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(String _username, String _password, String _email) {
-        User user = UserBuilder.aUser()
-                .withEmail(_email)
-                .withPassword(passwordEncoder.encode(_password))
-                .withUsername(_username)
+        User user = User.builder()
+                .email(_email)
+                .password(passwordEncoder.encode(_password))
+                .username(_username)
                 .build();
 
         return userDao.save(user);
@@ -49,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Order> getUserOrdersById(long id) {
+    public List<OrderHistory> getUserOrdersById(long id) {
         User user = userDao.getUserById(id);
         return user.getOrders();
     }

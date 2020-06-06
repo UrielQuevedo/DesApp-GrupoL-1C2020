@@ -3,7 +3,6 @@ package unq.ar.edu.dessap.grupol.service;
 import org.junit.Assert;
 import org.junit.Test;
 import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.service.builder.LocationBuilder;
 import unq.ar.edu.dessap.grupol.service.impl.GeoDistanceServiceImpl;
 
 public class GeoDistanceServiceTest {
@@ -33,16 +32,16 @@ public class GeoDistanceServiceTest {
 
     @Test
     public void testGivenTwoLocationTheDistanceBetweenThemIs6Point30() {
-        Location quilmes = LocationBuilder.aLocation()
-                .withLatitude(-34.724269)
-                .withLongitude(-58.260797)
-                .withAddress("Quilmes")
+        Location quilmes = Location.builder()
+                .latitude(-34.724269)
+                .longitude(-58.260797)
+                .address("Quilmes")
                 .build();
 
-        Location berazategui = LocationBuilder.aLocation()
-                .withLatitude(-34.763363)
-                .withLongitude(-58.208780)
-                .withAddress("Berazategui")
+        Location berazategui = Location.builder()
+                .latitude(-34.763363)
+                .longitude(-58.208780)
+                .address("Berazategui")
                 .build();
 
         Double distance = geoDistanceService.calculateMaxDistanceBetweenTwoLocation(quilmes, berazategui);

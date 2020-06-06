@@ -42,11 +42,10 @@ public class ProductController {
         return new ResponseEntity<>(productDtoUpdated, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{idStore}/products/{idProduct}")
-    public ResponseEntity<List<ProductDto>> delete(@PathVariable("idStore") Long idStore,
-                                             @PathVariable("idProduct") Long idProduct) {
-        List<ProductDto> products = productService.delete(idStore, idProduct);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    @DeleteMapping(value = "/products/{id}")
+    public ResponseEntity<ProductDto> delete(@PathVariable("id") Long id) {
+        ProductDto productoDto = productService.delete(id);
+        return new ResponseEntity<>(productoDto, HttpStatus.OK);
     }
 
 }

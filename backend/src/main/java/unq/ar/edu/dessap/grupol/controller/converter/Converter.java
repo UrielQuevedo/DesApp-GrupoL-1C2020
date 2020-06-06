@@ -2,50 +2,36 @@ package unq.ar.edu.dessap.grupol.controller.converter;
 
 import unq.ar.edu.dessap.grupol.controller.dtos.*;
 import unq.ar.edu.dessap.grupol.model.*;
-import unq.ar.edu.dessap.grupol.service.builder.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Converter {
 
-    public static List<Sector> toListSectors(List<SectorDto> sectorsDtos) {
-
-        List<Sector> sectors = new ArrayList<>();
-        sectorsDtos.stream().forEach(sectorDto -> {
-                Sector sector = SectorBuilder.aSector()
-                                    .withName(sectorDto.getName())
-                                    .build();
-                sectors.add(sector);
-        });
-        return sectors;
-    }
-
     public static List<Time> toListTimes(List<TimeDto> timesDtos) {
 
         List<Time> times = new ArrayList<>();
         timesDtos.stream().forEach(timeDto -> {
-            Time time = TimeBuilder.aTime()
-                    .withOf(timeDto.getOf())
-                    .withUntil(timeDto.getUntil())
+            Time time = Time.builder()
+                    .of(timeDto.getOf())
+                    .until(timeDto.getUntil())
                     .build();
             times.add(time);
         });
         return times;
     }
 
-    public static Store toStore(StoreDto storeDto, User user) {
+    public static Store toStore(StoreDto storeDto) {
 
-        return StoreBuilder.aStore()
-                .withName(storeDto.getName())
-                .withSectors(toListSectors(storeDto.getSectors()))
-                .withAddress(storeDto.getLocation())
-                .withOpenDays(storeDto.getOpenDays())
-                .withTimes(toListTimes(storeDto.getTimes()))
-                .withPayments(storeDto.getPayments())
-                .withMaxDistance(storeDto.getMaxDistance())
-                .withUser(user)
-                .withProducts(new ArrayList<>())
+        return Store.builder()
+                .name(storeDto.getName())
+                .sector(storeDto.getSector())
+                .location(storeDto.getLocation())
+                .openDays(storeDto.getOpenDays())
+                .times(toListTimes(storeDto.getTimes()))
+                .payments(storeDto.getPayments())
+                .maxDistance(storeDto.getMaxDistance())
+                .products(new ArrayList<>())
                 .build();
     }
 
@@ -55,7 +41,7 @@ public class Converter {
         storeDto.setName(store.getName());
         storeDto.setLocation(store.getLocation());
         storeDto.setMaxDistance(store.getMaxDistance());
-        storeDto.setSectors(toSectorsDtos(store.getSectors()));
+        storeDto.setSector(store.getSector());
         storeDto.setOpenDays(store.getOpenDays());
         storeDto.setPayments(store.getPayments());
         storeDto.setTimes(toTimesDtos(store.getTimes()));
@@ -91,25 +77,15 @@ public class Converter {
         return timesDtos;
     }
 
-    public static List<SectorDto> toSectorsDtos(List<Sector> sectors) {
-        List<SectorDto> sectorDtos = new ArrayList<>();
-        sectors.forEach(sector -> {
-            SectorDto sectorDto = new SectorDto();
-            sectorDto.setName(sector.getName());
-            sectorDtos.add(sectorDto);
-        });
-        return sectorDtos;
-    }
-
     public static Product toProduct(ProductDto productDto, Store store) {
 
-        Product product = ProductBuilder.aProduct()
-                .withName(productDto.getName())
-                .withBrand(productDto.getBrand())
-                .withPrice(productDto.getPrice())
-                .withStock(productDto.getStock())
-                .withImage_url(productDto.getImage_url())
-                .withStores(new ArrayList<>())
+        Product product = Product.builder()
+                .name(productDto.getName())
+                .brand(productDto.getBrand())
+                .price(productDto.getPrice())
+                .stock(productDto.getStock())
+                .image_url(productDto.getImage_url())
+                .store(store)
                 .build();
 
         return product;

@@ -7,17 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { updateProductRequest } from '../Service/Api';
+import { useForm } from 'react-hook-form';
 
 const DialogUpdateProduct = ({ product, setProducts }) => {
 
     const { id, name, brand, price, stock, image_url } = product;
 
     const [open, setOpen] = React.useState(false);
-    const [_name, setName] = useState(name);
-    const [_brand, setBrand] = useState(brand);
-    const [_price, setPrice] = useState(price);
-    const [_stock, setStock] = useState(stock);
-    const [_image_url, setImageUrl] = useState(image_url);
+    const { register, handleSubmit } = useForm();
  
     const handleClickOpen = () => {
         setOpen(true);
@@ -27,32 +24,25 @@ const DialogUpdateProduct = ({ product, setProducts }) => {
         setOpen(false);
     }
 
-    const updateProduct = () => {
-      const productUpdated = { 
-        name: _name,
-        brand: _brand,
-        price: _price,
-        stock: _stock, 
-        image_url: _image_url
-      }
-
-      updateProductRequest(id, productUpdated)
-      .then(data => {
-        console.log(data);
-        handleClose();
-        setProducts(oldProducts => {
-          let productsUpdated = [];
-          oldProducts.forEach(product => productsUpdated.push(product));
-          let oldProduct = productsUpdated.find(product => product.id === data.id);
-          oldProduct.name = data.name;
-          oldProduct.brand = data.brand;
-          oldProduct.stock = data.stock;
-          oldProduct.price = data.price;
-          oldProduct.image_url = data.image_url;
-          return productsUpdated;
+    const updateProduct = (productUpdated, e) => {
+       updateProductRequest(id, productUpdated)
+        .then(data => {
+          console.log(data);
+          handleClose();
+          setProducts(oldProducts => {
+            let productsUpdated = [];
+            oldProducts.forEach(product => productsUpdated.push(product));
+            let oldProduct = productsUpdated.find(product => product.id === data.id);
+            oldProduct.name = data.name;
+            oldProduct.brand = data.brand;
+            oldProduct.stock = data.stock;
+            oldProduct.price = data.price;
+            oldProduct.image_url = data.image_url;
+            e.target.reset()
+            return productsUpdated;
+          })
         })
-      })
-      .catch(error => console.log(error));
+        .catch(error => console.log(error));
     }
 
     return (
@@ -61,67 +51,79 @@ const DialogUpdateProduct = ({ product, setProducts }) => {
         Modificar
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <form onSubmit={handleSubmit(updateProduct)}>
         <DialogTitle id="form-dialog-title">Producto a modificar</DialogTitle>
         <DialogContent>
           <TextField
-            defaultValue={_name}
+            defaultValue={name}
             autoFocus
             margin="dense"
+            required
             id="name"
             label="Nombre"
             type="text"
+            name="name"
             fullWidth
-            onChange= {(e) => setName(e.target.value)}
-          /> 
+            inputRef={register}
+         /> 
             <TextField
-            defaultValue={_brand}
+            defaultValue={brand}
             autoFocus
             margin="dense"
+            required
             id="brand"
             label="Marca"
             type="text"
+            name="brand"
             fullWidth
-            onChange= {(e) => setBrand(e.target.value)}
+            inputRef={register}
           />
             <TextField
-            defaultValue={_price}
+            defaultValue={price}
             autoFocus
             margin="dense"
+            required
             id="price"
             label="Precio"
             type="number"
+            name="price"
             fullWidth
-            onChange= {(e) => setPrice(e.target.value)}
+            inputRef={register}
           />
             <TextField
-            defaultValue={_stock}
+            defaultValue={stock}
             autoFocus
             margin="dense"
             id="stock"
+            required
             label="Stock"
             type="number"
+            name="stock"
             fullWidth
-            onChange= {(e) => setStock(e.target.value)}
+            inputRef={register}
           />
             <TextField
-            defaultValue={_image_url}
+            defaultValue={image_url}
             autoFocus
             margin="dense"
             id="image_url"
+            required
             label="URL de imagen"
             type="text"
+            name="image_url"
             fullWidth
-            onChange= {(e) => setImageUrl(e.target.value)}
+            inputRef={register}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button onClick={updateProduct} color="primary">
+          <Button type="submit" color="primary">
             Guardar
           </Button>
         </DialogActions>
+        </form>
       </Dialog>
     </div>
     )
