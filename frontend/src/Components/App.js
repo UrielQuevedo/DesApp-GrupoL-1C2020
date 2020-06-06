@@ -11,8 +11,9 @@ import MessagePage from '../View/MessagePage';
 import Register from '../View/Register';
 import Store from '../View/Store';
 import NavigationBar from './NavigationBar/NavigationBar';
-import Stores from '../View/Stores';
 import ScrollToTop from './ScrollToTop';
+import StoresCategoriesView from './StoresCategoriesView';
+import AllStoresView from './AllStoresView';
 
 function App() {
   return (
@@ -28,8 +29,8 @@ function App() {
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/store' component={Store} />
-                <Route exact path='/stores' component={Stores} />
-                <Route exact path='/stores/category/:category' component={Stores} />
+                <Route exact path='/stores' component={AllStoresView} />
+                <Route exact path='/stores/category/:category' component={StoresCategoriesView} />
                 <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
                 <Route path='*' render={() => <MessagePage errorNumnber="404" title="Not Found" />} />
               </Switch>

@@ -1,17 +1,20 @@
-import { Grid, Divider, List, ListItem, TextField, InputAdornment, Button, Typography, Breadcrumbs } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Breadcrumbs, Button, Divider, Grid, InputAdornment, List, ListItem, TextField, Typography } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import SearchIcon from '@material-ui/icons/Search';
-import '../Styles/Stores.css';
-import Pagination from '@material-ui/lab/Pagination';
-import { NavLink, useParams, Link } from 'react-router-dom';
-import MapIcon from '@material-ui/icons/Map';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import MapIcon from '@material-ui/icons/Map';
+import SearchIcon from '@material-ui/icons/Search';
+import Pagination from '@material-ui/lab/Pagination';
+import L from 'leaflet';
+import React, { useState } from 'react';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Link, NavLink, useHistory } from 'react-router-dom';
+import '../Styles/Stores.css';
 
-const Stores = () => {
-
-  const { category } = useParams();
-  const [ filter, setFilter ] = useState({});
+const Stores = ({ stores, loading, user }) => {
+  const query = new URLSearchParams(window.location.search);
+  const { push } = useHistory();
+  const [ filter, setFilter ] = useState({ name: query.get('filter') });
+  const [ isMapView, setisMapView ] = useState(false);
 
   const categories = [
     { name: 'carniceria' },
@@ -26,6 +29,47 @@ const Stores = () => {
     { name: 'tarjetas' },
     { name: 'efectivo' }
   ];
+
+  const userLocation = new L.Icon({
+    iconUrl: '../svg/ubicacion.svg',
+    iconRetinaUrl: '../svg/ubicacion.svg',
+    iconSize: [35, 35],
+  });
+
+  const storeLocation = new L.Icon({
+    iconUrl: '../svg/tienda.svg',
+    iconRetinaUrl: '../svg/tienda.svg',
+    iconSize: [35, 35],
+  });
+
+  const MapView = () => {
+    return (
+      <Map center={[ user.location.latitude, user.location.longitude ]} zoom={16} style={{ height:'440px' }}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        />
+          <Marker icon={userLocation} position={[ user.location.latitude, user.location.longitude ]}>
+            <Popup minWidth={90}>
+              <span>
+                Tu Ubicacion
+              </span>
+            </Popup>
+          </Marker>
+        {
+          stores.map(({ name, sector, location }, i) => (
+            <Marker icon={storeLocation} key={i} position={[location.latitude, location.longitude]} >
+              <Popup minWidth={90}>
+                <span>
+                  {name + " (" + sector + ")"}
+                </span>
+              </Popup>
+            </Marker>
+          ))
+        }
+      </Map>
+    );
+  }
 
   const CreateCategoriesItems = () => {
     return categories.map(({ name }, i) => (
@@ -45,8 +89,20 @@ const Stores = () => {
     return "filter-item " + ((name === filter.name) ? "filter-item-selected" : '');
   }
 
+  const handlerSearchStores = () => {
+    query.set('search','chino');
+    push(`${window.location.pathname}?${query}`);
+  }
+
   const handlerChangeFilter = (name) => {
-    filter.name === name ? setFilter({}) : setFilter({ name: name });
+      if (filter.name === name) {
+        setFilter({})
+        query.delete('filter')
+      } else {
+        setFilter({ name: name });
+        query.set('filter', name)
+      }
+    push(`${window.location.pathname}?${query}`);
   }
 
   const CreateFiltersItems = () => {
@@ -96,7 +152,7 @@ const Stores = () => {
           placeholder="Busca cualquier tienda"
           InputProps={{
             startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
-            endAdornment: <Button>BUSCAR</Button>
+            endAdornment: <Button onClick={handlerSearchStores}>BUSCAR</Button>
           }}
         />
       </div>
@@ -110,37 +166,58 @@ const Stores = () => {
           <Link to="/stores" style={{ textDecoration:'none' }}>
             Tiendas
           </Link>
-          <Typography style={{ textTransform:'capitalize' }} color="textPrimary">{category}</Typography>
+          {/* <Typography style={{ textTransform:'capitalize' }} color="textPrimary">{category}</Typography> */}
         </Breadcrumbs>
         <div style={{ display:'flex' }}>
-          <FormatListBulletedIcon style={{ marginRight: '10px' }}/>
-          <MapIcon />
+          <FormatListBulletedIcon onClick={() => setisMapView(false)} className={ "icon " + (!isMapView ? "icon-selected" : "") } />
+          <MapIcon onClick={() => setisMapView(true)} className={ "icon " + (isMapView ? "icon-selected" : "") } />
           <div className="pagination-container">
-            <Pagination count={4} page={1} />
+            <Pagination count={1} page={1} />
           </div>
         </div>
       </Grid>
     );
   }
 
+  const StoresItemsView = () => {
+    return stores.map(({ name, sector, location }, i) => (
+      <div key={i} className="store-item-container">
+        <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
+        <div className="name">
+          {name}
+        </div>
+        <div className="address">
+          {location.address}
+        </div>
+        <div className="sector">
+          {sector}
+        </div>
+      </div>
+    ));
+  }
+
   const StoresView = () => {
     return (
       <Grid container item style={{ padding:'1rem', width:"100%" }} direction="column">
         <FilterLayout />
-        <div className="stores-container">
+        <Grid container item direction="column" className="stores-container">
           <StoreViewTop />
-          { category }
-        </div>
+          { !loading &&
+            <Grid container justify="center" item direction="row" style={{ marginTop:'10px' }}>
+              { isMapView ? <MapView /> : <StoresItemsView /> }
+            </Grid>
+          }
+        </Grid>
       </Grid>
     );
   }
 
   return (
-    <div style={{ marginTop:'4.5rem' }}>
-      <div style={{ display:'flex' }}>
-        <LateralMenu />
+    <div style={{ marginTop:'4.5rem', display:'flex' }}>
+      <LateralMenu />
+      <Grid container item xs={10}>
         <StoresView />
-      </div>
+      </Grid>
     </div>
   );
 }

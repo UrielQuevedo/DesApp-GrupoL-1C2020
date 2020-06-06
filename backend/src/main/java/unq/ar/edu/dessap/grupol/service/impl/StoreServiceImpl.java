@@ -6,9 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.converter.Converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.controller.exception.NotFound;
-import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Store;
-import unq.ar.edu.dessap.grupol.model.User;
+import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.persistence.StoreDao;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.GeoDistanceService;
@@ -16,6 +14,7 @@ import unq.ar.edu.dessap.grupol.service.StoreService;
 import unq.ar.edu.dessap.grupol.controller.exception.DuplicatedLocationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,8 +84,13 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Store> getFiltered(String name) {
-        return storeDao.getFiltered(name);
+    public List<Store> getFilteredByName(String name) {
+        return storeDao.getFilteredByName(name);
+    }
+
+    @Override
+    public List<Store> getStoresFiltered(Sector category, Optional<String> search,  Optional<Payment> payment) {
+        return storeDao.getStoresFiltered(category, search.orElse(" "), payment.orElse(null));
     }
 
 }

@@ -2,10 +2,9 @@ package unq.ar.edu.dessap.grupol.persistence.impl.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Product;
-import unq.ar.edu.dessap.grupol.model.Store;
+import unq.ar.edu.dessap.grupol.model.*;
 
 import java.util.List;
 
@@ -19,8 +18,11 @@ public interface StoreRepository extends JpaRepository<Store, Long>  {
     Store findByLatitudeAndLongitude(Double latitude, Double longitude);
 
     @Query("SELECT s FROM Store s INNER JOIN Product p ON s.id = p.store.id " +
-            "WHERE lower(s.name) like lower(concat('%',?1,'%')) OR lower(p.name) like lower(concat('%',?1,'%'))")
-    List<Store> getStoresFindByNameOrProductsName(String name);
+            "WHERE lower(s.name) like lower(concat('%',:name,'%')) OR lower(p.name) like lower(concat('%',:name,'%'))")
+    List<Store> getStoresFindByNameOrProductsName(@Param("name") String name);
 
-    //List<Store> getStoresFindByNameAndSectorAndFilter();
+    @Query("SELECT s FROM Store s WHERE s.sector = :sector " +
+            "AND lower(s.name) LIKE lower(concat('%',:search,'%')) " +
+            "AND (:payment IS NULL OR :payment MEMBER s.payments)")
+    List<Store> getStoresFindByNameAndSectorAndFilter(@Param("sector") Sector sector, @Param("search") String search, @Param("payment") Payment payment);
 }

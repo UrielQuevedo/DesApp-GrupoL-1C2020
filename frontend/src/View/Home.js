@@ -3,12 +3,15 @@ import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ShoppingCart from '../Components/ShoppingCart';
 import '../Styles/Home.css';
+import { useForm } from 'react-hook-form';
 
 const Home = () => {
   const { t } = useTranslation();
+  const { register, handleSubmit } = useForm();
+  const { push } = useHistory();
   const categories = [
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114819/carniceria_qehdne.jpg', name: 'carniceria' },
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114822/farmacia_oz38xp.jpg', name: 'farmacia' },
@@ -18,26 +21,35 @@ const Home = () => {
     { url: 'https://res.cloudinary.com/dddzzcrzg/image/upload/v1590114819/dietetica_zcwr0l.jpg', name: 'dietetica' },
   ];
 
+  const searchStores = (data, e) => {
+    push('/stores?search=' + data.search.trim());
+    e.target.reset();
+  }
+
   const SearchForm = () => {
     return (
-      <Grid container>
-        <Grid item xs={12} sm={10} lg={10}>
-          <TextField
-            className="search"
-            placeholder="Busca cualquier producto"
-            variant="outlined"
-            required
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
-            }}
-          />
+      <form onSubmit={handleSubmit(searchStores)}>
+        <Grid container>
+          <Grid item xs={12} sm={10} lg={10}>
+            <TextField
+              className="search"
+              inputRef={register}
+              placeholder="Busca cualquier tienda o producto"
+              variant="outlined"
+              name="search"
+              required
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={2} lg={2}>
+            <Button type="submit" variant="contained" className="buttonSearch">
+              {t('buscar')}
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={2} lg={2}>
-          <Button name="search" variant="contained" className="buttonSearch">
-            {t('buscar')}
-          </Button>
-        </Grid>
-      </Grid>
+      </form>
     );
   }
 

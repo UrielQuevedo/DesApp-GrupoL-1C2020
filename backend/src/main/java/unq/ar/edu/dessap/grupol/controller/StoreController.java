@@ -5,18 +5,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
 import unq.ar.edu.dessap.grupol.model.Location;
+import unq.ar.edu.dessap.grupol.model.Payment;
+import unq.ar.edu.dessap.grupol.model.Sector;
 import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.service.StoreService;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api")
 @Component
+@Validated
 public class StoreController {
 
     @Autowired
@@ -56,9 +63,15 @@ public class StoreController {
         }
     }
 
-    @GetMapping(value = "/stores/filter/{name}")
-    public ResponseEntity<List<Store>> getStoresFilter(@PathVariable("name") String name) {
-        return new ResponseEntity<List<Store>>(storeService.getFiltered(name), HttpStatus.OK);
+    @GetMapping(value = "/stores/all")
+    public ResponseEntity<List<Store>> getStoresFilter(@RequestParam String name) {
+        return new ResponseEntity<List<Store>>(storeService.getFilteredByName(name), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/stores/filter")
+    public ResponseEntity<List<Store>> getStoresFiltered(@RequestParam Sector category,
+                                                         @RequestParam Optional<String> search,
+                                                         @RequestParam Optional<Payment> payment) {
+        return new ResponseEntity<List<Store>>(storeService.getStoresFiltered(category, search, payment), HttpStatus.OK);
+    }
 }

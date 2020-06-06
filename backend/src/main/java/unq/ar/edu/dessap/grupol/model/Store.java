@@ -1,11 +1,13 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder
@@ -44,7 +46,7 @@ public class Store {
     private List<Time> times = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @JoinTable(name = "rel_stores_payments", joinColumns =
+    @CollectionTable(name = "rel_stores_payments", joinColumns =
     @JoinColumn(name = "fk_store"))
     @Column(name = "payment")
     @Enumerated(EnumType.STRING)
@@ -56,6 +58,7 @@ public class Store {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "store")
     @Builder.Default
+    @JsonIgnore
     private List<Product> products = new ArrayList<>();
 
     @Transient
@@ -75,5 +78,9 @@ public class Store {
 
     public void addTimes(Time time) {
         this.times.add(time);
+    }
+    
+    public List<String> getPayments() {
+        return payments.stream().map(Enum::name).collect(Collectors.toList());
     }
 }
