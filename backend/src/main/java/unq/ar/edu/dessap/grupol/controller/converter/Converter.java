@@ -63,6 +63,7 @@ public class Converter {
         productDto.setImage_url(product.getImage_url());
         productDto.setPrice(product.getPrice());
         productDto.setStock(product.getStock());
+        productDto.setCategory(product.getCategory());
         return productDto;
     }
 
