@@ -8,20 +8,30 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { updateProductRequest } from '../Service/Api';
 import { useForm } from 'react-hook-form';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const DialogUpdateProduct = ({ product, setProducts }) => {
 
-    const { id, name, brand, price, stock, image_url } = product;
+    const { id, name, brand, price, stock, image_url, category } = product;
 
     const [open, setOpen] = React.useState(false);
     const { register, handleSubmit } = useForm();
- 
+    const [_category, setCategory] = useState(category);
+
     const handleClickOpen = () => {
         setOpen(true);
     }
     
     const handleClose = () => {
         setOpen(false);
+    }
+
+    const handleChange = (event) => {
+      console.log(event.target.value);
+      setCategory(event.target.value);
     }
 
     const updateProduct = (productUpdated, e) => {
@@ -37,6 +47,7 @@ const DialogUpdateProduct = ({ product, setProducts }) => {
             oldProduct.brand = data.brand;
             oldProduct.stock = data.stock;
             oldProduct.price = data.price;
+            oldProduct.category = _category;
             oldProduct.image_url = data.image_url;
             e.target.reset()
             return productsUpdated;
@@ -114,6 +125,21 @@ const DialogUpdateProduct = ({ product, setProducts }) => {
             fullWidth
             inputRef={register}
           />
+           <FormControl fullWidth>
+            <InputLabel id="select-category">Categoria</InputLabel>
+            <Select
+              required
+              labelId="select-category"
+              id="category"
+              value={_category}
+              onChange={handleChange}
+              >
+              <MenuItem value={"BEBIDAS"}>BEBIDAS</MenuItem>
+              <MenuItem value={"GALLETITAS"}>GALLETITAS</MenuItem>
+              <MenuItem value={"FIAMBRE"}>FIAMBRE</MenuItem>
+              <MenuItem value={"FIDEOS"}>FIDEOS</MenuItem>
+            </Select>
+            </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
