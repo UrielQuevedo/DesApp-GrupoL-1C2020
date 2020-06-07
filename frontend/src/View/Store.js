@@ -53,7 +53,7 @@ const Store = (props) => {
           <Paper className={classes.paper}>{name}</Paper>
         </Grid>
         <Grid item xs={12}>
-          <DialogAddProduct setProducts={setProducts} />
+          <DialogAddProduct idStore={id} setProducts={setProducts} />
         </Grid>
         { products  &&
             <ListProduct products={products} idStore={id} setProducts={setProducts}/>

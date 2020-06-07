@@ -13,7 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 
-const DialogAddProduct = ( { setProducts }) => {
+const DialogAddProduct = ( { idStore, setProducts }) => {
   
   const [open, setOpen] = useState(false);
   const { register, handleSubmit } = useForm();
@@ -28,12 +28,13 @@ const DialogAddProduct = ( { setProducts }) => {
   }
 
   const handleChange = (event) => {
+    console.log(event.target.value);
     setCategory(event.target.value);
   }
 
   const addProduct = (product, e) => {
-      console.log(product);
-      addProductRequest(3, product)
+      const newProduct = {...product, category};
+      addProductRequest(idStore, newProduct)
       .then(data => {
             console.log(data);
             handleClose();
@@ -123,10 +124,10 @@ const DialogAddProduct = ( { setProducts }) => {
               value={category}
               onChange={handleChange}
               >
-              <MenuItem value={10}>BEBIDAS</MenuItem>
-              <MenuItem value={20}>GALLETITAS</MenuItem>
-              <MenuItem value={30}>FIAMBRE</MenuItem>
-              <MenuItem value={40}>FIDEOS</MenuItem>
+              <MenuItem value={"BEBIDAS"}>BEBIDAS</MenuItem>
+              <MenuItem value={"GALLETITAS"}>GALLETITAS</MenuItem>
+              <MenuItem value={"FIAMBRE"}>FIAMBRE</MenuItem>
+              <MenuItem value={"FIDEOS"}>FIDEOS</MenuItem>
             </Select>
             </FormControl>
         </DialogContent>

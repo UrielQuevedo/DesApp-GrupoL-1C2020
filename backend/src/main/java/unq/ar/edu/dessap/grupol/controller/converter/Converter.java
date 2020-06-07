@@ -85,6 +85,7 @@ public class Converter {
                 .price(productDto.getPrice())
                 .stock(productDto.getStock())
                 .image_url(productDto.getImage_url())
+                .category(productDto.getCategory())
                 .store(store)
                 .build();
 
