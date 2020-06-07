@@ -15,7 +15,7 @@ const ListProduct = ({ products, idStore, setProducts }) => {
                 <Product name={product.name} price={product.price} 
                 image_url ={product.image_url} brand={product.brand} stock={product.stock} category={product.category}/>
                 <DialogUpdateProduct idStore={idStore} product={product} setProducts={setProducts}/>
-                <DialogDeleteProduct idStore={idStore} idProduct={product.id} setProducts={setProducts}/>
+                <DialogDeleteProduct idProduct={product.id} setProducts={setProducts}/>
             </Grid>
         )}
         </React.Fragment>
