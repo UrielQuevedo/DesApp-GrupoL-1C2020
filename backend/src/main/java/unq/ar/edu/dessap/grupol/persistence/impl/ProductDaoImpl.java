@@ -1,7 +1,10 @@
 package unq.ar.edu.dessap.grupol.persistence.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import unq.ar.edu.dessap.grupol.model.Category;
 import unq.ar.edu.dessap.grupol.model.Product;
 import unq.ar.edu.dessap.grupol.persistence.ProductDao;
 import unq.ar.edu.dessap.grupol.persistence.impl.repository.ProductRepository;
@@ -33,5 +36,10 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void deleteById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Product> getProductsFiltered(Long idStore, Category category, String search, Pageable pageable) {
+        return productRepository.getProductsByStoreIdAndProductNameAndCategory(idStore, search, category, pageable);
     }
 }
