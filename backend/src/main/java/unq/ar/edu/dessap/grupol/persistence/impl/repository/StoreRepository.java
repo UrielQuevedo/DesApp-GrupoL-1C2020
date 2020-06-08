@@ -1,5 +1,7 @@
 package unq.ar.edu.dessap.grupol.persistence.impl.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,10 +19,12 @@ public interface StoreRepository extends JpaRepository<Store, Long>  {
             "and (s.location.longitude = ?2)")
     Store findByLatitudeAndLongitude(Double latitude, Double longitude);
 
-    @Query("SELECT s FROM Store s LEFT JOIN s.products p " +
+    @Query("SELECT DISTINCT s FROM Store s LEFT JOIN s.products p " +
             "WHERE (lower(s.name) like lower(concat('%',:name,'%')) OR lower(p.name) like lower(concat('%',:name,'%'))) " +
             "AND (:payment IS NULL OR :payment MEMBER s.payments) ")
-    List<Store> getStoresFindByNameOrProductsNameAndPayment(@Param("name") String name, @Param("payment") Payment payment);
+    Page<Store> getStoresFindByNameOrProductsNameAndPayment(@Param("name") String name,
+                                                            @Param("payment") Payment payment,
+                                                            Pageable pageable);
 
     @Query("SELECT s FROM Store s WHERE s.sector = :sector " +
             "AND lower(s.name) LIKE lower(concat('%',:search,'%')) " +

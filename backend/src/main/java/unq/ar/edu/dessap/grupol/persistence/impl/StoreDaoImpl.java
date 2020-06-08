@@ -1,6 +1,8 @@
 package unq.ar.edu.dessap.grupol.persistence.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import unq.ar.edu.dessap.grupol.model.Payment;
@@ -39,8 +41,8 @@ public class StoreDaoImpl implements StoreDao {
     }
 
     @Override
-    public List<Store> getFilteredByNameAndPayment(String name, Payment payment) {
-        return storeRepository.getStoresFindByNameOrProductsNameAndPayment(name, payment);
+    public Page<Store> getFilteredByNameAndPayment(String name, Payment payment, Pageable pageable) {
+        return storeRepository.getStoresFindByNameOrProductsNameAndPayment(name, payment, pageable);
     }
 
     @Override
