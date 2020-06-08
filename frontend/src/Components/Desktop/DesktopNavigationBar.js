@@ -26,7 +26,14 @@ const DesktopNavigationBar = ({ user }) => {
   const MyStoreButton = () => {
     return (
       <div className="myStoreButton">
-        <Link style={{ textDecoration:'none' }} to='/store'>
+        <Link style={{ textDecoration:'none' }} 
+        to={{
+          pathname:'/store',
+          state: {
+            user: user
+          }
+        }}>
+
           <Button size="small" variant="contained">
             tu tienda
           </Button>
