@@ -69,19 +69,21 @@ public class StoreController {
     public ResponseEntity<Page<Store>> getStoresFilter(@RequestParam Optional<String> search,
                                                        @RequestParam Optional<Payment> payment,
                                                        Pageable pageable) {
-        return new ResponseEntity<Page<Store>>(storeService.getFilteredByNameAndPayment(search, payment, pageable), HttpStatus.OK);
+        return new ResponseEntity<>(storeService.getFilteredByNameAndPayment(search, payment, pageable), HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/filter")
-    public ResponseEntity<List<Store>> getStoresFiltered(@RequestParam Sector category,
+    public ResponseEntity<Page<Store>> getStoresFiltered(@RequestParam Sector category,
                                                          @RequestParam Optional<String> search,
-                                                         @RequestParam Optional<Payment> payment) {
-        return new ResponseEntity<List<Store>>(storeService.getStoresFiltered(category, search, payment), HttpStatus.OK);
+                                                         @RequestParam Optional<Payment> payment,
+                                                         Pageable pageable) {
+        return new ResponseEntity<>(storeService.getStoresFiltered(category, search, payment, pageable), HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/offers")
-    public ResponseEntity<List<Store>> getStoresThatHaveOffer(@RequestParam Optional<String> search,
-                                                              @RequestParam Optional<Payment> payment) {
-        return new ResponseEntity<List<Store>>(storeService.getStoresThatHaveOffer(search, payment), HttpStatus.OK);
+    public ResponseEntity<Page<Store>> getStoresThatHaveOffer(@RequestParam Optional<String> search,
+                                                              @RequestParam Optional<Payment> payment,
+                                                              Pageable pageable) {
+        return new ResponseEntity<>(storeService.getStoresThatHaveOffer(search, payment, pageable), HttpStatus.OK);
     }
 }

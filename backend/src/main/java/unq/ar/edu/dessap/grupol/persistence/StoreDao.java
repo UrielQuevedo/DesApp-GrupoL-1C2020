@@ -23,7 +23,7 @@ public interface StoreDao {
 
     Page<Store> getFilteredByNameAndPayment(String name, Payment payment, Pageable pageable);
 
-    List<Store> getStoresFiltered(Sector category, String search, Payment payment);
+    Page<Store> getStoresFiltered(Sector category, String search, Payment payment, Pageable pageable);
 
-    List<Store> getStoresThatHaveOffer(String search, Payment payment);
+    Page<Store> getStoresThatHaveOffer(String search, Payment payment, Pageable pageable);
 }

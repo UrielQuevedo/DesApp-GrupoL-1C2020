@@ -11,7 +11,7 @@ import { Link, NavLink, useHistory } from 'react-router-dom';
 import '../Styles/Stores.css';
 import { Alert } from '@material-ui/lab';
 
-const Stores = ({ stores, loading, user, query, category, search }) => {
+const Stores = ({ stores, loading, user, query, category, search, pagination, setPagination }) => {
   const { push } = useHistory();
   const [ payment, setPayment ] = useState({ name: query.get('payment') });
   const [ isMapView, setisMapView ] = useState(false);
@@ -79,7 +79,7 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
             <Divider variant="middle" />
             <NavLink className="navlink-item" activeClassName="navlink-item-selected" to="/stores/category/offer">
               <ListItem className="item">
-                promociones
+                ofertas
                 <ArrowForwardIosIcon className="icon" />
               </ListItem>
             </NavLink>
@@ -99,7 +99,6 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
   const handlerSearchStores = (e) => {
     e.preventDefault();
     const data = searchDataToSend.value;
-    console.log(data)
     query.set('search', data);
     push(`${window.location.pathname}?${query}`);
     searchDataToSend.value = '';
@@ -184,6 +183,12 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
     );
   }
 
+  const handlePage = (e, value) => {
+    if (value !== pagination.number) {
+      setPagination({ ...pagination, number: value });
+    }
+  }
+
   const StoresNavigationView = () => {
     return (
       <Grid container item>
@@ -197,7 +202,7 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
           <FormatListBulletedIcon onClick={() => setisMapView(false)} className={ "icon " + (!isMapView ? "icon-selected" : "") } />
           <MapIcon onClick={() => setisMapView(true)} className={ "icon " + (isMapView ? "icon-selected" : "") } />
           <div className="pagination-container">
-            <Pagination count={1} page={1} />
+            { stores.length > 0  && <Pagination onChange={handlePage} count={pagination.totalPages} page={pagination.number} /> }
           </div>
         </div>
       </Grid>

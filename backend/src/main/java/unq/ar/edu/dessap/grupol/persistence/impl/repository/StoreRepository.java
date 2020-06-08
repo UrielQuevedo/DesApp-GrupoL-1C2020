@@ -29,11 +29,16 @@ public interface StoreRepository extends JpaRepository<Store, Long>  {
     @Query("SELECT s FROM Store s WHERE s.sector = :sector " +
             "AND lower(s.name) LIKE lower(concat('%',:search,'%')) " +
             "AND (:payment IS NULL OR :payment MEMBER s.payments)")
-    List<Store> getStoresFindByNameAndSectorAndFilter(@Param("sector") Sector sector, @Param("search") String search, @Param("payment") Payment payment);
+    Page<Store> getStoresFindByNameAndSectorAndFilter(@Param("sector") Sector sector,
+                                                      @Param("search") String search,
+                                                      @Param("payment") Payment payment,
+                                                      Pageable pageable);
 
     @Query("SELECT s FROM Store s LEFT JOIN s.products p WHERE p.offerToApply IS NOT NULL " +
             "AND lower(s.name) LIKE lower(concat('%',:search,'%')) " +
             "AND (:payment IS NULL OR :payment MEMBER s.payments)")
-    List<Store> getStoresThatHaveOffer(@Param("search") String search, @Param("payment") Payment payment);
+    Page<Store> getStoresThatHaveOffer(@Param("search") String search,
+                                       @Param("payment") Payment payment,
+                                       Pageable pageable);
 
 }
