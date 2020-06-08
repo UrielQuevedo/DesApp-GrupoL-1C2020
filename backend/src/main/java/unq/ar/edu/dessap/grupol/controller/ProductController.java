@@ -44,7 +44,12 @@ public class ProductController {
                                                              @PathVariable("category") Category category,
                                                              @RequestParam Optional<String> search,
                                                              Pageable pageable) {
-        return new ResponseEntity<Page<Product>>(productService.getProductsFiltered(idStore, category, search, pageable), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getProductsFiltered(idStore, category, search, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{idStore}/products/categories")
+    public ResponseEntity<List<Category>> getCategoriesFromProductsStore(@PathVariable("idStore") Long idStore){
+        return new ResponseEntity<>(productService.getCategoriesFromProductStore(idStore),HttpStatus.OK);
     }
 
     @PutMapping(value = "/products/{id}")

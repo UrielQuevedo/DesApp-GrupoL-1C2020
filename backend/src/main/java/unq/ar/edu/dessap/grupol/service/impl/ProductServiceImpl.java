@@ -82,4 +82,9 @@ public class ProductServiceImpl implements ProductService {
         return productDao.getProductsFiltered(idStore, category, search.orElse(""), pageable);
     }
 
+    @Override
+    public List<Category> getCategoriesFromProductStore(Long idStore) {
+        return productDao.getCategoriesFromProductsStore(idStore);
+    }
+
 }

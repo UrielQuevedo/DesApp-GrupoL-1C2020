@@ -42,4 +42,9 @@ public class ProductDaoImpl implements ProductDao {
     public Page<Product> getProductsFiltered(Long idStore, Category category, String search, Pageable pageable) {
         return productRepository.getProductsByStoreIdAndProductNameAndCategory(idStore, search, category, pageable);
     }
+
+    @Override
+    public List<Category> getCategoriesFromProductsStore(Long idStore) {
+        return productRepository.getProductsCategories(idStore);
+    }
 }
