@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useGetCategories } from '../Service/StoreService';
 
-const ProductWrapper = () => {
+const ProductsWrapper = () => {
   const { store_id } = useParams();
   const { categoriesLoading, categories } = useGetCategories(store_id);
 
@@ -15,4 +15,4 @@ const ProductWrapper = () => {
   );
 }
 
-export default ProductWrapper;
+export default ProductsWrapper;
