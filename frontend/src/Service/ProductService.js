@@ -22,7 +22,7 @@ export const useGetProductsFiltered = (store_id, category) => {
     page: 0,
     sort: 'price,desc',
   });
-  const { method, loading: productsLoading } = useGet(`/stores/${store_id}/products/${category}/filter`, filter);
+  const { method, loading: productsLoading } = useGet(`/stores/${store_id}/products/${category}`, filter);
 
   const setContent = (data) => {
     setProducts(data.content);

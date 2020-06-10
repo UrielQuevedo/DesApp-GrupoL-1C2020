@@ -19,9 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "where s.id = ?1")
     List<Product> findAllByIdStore(Long id);
 
-    @Query("SELECT DISTINCT p.category FROM Store s INNER JOIN Product p ON p.store.id = :store_id AND s.id = :store_id")
-    List<Category> getProductsCategories(@Param("store_id") Long store_id);
-
     @Query("SELECT p FROM Product p INNER JOIN Store s ON p.store.id = :store_id AND s.id = :store_id " +
             "AND lower(p.name) LIKE lower(concat('%',:search,'%')) " +
             "AND :category = p.category ")

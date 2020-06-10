@@ -11,10 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
-import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Payment;
-import unq.ar.edu.dessap.grupol.model.Sector;
-import unq.ar.edu.dessap.grupol.model.Store;
+import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.service.StoreService;
 
 import javax.validation.Valid;
@@ -49,12 +46,6 @@ public class StoreController {
         return new ResponseEntity<>(storeDto, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/stores")
-    public ResponseEntity<List<StoreDto>> getAll() {
-        List<StoreDto> storesDtos = storeService.getAll();
-        return new ResponseEntity<>(storesDtos, HttpStatus.OK);
-    }
-
     @GetMapping(value = "/stores/nearby")
     public ResponseEntity<List<Store>> getStoresNearby(@RequestBody Location location) {
         try {
@@ -72,7 +63,7 @@ public class StoreController {
         return new ResponseEntity<>(storeService.getFilteredByNameAndPayment(search, payment, pageable), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/stores/filter")
+    @GetMapping(value = "/stores")
     public ResponseEntity<Page<Store>> getStoresFiltered(@RequestParam Sector category,
                                                          @RequestParam Optional<String> search,
                                                          @RequestParam Optional<Payment> payment,
@@ -85,5 +76,10 @@ public class StoreController {
                                                               @RequestParam Optional<Payment> payment,
                                                               Pageable pageable) {
         return new ResponseEntity<>(storeService.getStoresThatHaveOffer(search, payment, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/stores/{idStore}/categories")
+    public ResponseEntity<List<Category>> getCategoriesFromProductsStore(@PathVariable("idStore") Long idStore){
+        return new ResponseEntity<>(storeService.getCategoriesFromStore(idStore),HttpStatus.OK);
     }
 }

@@ -49,7 +49,7 @@ const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
   }
 
   const handlerChangePayment = (name) => {
-    filter.payment ?
+    filter.payment === name.toUpperCase() ?
     setFilter({...filter, payment: null }) :
     setFilter({...filter, payment: name.toUpperCase() });
   }

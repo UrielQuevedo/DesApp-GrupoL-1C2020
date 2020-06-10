@@ -22,6 +22,4 @@ public interface ProductService {
     ProductDto delete(Long id);
 
     Page<Product> getProductsFiltered(Long idStore, Category category, Optional<String> search, Pageable pageable);
-
-    List<Category> getCategoriesFromProductStore(Long idStore);
 }
