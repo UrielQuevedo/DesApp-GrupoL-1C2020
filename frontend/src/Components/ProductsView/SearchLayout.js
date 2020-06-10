@@ -13,8 +13,10 @@ const SearchLayout = ({ name, subName, filter, setFilter }) => {
   const handlerSearchStores = (e) => {
     e.preventDefault();
     const data = searchDataToSend.value;
-    setFilter({...filter, search: data });
-    searchDataToSend.value = '';
+    if (data) {
+      setFilter({...filter, search: data });
+      searchDataToSend.value = '';
+    }
   }
 
   const handleSearchDataToSend = (e) => {

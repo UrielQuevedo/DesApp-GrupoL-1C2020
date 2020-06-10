@@ -1,11 +1,14 @@
-import { Breadcrumbs, CircularProgress, Divider, Grid, List, ListItem, Typography, Fade } from '@material-ui/core';
+import { Breadcrumbs, CircularProgress, Divider, Fade, Grid, List, ListItem, Typography } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { Alert } from '@material-ui/lab';
 import Pagination from '@material-ui/lab/Pagination';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, NavLink, useParams } from 'react-router-dom';
 import ProductItem from '../Components/ProductsView/ProductItem';
 import SearchLayout from '../Components/ProductsView/SearchLayout';
+import ShowStoreOnMap from '../Components/ShowStoresOnMap';
+import { UserContext } from '../Context/UserContext';
 import { useGetProductsFiltered } from '../Service/ProductService';
 import { useGetCategories, useGetStore } from '../Service/StoreService';
 import '../Styles/Stores.css';
@@ -16,6 +19,7 @@ const Products = () => {
   const { categoriesLoading, categories } = useGetCategories(store_id);
   const { store } = useGetStore(store_id);
   const { productsLoading, products, setFilter, filter, totalPages } = useGetProductsFiltered(store_id, category);
+  const { user } = useContext(UserContext);
 
   const filters = [
     { name: 'Menor Precio', value:'price,asc' },
@@ -100,10 +104,10 @@ const Products = () => {
           </Typography>
         </Breadcrumbs>
         <div style={{ display:'flex' }}>
-          <div onClick={() => setIsInfoView(false)} className={ "icon " + (!isInfoView ? "icon-selected" : "") }>
+          <div onClick={() => setIsInfoView(false)} style={{ fontWeight: 500 }} className={ "icon " + (!isInfoView ? "icon-selected" : "") }>
             Productos
           </div>
-          <div onClick={() => setIsInfoView(true)} className={ "icon " + (isInfoView ? "icon-selected" : "") }>
+          <div onClick={() => setIsInfoView(true)} style={{ fontWeight: 500 }} className={ "icon " + (isInfoView ? "icon-selected" : "") }>
             Informacion
           </div>
           <div className="pagination-container">
@@ -117,9 +121,26 @@ const Products = () => {
   const StoreInformation = () => {
     return (
       <Fade in={true}>
-        <div>
-          {store.location.address}
-        </div>
+        <Grid container justify="center">
+          <Grid container item xs={6} justify="center" direction="column" alignContent="center">
+            <h3 style={{ margin:'0', marginBottom:'13px' }}>
+              Horarios
+            </h3>
+            <p style={{textAlign:'start', width:'100%', height:'440px'}}>
+              No hay nada aun.
+            </p>
+          </Grid>
+          <Grid container item xs={6} justify="center" direction="column" alignContent="center">
+            <h3 style={{ margin:'0' }}>
+              Ubicacion
+            </h3>
+            <p style={{textAlign:'start', width:'100%', marginTop:'0' }}>
+              <LocationOnIcon style={{ transform: 'translateY(6px)', marginRight: '2px' }} />
+              {store.location.address}
+            </p>
+            <ShowStoreOnMap userLocation={user.location} stores={[store]} centerLocation={store.location} />
+          </Grid>
+        </Grid>
       </Fade>
     );
   }
