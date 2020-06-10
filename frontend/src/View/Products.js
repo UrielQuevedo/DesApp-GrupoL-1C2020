@@ -2,12 +2,12 @@ import { Breadcrumbs, CircularProgress, Divider, Fade, Grid, List, ListItem, Typ
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { Alert } from '@material-ui/lab';
-import Pagination from '@material-ui/lab/Pagination';
 import React, { useContext, useState } from 'react';
 import { Link, NavLink, useParams } from 'react-router-dom';
+import PaginationComponent from '../Components/ProductsAndStores/Pagination';
 import ProductItem from '../Components/ProductsView/ProductItem';
-import SearchLayout from '../Components/ProductsView/SearchLayout';
-import ShowStoreOnMap from '../Components/ShowStoresOnMap';
+import SearchLayout from '../Components/ProductsAndStores/SearchLayout';
+import ShowStoreOnMap from '../Components/ProductsAndStores/ShowStoresOnMap';
 import { UserContext } from '../Context/UserContext';
 import { useGetProductsFiltered } from '../Service/ProductService';
 import { useGetCategories, useGetStore } from '../Service/StoreService';
@@ -82,13 +82,6 @@ const Products = () => {
     );
   }
 
-  const handlePage = (_, value) => {
-    const nextPage = value - 1;
-    if (nextPage !== filter.page) {
-      setFilter({ ...filter, page: nextPage });
-    }
-  }
-
   const StoreNavigationBar = () => {
     return (
       <Grid container item>
@@ -110,9 +103,7 @@ const Products = () => {
           <div onClick={() => setIsInfoView(true)} style={{ fontWeight: 500 }} className={ "icon " + (isInfoView ? "icon-selected" : "") }>
             Informacion
           </div>
-          <div className="pagination-container">
-            { products.length > 0 && <Pagination onChange={handlePage} count={totalPages} page={filter.page + 1} /> }
-          </div>
+          <PaginationComponent isActive={products.length > 0} filter={filter} setFilter={setFilter} totalPages={totalPages} />
         </div>
       </Grid>
     );

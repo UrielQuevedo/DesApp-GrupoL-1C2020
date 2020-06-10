@@ -3,11 +3,11 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import MapIcon from '@material-ui/icons/Map';
 import { Alert } from '@material-ui/lab';
-import Pagination from '@material-ui/lab/Pagination';
 import React, { useContext, useState } from 'react';
 import { Link, NavLink, useParams } from 'react-router-dom';
-import SearchLayout from '../Components/ProductsView/SearchLayout';
-import ShowStoreOnMap from '../Components/ShowStoresOnMap';
+import PaginationComponent from '../Components/ProductsAndStores/Pagination';
+import SearchLayout from '../Components/ProductsAndStores/SearchLayout';
+import ShowStoreOnMap from '../Components/ProductsAndStores/ShowStoresOnMap';
 import { UserContext } from '../Context/UserContext';
 import '../Styles/Stores.css';
 
@@ -85,13 +85,6 @@ const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
     );
   }
 
-  const handlePage = (_, value) => {
-    const nextPage = value - 1;
-    if (nextPage !== filter.page) {
-      setFilter({ ...filter, page: nextPage });
-    }
-  }
-
   const StoresNavigationView = () => {
     return (
       <Grid container item>
@@ -104,9 +97,7 @@ const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
         <div style={{ display:'flex' }}>
           <FormatListBulletedIcon onClick={() => setisMapView(false)} className={ "icon " + (!isMapView ? "icon-selected" : "") } />
           <MapIcon onClick={() => setisMapView(true)} className={ "icon " + (isMapView ? "icon-selected" : "") } />
-          <div className="pagination-container">
-            { stores.length > 0  && <Pagination onChange={handlePage} count={totalPages} page={filter.page + 1} /> }
-          </div>
+          <PaginationComponent isActive={stores.length > 0} filter={filter} setFilter={setFilter} totalPages={totalPages} />
         </div>
       </Grid>
     );
