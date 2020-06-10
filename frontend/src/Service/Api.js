@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-//TODO Agregar Api de Backend de Heroku;
-const server = process.env.COMPRAS_EN_CASA_BACKEND || 'http://localhost:8080';
+const server = process.env.REACT_APP_API_BACKEND || 'http://localhost:8080';
 
 const request = (type, path, body, params) => axios
     .request({
