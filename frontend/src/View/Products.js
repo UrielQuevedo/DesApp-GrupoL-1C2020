@@ -147,7 +147,7 @@ const Products = () => {
       <Grid container item direction="column" className="stores-container">
         <StoreNavigationBar />
         { productsLoading && <CircularProgress className="stores-loading-data mt-20" /> }
-        { !productsLoading && products.length <= 0 && <Alert className="mt-20" severity="warning">No se encuentro ningun producto</Alert>}
+        { !productsLoading && products.length <= 0 && <Alert className="mt-20" severity="warning">No se encontro ningun producto</Alert>}
         { !productsLoading && products.length > 0 &&
           <Grid container justify="center" item direction="row" style={{ marginTop:'10px' }}>
             {

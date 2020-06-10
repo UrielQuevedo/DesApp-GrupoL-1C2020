@@ -1,12 +1,11 @@
-import { Box, Button, Grid, InputAdornment, Paper, TextField, Grow } from '@material-ui/core';
+import { Box, Button, Grid, Grow, InputAdornment, Paper, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
-import ShoppingCart from '../Components/ShoppingCart';
 import '../Styles/Home.css';
-import { useForm } from 'react-hook-form';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -158,7 +157,6 @@ const Home = () => {
 
   return (
     <>
-      <ShoppingCart />
       <SearchLayout />
       <StoreCategories />
       <Information />
