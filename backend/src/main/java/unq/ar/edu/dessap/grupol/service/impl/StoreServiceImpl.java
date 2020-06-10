@@ -1,6 +1,10 @@
 package unq.ar.edu.dessap.grupol.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.converter.Converter;
@@ -84,18 +88,18 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Store> getFilteredByNameAndPayment(Optional<String> search, Optional<Payment> payment) {
-        return storeDao.getFilteredByNameAndPayment(search.orElse(""), payment.orElse(null));
+    public Page<Store> getFilteredByNameAndPayment(Optional<String> search, Optional<Payment> payment, Pageable pageable) {
+        return storeDao.getFilteredByNameAndPayment(search.orElse(""),payment.orElse(null), pageable);
     }
 
     @Override
-    public List<Store> getStoresFiltered(Sector category, Optional<String> search,  Optional<Payment> payment) {
-        return storeDao.getStoresFiltered(category, search.orElse(""), payment.orElse(null));
+    public Page<Store> getStoresFiltered(Sector category, Optional<String> search,  Optional<Payment> payment, Pageable pageable) {
+        return storeDao.getStoresFiltered(category, search.orElse(""), payment.orElse(null), pageable);
     }
 
     @Override
-    public List<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment) {
-        return storeDao.getStoresThatHaveOffer(search.orElse(""), payment.orElse(null));
+    public Page<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment, Pageable pageable) {
+        return storeDao.getStoresThatHaveOffer(search.orElse(""), payment.orElse(null), pageable);
     }
 
 }

@@ -2,6 +2,8 @@ package unq.ar.edu.dessap.grupol.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -64,21 +66,24 @@ public class StoreController {
     }
 
     @GetMapping(value = "/stores/all")
-    public ResponseEntity<List<Store>> getStoresFilter(@RequestParam Optional<String> search,
-                                                       @RequestParam Optional<Payment> payment) {
-        return new ResponseEntity<List<Store>>(storeService.getFilteredByNameAndPayment(search, payment), HttpStatus.OK);
+    public ResponseEntity<Page<Store>> getStoresFilter(@RequestParam Optional<String> search,
+                                                       @RequestParam Optional<Payment> payment,
+                                                       Pageable pageable) {
+        return new ResponseEntity<>(storeService.getFilteredByNameAndPayment(search, payment, pageable), HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/filter")
-    public ResponseEntity<List<Store>> getStoresFiltered(@RequestParam Sector category,
+    public ResponseEntity<Page<Store>> getStoresFiltered(@RequestParam Sector category,
                                                          @RequestParam Optional<String> search,
-                                                         @RequestParam Optional<Payment> payment) {
-        return new ResponseEntity<List<Store>>(storeService.getStoresFiltered(category, search, payment), HttpStatus.OK);
+                                                         @RequestParam Optional<Payment> payment,
+                                                         Pageable pageable) {
+        return new ResponseEntity<>(storeService.getStoresFiltered(category, search, payment, pageable), HttpStatus.OK);
     }
 
     @GetMapping(value = "/stores/offers")
-    public ResponseEntity<List<Store>> getStoresThatHaveOffer(@RequestParam Optional<String> search,
-                                                              @RequestParam Optional<Payment> payment) {
-        return new ResponseEntity<List<Store>>(storeService.getStoresThatHaveOffer(search, payment), HttpStatus.OK);
+    public ResponseEntity<Page<Store>> getStoresThatHaveOffer(@RequestParam Optional<String> search,
+                                                              @RequestParam Optional<Payment> payment,
+                                                              Pageable pageable) {
+        return new ResponseEntity<>(storeService.getStoresThatHaveOffer(search, payment, pageable), HttpStatus.OK);
     }
 }

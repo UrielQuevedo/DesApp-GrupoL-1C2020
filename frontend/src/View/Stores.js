@@ -1,21 +1,20 @@
-import { Breadcrumbs, Button, Divider, Grid, InputAdornment, List, ListItem, TextField, Typography, Chip, CircularProgress } from '@material-ui/core';
+import { Breadcrumbs, CircularProgress, Divider, Fade, Grid, List, ListItem, Typography } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import MapIcon from '@material-ui/icons/Map';
-import SearchIcon from '@material-ui/icons/Search';
-import Pagination from '@material-ui/lab/Pagination';
-import L from 'leaflet';
-import React, { useState } from 'react';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import { Link, NavLink, useHistory } from 'react-router-dom';
-import '../Styles/Stores.css';
 import { Alert } from '@material-ui/lab';
+import React, { useContext, useState } from 'react';
+import { Link, NavLink, useParams } from 'react-router-dom';
+import PaginationComponent from '../Components/ProductsAndStores/Pagination';
+import SearchLayout from '../Components/ProductsAndStores/SearchLayout';
+import ShowStoreOnMap from '../Components/ProductsAndStores/ShowStoresOnMap';
+import { UserContext } from '../Context/UserContext';
+import '../Styles/Stores.css';
 
-const Stores = ({ stores, loading, user, query, category, search }) => {
-  const { push } = useHistory();
-  const [ payment, setPayment ] = useState({ name: query.get('payment') });
+const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
+  const { category } = useParams();
   const [ isMapView, setisMapView ] = useState(false);
-  const [ searchDataToSend, setSearchDataToSend ] = useState('');
+  const { user } = useContext(UserContext);
 
   const categories = [
     { name: 'carniceria' },
@@ -33,8 +32,8 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
 
   const CreateCategoriesItems = () => {
     return categories.map(({ name }, i) => (
-      <div key={i} onClick={() => query.delete('search')}>
-        <NavLink className="navlink-item" activeClassName="navlink-item-selected" to={`/stores/category/${name.toUpperCase()}?${query}`} >
+      <div key={i}>
+        <NavLink className="navlink-item" activeClassName="navlink-item-selected" to={`/stores/category/${name.toUpperCase()}`} >
           <ListItem className="item">
             { name }
             <ArrowForwardIosIcon className="icon" />
@@ -42,22 +41,17 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
         </NavLink>
         <Divider variant="middle"  />
       </div>
-  ));
+    ));
   }
 
   const getClassname = (name) => {
-    return "filter-item " + ((name === payment.name?.toLowerCase()) ? "filter-item-selected" : '');
+    return "filter-item " + ((name === filter.payment?.toLowerCase()) ? "filter-item-selected" : '');
   }
 
   const handlerChangePayment = (name) => {
-      if (payment.name === name) {
-        setPayment({})
-        query.delete('payment')
-      } else {
-        setPayment({ name: name });
-        query.set('payment', name.toUpperCase())
-      }
-    push(`${window.location.pathname}?${query}`);
+    filter.payment ?
+    setFilter({...filter, payment: null }) :
+    setFilter({...filter, payment: name.toUpperCase() });
   }
 
   const CreateFiltersItems = () => {
@@ -79,7 +73,7 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
             <Divider variant="middle" />
             <NavLink className="navlink-item" activeClassName="navlink-item-selected" to="/stores/category/offer">
               <ListItem className="item">
-                promociones
+                ofertas
                 <ArrowForwardIosIcon className="icon" />
               </ListItem>
             </NavLink>
@@ -88,99 +82,6 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
           </List>
         </div>
       </div>
-    );
-  }
-
-  const deleteSearchFilter = () => {
-    query.delete('search')
-    push(`${window.location.pathname}?${query}`);
-  }
-
-  const handlerSearchStores = (e) => {
-    e.preventDefault();
-    const data = searchDataToSend.value;
-    console.log(data)
-    query.set('search', data);
-    push(`${window.location.pathname}?${query}`);
-    searchDataToSend.value = '';
-  }
-
-  const handleSearchDataToSend = (e) => {
-    setSearchDataToSend(e.target);
-  }
-
-  const filterLayout = () => {
-    return (
-      <div className="search-container">
-        <h1>
-          Tiendas
-          <span>
-            cercanas a tu casa
-          </span>
-        </h1>
-        <form>
-          <TextField
-            variant="outlined"
-            size="small"
-            required
-            className="search-button"
-            onChange={handleSearchDataToSend}
-            placeholder="Busca cualquier tienda"
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
-              endAdornment: <Button type="submit"onClick={handlerSearchStores}>BUSCAR</Button>
-            }}
-          />
-        </form>
-        { search &&
-          <Chip
-            label={`Busqueda: ${search}`}
-            onDelete={deleteSearchFilter}
-            style={{margin:'10px 0 0 0'}}
-          />
-        }
-      </div>
-    );
-  }
-
-  const userLocation = new L.Icon({
-    iconUrl: '/svg/ubicacion.svg',
-    iconRetinaUrl: '/svg/ubicacion.svg',
-    iconSize: [35, 35],
-  });
-
-  const storeLocation = new L.Icon({
-    iconUrl: '/svg/tienda.svg',
-    iconRetinaUrl: '/svg/tienda.svg',
-    iconSize: [35, 35],
-  });
-
-  const MapView = () => {
-    return (
-      <Map center={[ user.location.latitude, user.location.longitude ]} zoom={16} style={{ height:'440px' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-          <Marker icon={userLocation} position={[ user.location.latitude, user.location.longitude ]}>
-            <Popup minWidth={90}>
-              <span>
-                Tu Ubicacion
-              </span>
-            </Popup>
-          </Marker>
-        {
-          stores.map(({ name, sector, location }, i) => (
-            <Marker icon={storeLocation} key={i} position={[location.latitude, location.longitude]} >
-              <Popup minWidth={90}>
-                <span>
-                  {name + " (" + sector + ")"}
-                </span>
-              </Popup>
-            </Marker>
-          ))
-        }
-      </Map>
     );
   }
 
@@ -196,9 +97,7 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
         <div style={{ display:'flex' }}>
           <FormatListBulletedIcon onClick={() => setisMapView(false)} className={ "icon " + (!isMapView ? "icon-selected" : "") } />
           <MapIcon onClick={() => setisMapView(true)} className={ "icon " + (isMapView ? "icon-selected" : "") } />
-          <div className="pagination-container">
-            <Pagination count={1} page={1} />
-          </div>
+          <PaginationComponent isActive={stores.length > 0} filter={filter} setFilter={setFilter} totalPages={totalPages} />
         </div>
       </Grid>
     );
@@ -208,16 +107,20 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
     return stores.map(({ name, sector, id, location }, i) => (
       <div key={i} className="store-item-container">
         <Link to={`/stores/${id}/products`} style={{textDecoration:'none', color:'#000'}}>
-          <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
-          <div className="name">
-            {name}
-          </div>
-          <div className="address">
-            {location.address}
-          </div>
-          <div className="sector">
-            {sector}
-          </div>
+          <Fade in={true}>
+            <div>
+              <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
+              <div className="name">
+                {name}
+              </div>
+              <div className="address">
+                {location.address}
+              </div>
+              <div className="sector">
+                {sector}
+              </div>
+            </div>
+          </Fade>
         </Link>
       </div>
     ));
@@ -228,14 +131,19 @@ const Stores = ({ stores, loading, user, query, category, search }) => {
       <LateralMenu />
       <Grid container item xs={10}>
         <Grid container item style={{ padding:'1rem', width:"100%" }} direction="column">
-          {filterLayout()}
+          <SearchLayout name="Tiendas" subName="cercanas a tu casa" filter={filter} setFilter={setFilter}  />
           <Grid container item direction="column" className="stores-container">
             <StoresNavigationView />
-            { loading && <CircularProgress className="stores-loading-data mt-20" />}
-            { !loading && stores.length <= 0 && <Alert className="mt-20" severity="warning">No se encuentro ninguna tienda</Alert>}
-            { !loading && stores.length > 0 &&
+            { storesLoading && <CircularProgress className="stores-loading-data mt-20" />}
+            { !storesLoading && stores.length <= 0 && <Alert className="mt-20" severity="warning">No se encuentro ninguna tienda</Alert>}
+            { !storesLoading && stores.length > 0 &&
               <Grid container justify="center" item direction="row" style={{ marginTop:'10px' }}>
-                { isMapView ? <MapView /> : <StoresItemsView /> }
+                {
+                  isMapView ?
+                  <ShowStoreOnMap userLocation={user.location} stores={stores} centerLocation={user.location} />
+                  :
+                  <StoresItemsView />
+                }
               </Grid>
             }
           </Grid>

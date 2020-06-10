@@ -1,12 +1,11 @@
-import { Box, Button, Grid, InputAdornment, Paper, TextField } from '@material-ui/core';
+import { Box, Button, Grid, Grow, InputAdornment, Paper, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
-import ShoppingCart from '../Components/ShoppingCart';
 import '../Styles/Home.css';
-import { useForm } from 'react-hook-form';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -78,15 +77,17 @@ const Home = () => {
   const StoreCategoriesList = () => {
     return categories.map(({ url, name }, i) => (
       <Link to={`/stores/category/${name.toUpperCase()}`} key={i} style={{ textDecoration:'none' }}>
-        <div className="item-categorie mt-20">
-          <Box boxShadow={7} className="image-categorie">
-            <img
-              src={url}
-              alt={"Categoria de " + name}
-            />
-          </Box>
-          <p>{name}</p>
-        </div>
+        <Grow in={true} {...{ timeout: 1000 + i * 400 }}>
+          <div className="item-categorie mt-20">
+            <Box boxShadow={7} className="image-categorie">
+              <img
+                src={url}
+                alt={"Categoria de " + name}
+              />
+            </Box>
+            <p>{name}</p>
+          </div>
+        </Grow>
       </Link>
     ));
   }
@@ -156,7 +157,6 @@ const Home = () => {
 
   return (
     <>
-      <ShoppingCart />
       <SearchLayout />
       <StoreCategories />
       <Information />

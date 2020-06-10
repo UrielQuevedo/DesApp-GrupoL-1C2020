@@ -4,10 +4,10 @@ import StoreIcon from '@material-ui/icons/Store';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../Styles/NavigationBar.css';
-import UserLocationButton from '../NavigationBar/UserLocationButton';
-import UserMenuItems from '../NavigationBar/UserMenuItems';
-import Svg from '../Svg';
+import '../../../Styles/NavigationBar.css';
+import UserLocationButton from '../UserLocationButton';
+import UserMenuItems from '../UserMenuItems';
+import Svg from '../../Svg';
 
 
 const MobileNavigationBar = ({ trigger, user }) => {

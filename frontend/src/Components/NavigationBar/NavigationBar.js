@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import DesktopNavigationBar from '../Desktop/DesktopNavigationBar';
-import MobileNavigationBar from '../Mobile/MobileNavigationBar';
+import DesktopNavigationBar from './Desktop/DesktopNavigationBar';
+import MobileNavigationBar from './Mobile/MobileNavigationBar';
 import { Hidden, useScrollTrigger } from '@material-ui/core';
 import { UserContext } from '../../Context/UserContext';
 

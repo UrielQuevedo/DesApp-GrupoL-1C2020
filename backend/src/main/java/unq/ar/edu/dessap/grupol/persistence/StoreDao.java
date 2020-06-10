@@ -1,5 +1,7 @@
 package unq.ar.edu.dessap.grupol.persistence;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import unq.ar.edu.dessap.grupol.model.Payment;
 import unq.ar.edu.dessap.grupol.model.Sector;
@@ -19,9 +21,9 @@ public interface StoreDao {
 
     Optional<Store> findById(Long id);
 
-    List<Store> getFilteredByNameAndPayment(String name, Payment payment);
+    Page<Store> getFilteredByNameAndPayment(String name, Payment payment, Pageable pageable);
 
-    List<Store> getStoresFiltered(Sector category, String search, Payment payment);
+    Page<Store> getStoresFiltered(Sector category, String search, Payment payment, Pageable pageable);
 
-    List<Store> getStoresThatHaveOffer(String search, Payment payment);
+    Page<Store> getStoresThatHaveOffer(String search, Payment payment, Pageable pageable);
 }

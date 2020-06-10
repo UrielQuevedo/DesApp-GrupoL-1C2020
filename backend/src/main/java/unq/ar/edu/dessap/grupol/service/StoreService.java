@@ -1,5 +1,7 @@
 package unq.ar.edu.dessap.grupol.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
@@ -24,9 +26,9 @@ public interface StoreService  {
 
     StoreDto getByUserId(Long idUser);
 
-    List<Store> getFilteredByNameAndPayment(Optional<String> name, Optional<Payment> payment);
+    Page<Store> getFilteredByNameAndPayment(Optional<String> name, Optional<Payment> payment, Pageable pageable);
 
-    List<Store> getStoresFiltered(Sector category, Optional<String> search, Optional<Payment> payment);
+    Page<Store> getStoresFiltered(Sector category, Optional<String> search, Optional<Payment> payment, Pageable pageable);
 
-    List<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment);
+    Page<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment, Pageable pageable);
 }

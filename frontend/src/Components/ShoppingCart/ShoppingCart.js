@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hidden } from '@material-ui/core';
-import MobileShoppingCart from './Mobile/MobileShoppingCart';
-import DesktopShoppingCart from './Desktop/DesktopShoppingCart';
+import MobileShoppingCart from './MobileShoppingCart';
+import DesktopShoppingCart from './DesktopShoppingCart';
 import { useState } from 'react';
 
 const ShoppingCart = () => {

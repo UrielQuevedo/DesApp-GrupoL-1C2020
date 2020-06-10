@@ -5,9 +5,9 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import '../../Styles/NavigationBar.css';
-import UserLocationButton from '../NavigationBar/UserLocationButton';
-import UserMenuItems from '../NavigationBar/UserMenuItems';
+import '../../../Styles/NavigationBar.css';
+import UserLocationButton from '../UserLocationButton';
+import UserMenuItems from '../UserMenuItems';
 
 
 const DesktopNavigationBar = ({ user }) => {
