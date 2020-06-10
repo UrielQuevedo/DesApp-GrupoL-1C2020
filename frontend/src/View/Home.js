@@ -148,7 +148,7 @@ const Home = () => {
           title="Publica tu tienda"
           description="Texto motivador y convincente para publicar tu tienda, y bla bla bla.."
           nameButtom="publicar tienda"
-          link="/store"
+          link="/publish/store"
         />
         <div className="background-color" />
       </Grid>
