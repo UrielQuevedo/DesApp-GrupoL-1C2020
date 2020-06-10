@@ -8,3 +8,13 @@ before_script:
   - cd backend
   - chmod +x mvnw
   - psql -c 'create database "ComprasEnCasa";' -U postgres
+
+cache:
+  directories:
+    - "$HOME/.m2"
+
+before_cache:
+  - rm -rf $HOME/.m2/repository/unq/ar/edu/dessap/grupol
+
+after_success:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Java -r target/jacoco/jacoco.xml
