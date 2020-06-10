@@ -2,8 +2,7 @@ import { useState } from "react";
 import Axios from "axios";
 
 export const useHereMapService = () => {
-  //TODO meter en una variable de entorno
-  const apiKey = 'A5liKoRj88kze2rtyInYq-m6Eah7Hkg3Z2bd4kQoBH4';
+  const apiKey = process.env.REACT_APP_HEREMAP_TOKEN;
   const [ loading, setLoading ] = useState(false);
 
   const fetchPositionsByCoords = async ({ lat, lng }, next) => {

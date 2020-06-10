@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-const API_URL = (process.env.COMPRAS_EN_CASA_BACKEND || 'http://localhost:8080') + '/api';
+const API_URL = (process.env.REACT_APP_API_BACKEND || 'http://localhost:8080') + '/api';
 
 const useApi = (axiosFunction) => {
   const [loading, setLoading] = useState(true);
