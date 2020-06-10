@@ -9,10 +9,7 @@ const useApi = (axiosFunction) => {
   const method = (nextFunction) => {
     setLoading(true);
     axiosFunction()
-      .then((response) => {
-        nextFunction(response.data)
-        console.log(response.data);
-      })
+      .then((response) => nextFunction(response.data))
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   }
@@ -25,6 +22,5 @@ export const useGet = (url, queryParams = {}) => {
 }
 
 export const usePost = (url, body) => {
-  const [loading, method] = useApi(() => axios.post(API_URL + url, body));
-  return { loading, method };
+  return useApi(() => axios.post(API_URL + url, body));
 }
