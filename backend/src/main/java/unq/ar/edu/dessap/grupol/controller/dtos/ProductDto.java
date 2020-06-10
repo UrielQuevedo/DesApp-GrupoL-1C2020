@@ -1,5 +1,6 @@
 package unq.ar.edu.dessap.grupol.controller.dtos;
 
+import unq.ar.edu.dessap.grupol.model.Category;
 import unq.ar.edu.dessap.grupol.model.Product;
 
 public class ProductDto {
@@ -10,9 +11,18 @@ public class ProductDto {
     private int stock;
     private double price;
     private String image_url;
+    private Category category;
 
     public String getImage_url() {
         return image_url;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public long getId() {

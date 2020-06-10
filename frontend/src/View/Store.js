@@ -19,17 +19,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Store = ({ idUser }) => {
+const Store = (props) => {
 
   const classes = useStyles();
-  // setear idUser que me llega del home
+  const idUser = props.location.state.user.id;
   const [ id, setId ] = useState(null); 
   const [ name, setName ] = useState(null); 
   const [ products, setProducts] = useState(null);
+  const [ loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(false);
       if(!id) {
-        getStoreByIdUserRequest(2)
+        getStoreByIdUserRequest(idUser)
         .then(data => {
           console.log(data);
           const { id, name, products } = data;
@@ -45,22 +47,27 @@ const Store = ({ idUser }) => {
 
     return (
       <React.Fragment>
-      <CssBaseline />
-      <Container fixed>
-        <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>{name}</Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <DialogAddProduct setProducts={setProducts} />
-        </Grid>
-        { products  &&
-            <ListProduct products={products} idStore={id} setProducts={setProducts}/>
-        }     
-      </Grid>
-      </div>
-      </Container>
+      { loading ? 
+        <h1> Cargando... </h1> :
+        <div>
+          <CssBaseline />
+          <Container fixed>
+            <div className={classes.root}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>{name}</Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <DialogAddProduct idStore={id} setProducts={setProducts} />
+            </Grid> 
+            { products  &&
+                <ListProduct products={products} idStore={id} setProducts={setProducts}/>
+            }     
+          </Grid>
+            </div>
+          </Container>
+        </div>
+      }
     </React.Fragment>
     )
 }

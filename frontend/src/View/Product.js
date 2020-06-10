@@ -13,14 +13,14 @@ const useStyles = makeStyles({
       maxWidth: 345,
     },
     media: {
-      height: 200,
+      height: 150,
     },
   });
 
-const Product = ( { name, price, image_url, brand, stock} ) => {
+const Product = ( { name, price, image_url, brand, stock, category } ) => {
 
     const classes = useStyles();
-
+  
     return (
         <Card className={classes.root}>
             <CardActionArea>
@@ -36,6 +36,7 @@ const Product = ( { name, price, image_url, brand, stock} ) => {
                 <Typography variant="body2" color="textSecondary" component="p">
                 <p> Stock: {stock} </p>
                 <p> Precio: ${price} </p>
+                <p> Categoria: {category} </p>
                 </Typography>
             </CardContent>
             </CardActionArea>

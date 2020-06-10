@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const DialogDeleteProduct = ( { idStore, idProduct, setProducts } ) => {
+const DialogDeleteProduct = ( { idProduct, setProducts } ) => {
     
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
@@ -30,11 +30,11 @@ const DialogDeleteProduct = ( { idStore, idProduct, setProducts } ) => {
     };
     
     const deleteProduct = () => {
-        deleteProductRequest(idStore, idProduct)
+        deleteProductRequest(idProduct)
         .then(data => {
             console.log(data);
             handleClose();
-            setProducts(data);
+            setProducts(oldProducts => oldProducts.filter(product => product.id !== idProduct));
         })
         .catch(error => {
             console.log(error.message);

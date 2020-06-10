@@ -63,6 +63,7 @@ public class Converter {
         productDto.setImage_url(product.getImage_url());
         productDto.setPrice(product.getPrice());
         productDto.setStock(product.getStock());
+        productDto.setCategory(product.getCategory());
         return productDto;
     }
 
@@ -85,6 +86,7 @@ public class Converter {
                 .price(productDto.getPrice())
                 .stock(productDto.getStock())
                 .image_url(productDto.getImage_url())
+                .category(productDto.getCategory())
                 .store(store)
                 .build();
 

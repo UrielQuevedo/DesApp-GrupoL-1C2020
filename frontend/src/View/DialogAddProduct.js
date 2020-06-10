@@ -8,11 +8,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { addProductRequest } from '../Service/Api';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 
-const DialogAddProduct = ( { setProducts }) => {
+const DialogAddProduct = ( { idStore, setProducts }) => {
   
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const { register, handleSubmit } = useForm();
+  const [category, setCategory] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,8 +27,14 @@ const DialogAddProduct = ( { setProducts }) => {
     setOpen(false);
   }
 
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setCategory(event.target.value);
+  }
+
   const addProduct = (product, e) => {
-      addProductRequest(3, product)
+      const newProduct = {...product, category};
+      addProductRequest(idStore, newProduct)
       .then(data => {
             console.log(data);
             handleClose();
@@ -104,6 +115,21 @@ const DialogAddProduct = ( { setProducts }) => {
             fullWidth
             inputRef={register}
           />
+          <FormControl fullWidth>
+            <InputLabel id="select-category">Categoria</InputLabel>
+            <Select
+              required
+              labelId="select-category"
+              id="category"
+              value={category}
+              onChange={handleChange}
+              >
+              <MenuItem value={"BEBIDAS"}>BEBIDAS</MenuItem>
+              <MenuItem value={"GALLETITAS"}>GALLETITAS</MenuItem>
+              <MenuItem value={"FIAMBRE"}>FIAMBRE</MenuItem>
+              <MenuItem value={"FIDEOS"}>FIDEOS</MenuItem>
+            </Select>
+            </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
