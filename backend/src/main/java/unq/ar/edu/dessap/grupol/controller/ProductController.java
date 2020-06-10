@@ -39,17 +39,12 @@ public class ProductController {
         return new ResponseEntity<>(productDtos, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{idStore}/products/{category}/filter")
+    @GetMapping(value = "/{idStore}/products/{category}")
     public ResponseEntity<Page<Product>> getProductsFiltered(@PathVariable("idStore") Long idStore,
                                                              @PathVariable("category") Category category,
                                                              @RequestParam Optional<String> search,
                                                              Pageable pageable) {
         return new ResponseEntity<>(productService.getProductsFiltered(idStore, category, search, pageable), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{idStore}/products/categories")
-    public ResponseEntity<List<Category>> getCategoriesFromProductsStore(@PathVariable("idStore") Long idStore){
-        return new ResponseEntity<>(productService.getCategoriesFromProductStore(idStore),HttpStatus.OK);
     }
 
     @PutMapping(value = "/products/{id}")

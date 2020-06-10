@@ -5,10 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import unq.ar.edu.dessap.grupol.controller.dtos.StoreDto;
-import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.Payment;
-import unq.ar.edu.dessap.grupol.model.Sector;
-import unq.ar.edu.dessap.grupol.model.Store;
+import unq.ar.edu.dessap.grupol.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,4 +28,6 @@ public interface StoreService  {
     Page<Store> getStoresFiltered(Sector category, Optional<String> search, Optional<Payment> payment, Pageable pageable);
 
     Page<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment, Pageable pageable);
+
+    List<Category> getCategoriesFromStore(Long idStore);
 }

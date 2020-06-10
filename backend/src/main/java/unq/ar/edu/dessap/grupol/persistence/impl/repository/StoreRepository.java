@@ -41,4 +41,6 @@ public interface StoreRepository extends JpaRepository<Store, Long>  {
                                        @Param("payment") Payment payment,
                                        Pageable pageable);
 
+    @Query("SELECT DISTINCT p.category FROM Store s INNER JOIN Product p ON p.store.id = :store_id AND s.id = :store_id")
+    List<Category> getProductsCategories(@Param("store_id") Long store_id);
 }

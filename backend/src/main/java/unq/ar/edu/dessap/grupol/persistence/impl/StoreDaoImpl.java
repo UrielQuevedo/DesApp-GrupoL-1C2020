@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import unq.ar.edu.dessap.grupol.model.Category;
 import unq.ar.edu.dessap.grupol.model.Payment;
 import unq.ar.edu.dessap.grupol.model.Sector;
 import unq.ar.edu.dessap.grupol.model.Store;
@@ -53,5 +54,10 @@ public class StoreDaoImpl implements StoreDao {
     @Override
     public Page<Store> getStoresThatHaveOffer(String search, Payment payment, Pageable pageable) {
         return storeRepository.getStoresThatHaveOffer(search, payment, pageable);
+    }
+
+    @Override
+    public List<Category> getCategoriesFromStore(Long idStore) {
+        return storeRepository.getProductsCategories(idStore);
     }
 }

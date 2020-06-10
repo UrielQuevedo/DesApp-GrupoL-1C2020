@@ -4,7 +4,7 @@ import { useGet } from "./HTTPService";
 
 export const useGetCategories = (store_id) => {
   const [ categories, setCategories ] = useState([]);
-  const { method, loading: categoriesLoading } = useGet(`/stores/${store_id}/products/categories`);
+  const { method, loading: categoriesLoading } = useGet(`/stores/${store_id}/categories`);
 
   useEffect(() => {
     method(setCategories);
@@ -61,5 +61,5 @@ export const useGetAllStoresFiltered = () => {
 }
 
 export const useGetStoresBySectorFiltered = (category) => {
-  return useGetStoresFiltered(`/stores/filter?category=${category}`, category);
+  return useGetStoresFiltered(`/stores?category=${category}`, category);
 }

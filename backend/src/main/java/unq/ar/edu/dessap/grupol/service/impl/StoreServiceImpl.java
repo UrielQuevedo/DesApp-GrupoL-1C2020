@@ -102,5 +102,10 @@ public class StoreServiceImpl implements StoreService {
         return storeDao.getStoresThatHaveOffer(search.orElse(""), payment.orElse(null), pageable);
     }
 
+    @Override
+    public List<Category> getCategoriesFromStore(Long idStore) {
+        return storeDao.getCategoriesFromStore(idStore);
+    }
+
 }
 
