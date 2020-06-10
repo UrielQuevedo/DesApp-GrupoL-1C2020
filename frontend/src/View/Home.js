@@ -1,4 +1,4 @@
-import { Box, Button, Grid, InputAdornment, Paper, TextField } from '@material-ui/core';
+import { Box, Button, Grid, InputAdornment, Paper, TextField, Grow } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -78,15 +78,17 @@ const Home = () => {
   const StoreCategoriesList = () => {
     return categories.map(({ url, name }, i) => (
       <Link to={`/stores/category/${name.toUpperCase()}`} key={i} style={{ textDecoration:'none' }}>
-        <div className="item-categorie mt-20">
-          <Box boxShadow={7} className="image-categorie">
-            <img
-              src={url}
-              alt={"Categoria de " + name}
-            />
-          </Box>
-          <p>{name}</p>
-        </div>
+        <Grow in={true} {...{ timeout: 1000 + i * 400 }}>
+          <div className="item-categorie mt-20">
+            <Box boxShadow={7} className="image-categorie">
+              <img
+                src={url}
+                alt={"Categoria de " + name}
+              />
+            </Box>
+            <p>{name}</p>
+          </div>
+        </Grow>
       </Link>
     ));
   }

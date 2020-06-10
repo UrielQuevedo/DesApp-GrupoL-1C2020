@@ -32,7 +32,6 @@
   padding: 20px;
   font-weight: 600;
   text-decoration: none;
-  transition: 0.5s;
   color: #000000;
 }
 .navbar-desktop .item:hover {
