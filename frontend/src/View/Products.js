@@ -1,28 +1,31 @@
-import { Breadcrumbs, Button, CircularProgress, Divider, Grid, InputAdornment, List, ListItem, TextField, Chip, Typography } from '@material-ui/core';
+import { Breadcrumbs, CircularProgress, Divider, Grid, List, ListItem, Typography, Fade } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import SearchIcon from '@material-ui/icons/Search';
 import { Alert } from '@material-ui/lab';
 import Pagination from '@material-ui/lab/Pagination';
 import React, { useState } from 'react';
-import { Link, NavLink, useHistory, useParams } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
+import ProductItem from '../Components/ProductsView/ProductItem';
+import SearchLayout from '../Components/ProductsView/SearchLayout';
+import { useGetProductsFiltered } from '../Service/ProductService';
+import { useGetCategories, useGetStore } from '../Service/StoreService';
 import '../Styles/Stores.css';
 
-const Products = ({ categories, store, products, loading, query }) => {
-  const { category } = useParams();
-  const { push } = useHistory();
-  const search = query.get('search');
-  const [ payment, setPayment ] = useState({ name: query.get('payment') });
-  const [ searchDataToSend, setSearchDataToSend ] = useState('');
+const Products = () => {
+  const { category, store_id } = useParams();
+  const [ isInfoView, setIsInfoView ] = useState(false);
+  const { categoriesLoading, categories } = useGetCategories(store_id);
+  const { store } = useGetStore(store_id);
+  const { productsLoading, products, setFilter, filter, totalPages } = useGetProductsFiltered(store_id, category);
 
   const filters = [
-    { name: 'Menor Precio' },
-    { name: 'Mayor Precio' }
+    { name: 'Menor Precio', value:'price,asc' },
+    { name: 'Mayor Precio', value:'price,desc' }
   ];
 
   const CreateCategoriesItems = () => {
     return categories.map((category, i) => (
-      <div key={i} onClick={() => query.delete('search')}>
-        <NavLink className="navlink-item" activeClassName="navlink-item-selected" to={`/stores/${store.id}/products/${category}?${query}`} >
+      <div key={i}>
+        <NavLink className="navlink-item" activeClassName="navlink-item-selected" to={`/stores/${store.id}/products/${category}`} >
           <ListItem className="item">
             { category.toLowerCase() }
             <ArrowForwardIosIcon className="icon" />
@@ -30,27 +33,22 @@ const Products = ({ categories, store, products, loading, query }) => {
         </NavLink>
         <Divider variant="middle"  />
       </div>
-  ));
+    ));
   }
 
-  const getClassname = (name) => {
-    return "filter-item " + ((name === payment.name?.toLowerCase()) ? "filter-item-selected" : '');
+  const getClassname = (value) => {
+    return "filter-item " + ((value === filter.sort) ? "filter-item-selected" : '');
   }
 
-  const handlerChangePayment = (name) => {
-    if (payment.name === name) {
-      setPayment({})
-      query.delete('payment')
-    } else {
-      setPayment({ name: name });
-      query.set('payment', name.toUpperCase())
+  const handleChangeFilter = (value) => {
+    if (value !== filter.sort) {
+      setFilter({ ...filter, sort: value })
     }
-    push(`${window.location.pathname}?${query}`);
   }
 
   const CreateFiltersItems = () => {
-    return filters.map(({ name }, i) => (
-      <div className={getClassname(name)} key={i} onClick={() => handlerChangePayment(name)}>
+    return filters.map(({ name, value }, i) => (
+      <div className={getClassname(value)} key={i} onClick={() => handleChangeFilter(value)}>
         { name }
       </div>
     ));
@@ -72,100 +70,81 @@ const Products = ({ categories, store, products, loading, query }) => {
               </ListItem>
             </NavLink>
             <Divider variant="middle"  />
-            <CreateCategoriesItems />
+            { categoriesLoading && <CircularProgress className="stores-loading-data mt-20" /> }
+            { !categoriesLoading && <CreateCategoriesItems /> }
           </List>
         </div>
       </div>
     );
   }
 
-  const deleteSearchFilter = () => {
-    query.delete('search')
-    push(`${window.location.pathname}?${query}`);
+  const handlePage = (_, value) => {
+    const nextPage = value - 1;
+    if (nextPage !== filter.page) {
+      setFilter({ ...filter, page: nextPage });
+    }
   }
 
-  const handlerSearchStores = (e) => {
-    e.preventDefault();
-    const data = searchDataToSend.value;
-    query.set('search', data);
-    push(`${window.location.pathname}?${query}`);
-    searchDataToSend.value = '';
-  }
-
-  const handleSearchDataToSend = (e) => {
-    setSearchDataToSend(e.target);
-  }
-
-  const filterLayout = () => {
-    return (
-      <div className="search-container">
-        <h1>
-          { store.name }
-          <span>
-            { store.sector }
-          </span>
-        </h1>
-        <form>
-          <TextField
-            variant="outlined"
-            size="small"
-            required
-            className="search-button"
-            onChange={handleSearchDataToSend}
-            placeholder="Busca cualquier producto"
-            InputProps={{
-              startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
-              endAdornment: <Button type="submit"onClick={handlerSearchStores}>BUSCAR</Button>
-            }}
-          />
-        </form>
-        { search &&
-          <Chip
-            label={`Busqueda: ${search}`}
-            onDelete={deleteSearchFilter}
-            style={{margin:'10px 0 0 0'}}
-          />
-        }
-      </div>
-    );
-  }
-
-  const StoresNavigationView = () => {
+  const StoreNavigationBar = () => {
     return (
       <Grid container item>
         <Breadcrumbs aria-label="breadcrumb" style={{ flexGrow: '1' }}>
           <Link to="/stores" style={{ textDecoration:'none' }}>
             Tiendas
           </Link>
-          <Typography style={{ textTransform:'capitalize' }} color="textPrimary">{store.name}</Typography>
-          <Typography style={{ textTransform:'capitalize' }} color="textPrimary">{category}</Typography>
+          <Typography style={{ textTransform:'capitalize' }} color="textPrimary">
+            {store.name}
+          </Typography>
+          <Typography style={{ textTransform:'capitalize' }} color="textPrimary">
+            {category}
+          </Typography>
         </Breadcrumbs>
         <div style={{ display:'flex' }}>
-        <div>Productos</div>
-        <div>Informacion</div>
+          <div onClick={() => setIsInfoView(false)} className={ "icon " + (!isInfoView ? "icon-selected" : "") }>
+            Productos
+          </div>
+          <div onClick={() => setIsInfoView(true)} className={ "icon " + (isInfoView ? "icon-selected" : "") }>
+            Informacion
+          </div>
           <div className="pagination-container">
-            <Pagination count={1} page={1} />
+            { products.length > 0 && <Pagination onChange={handlePage} count={totalPages} page={filter.page + 1} /> }
           </div>
         </div>
       </Grid>
     );
   }
 
-  const StoresItemsView = () => {
-    return products.map(({ name, brand, price }, i) => (
-      <div key={i} className="store-item-container">
-        <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
-        <div className="name">
-          {price},00$
+  const StoreInformation = () => {
+    return (
+      <Fade in={true}>
+        <div>
+          {store.location.address}
         </div>
-        <div className="address">
-          {name}
-        </div>
-        <div className="sector">
-          {brand}
-        </div>
-      </div>
+      </Fade>
+    );
+  }
+
+  const ProductsItemsView = () => {
+    return products.map((product, i) => (
+      <ProductItem key={i} product={product} />
     ));
+  }
+
+  const StoreLayout = () => {
+    return (
+      <Grid container item direction="column" className="stores-container">
+        <StoreNavigationBar />
+        { productsLoading && <CircularProgress className="stores-loading-data mt-20" /> }
+        { !productsLoading && products.length <= 0 && <Alert className="mt-20" severity="warning">No se encuentro ningun producto</Alert>}
+        { !productsLoading && products.length > 0 &&
+          <Grid container justify="center" item direction="row" style={{ marginTop:'10px' }}>
+            {
+              isInfoView ? <StoreInformation /> : <ProductsItemsView />
+            }
+          </Grid>
+        }
+      </Grid>
+    );
   }
 
   return (
@@ -173,17 +152,8 @@ const Products = ({ categories, store, products, loading, query }) => {
       <LateralMenu />
       <Grid container item xs={10}>
         <Grid container item style={{ padding:'1rem', width:"100%" }} direction="column">
-          {filterLayout()}
-          <Grid container item direction="column" className="stores-container">
-            <StoresNavigationView />
-            { loading && <CircularProgress className="stores-loading-data mt-20" />}
-            { !loading && products.length <= 0 && <Alert className="mt-20" severity="warning">No se encuentro ninguna tienda</Alert>}
-            { !loading && products.length > 0 &&
-              <Grid container justify="center" item direction="row" style={{ marginTop:'10px' }}>
-                <StoresItemsView />
-              </Grid>
-            }
-          </Grid>
+          <SearchLayout name={store.name} subName={store.sector} filter={filter} setFilter={setFilter} />
+          <StoreLayout />
         </Grid>
       </Grid>
     </div>
