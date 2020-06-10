@@ -1,20 +1,25 @@
+dist: trusty
 language: java
+sudo: required
 jdk:
   - openjdk8
+
+cache:
+  directories:
+    - "$HOME/.m2"
 
 services: postgresql
 
 before_script:
   - cd backend
   - chmod +x mvnw
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/6.0.0/codacy-coverage-reporter-6.0.0-assembly.jar
   - psql -c 'create database "ComprasEnCasa";' -U postgres
-
-cache:
-  directories:
-    - "$HOME/.m2"
 
 before_cache:
   - rm -rf $HOME/.m2/repository/unq/ar/edu/dessap/grupol
 
 after_success:
-  - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Java -r target/jacoco/jacoco.xml
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Java -r target/jacoco/jacoco.xml --partial
+  - java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r target/jacoco/jacoco.xml
