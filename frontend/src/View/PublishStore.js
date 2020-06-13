@@ -9,7 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
-import '../Styles/Store.css';
+import { Link } from 'react-router-dom';
+import '../Styles/PublishStore.css';
 
 const GreenCheckbox = withStyles({
     root: {
@@ -33,7 +34,6 @@ const PublishStore = () => {
         console.log(event.target.checked);
         setState({ ...state, [event.target.name]: event.target.checked });
       }
-
 
     return (
         <React.Fragment>
@@ -101,9 +101,11 @@ const PublishStore = () => {
                             </form>
                         </div>
                         <div className="containerButton">
-                            <Button onClick={() => console.log("volve al home")} color="primary">
-                                Volver al home
-                            </Button>
+                            <Link style={{ textDecoration:'none' }} to="/">
+                                <Button color="primary">
+                                    Volver al home
+                                </Button>
+                            </Link>
                             <div className="buttonRight">
                                 <Button variant="contained" type="submit" color="primary" style={{}}>
                                     Crear tienda
