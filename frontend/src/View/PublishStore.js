@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+import '../Styles/Store.css';
 
 const GreenCheckbox = withStyles({
     root: {
@@ -39,72 +40,76 @@ const PublishStore = () => {
             <br/> <br/> <br/>
              <CssBaseline />
              <Container fixed>
-                    <div>
-                     <form>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            required
-                            id="name"
-                            label="Nombre"
-                            type="text"
-                            name="name"
-                            fullWidth
-                            inputRef={register}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            required
-                            id="Direccion"
-                            label="Dirección"
-                            type="text"
-                            name="Direccion"
-                            fullWidth
-                            inputRef={register}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            required
-                            id="Sector"
-                            label="Sector"
-                            type="text"
-                            name="Sector"
-                            fullWidth
-                            inputRef={register}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            required
-                            id="Distancia maxima"
-                            label="Distancia maxima"
-                            type="number"
-                            name="Distancia maxima"
-                            fullWidth
-                            inputRef={register}
-                        /> 
-                        <div>
-                            <p>Metodos de pago</p>
-                            <FormControlLabel
-                                control={<GreenCheckbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
-                                label="Efectivo"
-                            />
-                            <FormControlLabel
-                                control={<GreenCheckbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
-                                label="Tarjeta"
-                            />
+                    <div className="containerPublishStore">
+                        <div className="containerData"> 
+                            <form>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    required
+                                    id="name"
+                                    label="Nombre"
+                                    type="text"
+                                    name="name"
+                                    fullWidth
+                                    inputRef={register}
+                                />
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    required
+                                    id="Direccion"
+                                    label="Dirección"
+                                    type="text"
+                                    name="Direccion"
+                                    fullWidth
+                                    inputRef={register}
+                                />
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    required
+                                    id="Sector"
+                                    label="Sector"
+                                    type="text"
+                                    name="Sector"
+                                    fullWidth
+                                    inputRef={register}
+                                />
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    required
+                                    id="Distancia maxima"
+                                    label="Distancia maxima"
+                                    type="number"
+                                    name="Distancia maxima"
+                                    fullWidth
+                                    inputRef={register}
+                                /> 
+                                <div>
+                                    <p>Metodos de pago</p>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
+                                        label="Efectivo"
+                                    />
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
+                                        label="Tarjeta"
+                                    />
+                                </div>
+                            </form>
                         </div>
-                        <div>
+                        <div className="containerButton">
                             <Button onClick={() => console.log("volve al home")} color="primary">
-                                Volver
+                                Volver al home
                             </Button>
-                            <Button type="submit" color="primary">
-                                Guardar
-                            </Button>
+                            <div className="buttonRight">
+                                <Button variant="contained" type="submit" color="primary" style={{}}>
+                                    Crear tienda
+                                </Button>
+                            </div>
                         </div>
-                     </form>
                     </div>
              </Container>
         </React.Fragment>
