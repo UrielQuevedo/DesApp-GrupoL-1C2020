@@ -12,6 +12,10 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { publishStore } from '../Service/Api';
 import { UserContext } from '../Context/UserContext';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import '../Styles/PublishStore.css';
 
 const GreenCheckbox = withStyles({
@@ -28,17 +32,23 @@ const PublishStore = () => {
 
     const { user } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
+    const [ sector, setSector ] = useState('');
     const [ payments, setState ] = useState({
         checkedA: '',
         checkedB: '',
     })
     
-    const handleChange = (event) => {
+    const handleChangePayments = (event) => {
         setState({ ...payments, [event.target.name]: event.target.checked });
     }
 
     const publishStore = (store) => {
         console.log(store);
+    }
+
+    const handleChangeSector = (event) => {
+        setSector(event.target.value);
+        console.log(event.target.value);
     }
 
     return (
@@ -82,28 +92,37 @@ const PublishStore = () => {
                                     fullWidth
                                     inputRef={register}
                                 /> 
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    required
-                                    id="Sector"
-                                    label="Sector"
-                                    type="text"
-                                    name="sector"
-                                    fullWidth
-                                    inputRef={register}
-                                />
+                                <FormControl fullWidth>
+                                    <InputLabel id="select-sector">Sector</InputLabel>
+                                    <Select
+                                        fullWidth
+                                        labelId="select-sector"
+                                        id="sector"
+                                        label="SECTOR"
+                                        name="sector"
+                                        value={sector}
+                                        onChange={handleChangeSector}
+                                        
+                                        >
+                                        <MenuItem value={"FARMACIA"}>Farmacia</MenuItem>
+                                        <MenuItem value={"KIOSCO"}>Kiosco</MenuItem>
+                                        <MenuItem value={"DIETICA"}>Dietetica</MenuItem>
+                                        <MenuItem value={"ALMACEN"}>Almacen</MenuItem>
+                                        <MenuItem value={"VERDULERIA"}>Verduleria</MenuItem>
+                                        <MenuItem value={"CARNICERIA"}>Carniceria</MenuItem>
+                                    </Select>
+                                </FormControl>
                                 <div>
                                     <p>Metodos de pago</p>
                                     <FormControlLabel
-                                        control={<GreenCheckbox checked={payments.checkedA} onChange={handleChange} name="checkedA" />}
+                                        control={<GreenCheckbox checked={payments.checkedA} onChange={handleChangePayments} name="checkedA" />}
                                         label="Efectivo"
                                         name="EFECTIVO"
                                         value="EFECTIVO"
                                         inputRef={register}
                                     />
                                     <FormControlLabel
-                                        control={<GreenCheckbox checked={payments.checkedB} onChange={handleChange} name="checkedB" />}
+                                        control={<GreenCheckbox checked={payments.checkedB} onChange={handleChangePayments} name="checkedB" />}
                                         label="Tarjeta"
                                         name="TARJETA"
                                         value="TARJETA"
