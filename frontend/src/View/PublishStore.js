@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -10,6 +10,8 @@ import { green } from '@material-ui/core/colors';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { publishStore } from '../Service/Api';
+import { UserContext } from '../Context/UserContext';
 import '../Styles/PublishStore.css';
 
 const GreenCheckbox = withStyles({
@@ -24,16 +26,20 @@ const GreenCheckbox = withStyles({
 
 const PublishStore = () => {
 
+    const { user } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
-    const [state, setState] = React.useState({
-        checkedA: false,
-        checkedB: false,
-      })
+    const [ payments, setState ] = useState({
+        checkedA: '',
+        checkedB: '',
+    })
     
-      const handleChange = (event) => {
-        console.log(event.target.checked);
-        setState({ ...state, [event.target.name]: event.target.checked });
-      }
+    const handleChange = (event) => {
+        setState({ ...payments, [event.target.name]: event.target.checked });
+    }
+
+    const publishStore = (store) => {
+        console.log(store);
+    }
 
     return (
         <React.Fragment>
@@ -41,8 +47,8 @@ const PublishStore = () => {
              <CssBaseline />
              <Container fixed>
                     <div className="containerPublishStore">
+                        <form onSubmit={handleSubmit(publishStore)}>
                         <div className="containerData"> 
-                            <form>
                                 <TextField
                                     autoFocus
                                     margin="dense"
@@ -61,18 +67,7 @@ const PublishStore = () => {
                                     id="Direccion"
                                     label="Dirección"
                                     type="text"
-                                    name="Direccion"
-                                    fullWidth
-                                    inputRef={register}
-                                />
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    required
-                                    id="Sector"
-                                    label="Sector"
-                                    type="text"
-                                    name="Sector"
+                                    name="location"
                                     fullWidth
                                     inputRef={register}
                                 />
@@ -83,22 +78,38 @@ const PublishStore = () => {
                                     id="Distancia maxima"
                                     label="Distancia maxima"
                                     type="number"
-                                    name="Distancia maxima"
+                                    name="maxDistance"
                                     fullWidth
                                     inputRef={register}
                                 /> 
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    required
+                                    id="Sector"
+                                    label="Sector"
+                                    type="text"
+                                    name="sector"
+                                    fullWidth
+                                    inputRef={register}
+                                />
                                 <div>
                                     <p>Metodos de pago</p>
                                     <FormControlLabel
-                                        control={<GreenCheckbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
+                                        control={<GreenCheckbox checked={payments.checkedA} onChange={handleChange} name="checkedA" />}
                                         label="Efectivo"
+                                        name="EFECTIVO"
+                                        value="EFECTIVO"
+                                        inputRef={register}
                                     />
                                     <FormControlLabel
-                                        control={<GreenCheckbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
+                                        control={<GreenCheckbox checked={payments.checkedB} onChange={handleChange} name="checkedB" />}
                                         label="Tarjeta"
+                                        name="TARJETA"
+                                        value="TARJETA"
+                                        inputRef={register}
                                     />
                                 </div>
-                            </form>
                         </div>
                         <div className="containerButton">
                             <Link style={{ textDecoration:'none' }} to="/">
@@ -107,11 +118,12 @@ const PublishStore = () => {
                                 </Button>
                             </Link>
                             <div className="buttonRight">
-                                <Button variant="contained" type="submit" color="primary" style={{}}>
+                                <Button variant="contained" type="submit" color="primary">
                                     Crear tienda
                                 </Button>
                             </div>
                         </div>
+                        </form>
                     </div>
              </Container>
         </React.Fragment>
