@@ -16,6 +16,9 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import LocationOn from '@material-ui/icons/LocationOn';
+import { Box } from '@material-ui/core';
 import '../Styles/PublishStore.css';
 
 const GreenCheckbox = withStyles({
@@ -98,17 +101,13 @@ const PublishStore = () => {
                                     fullWidth
                                     inputRef={register}
                                 />
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    required
-                                    id="Direccion"
-                                    label="Dirección"
-                                    type="text"
-                                    name="location"
-                                    fullWidth
-                                    inputRef={register}
-                                />
+                                    <Button className="location-button" fullWidth >
+                                        <LocationOn style={{ position: 'absolute', left: '0' }}/>
+                                        <Box textOverflow="ellipsis" overflow="hidden" className="location-address" >
+                                            Dirección
+                                        </Box>
+                                            <ArrowDropDownIcon style={{ position: 'absolute', right: '0' }}/>
+                                    </Button>
                                 <TextField
                                     autoFocus
                                     margin="dense"
