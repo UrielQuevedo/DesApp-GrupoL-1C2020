@@ -10,7 +10,7 @@ import { green } from '@material-ui/core/colors';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { publishStore } from '../Service/Api';
+import { publishStoreRequest } from '../Service/Api';
 import { UserContext } from '../Context/UserContext';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -34,8 +34,8 @@ const PublishStore = () => {
     const { register, handleSubmit } = useForm();
     const [ sector, setSector ] = useState('');
     const [ payments, setState ] = useState({
-        checkedA: '',
-        checkedB: '',
+        checkedA: false,
+        checkedB: false,
     })
     
     const handleChangePayments = (event) => {
@@ -43,7 +43,35 @@ const PublishStore = () => {
     }
 
     const publishStore = (store) => {
-        console.log(store);
+        const store_data = setData(store);
+        console.log(store_data);
+        publishStoreRequest(user.id, store_data)
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
+    }
+    
+    const setData = (store) => {
+        const payments = [];
+        if(store.checkedA) {
+            payments.push(store.checkedA);
+        }
+        if(store.checkedB) {
+            payments.push(store.checkedB);
+        }
+
+        const result = {
+            name: store.name,
+            location: user.location,
+            maxDistance: store.maxDistance,
+            sector: sector,
+            payments: payments
+        }
+
+        return result;
     }
 
     const handleChangeSector = (event) => {
@@ -99,10 +127,8 @@ const PublishStore = () => {
                                         labelId="select-sector"
                                         id="sector"
                                         label="SECTOR"
-                                        name="sector"
                                         value={sector}
                                         onChange={handleChangeSector}
-                                        
                                         >
                                         <MenuItem value={"FARMACIA"}>Farmacia</MenuItem>
                                         <MenuItem value={"KIOSCO"}>Kiosco</MenuItem>
