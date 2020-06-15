@@ -16,9 +16,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import LocationOn from '@material-ui/icons/LocationOn';
-import { Box } from '@material-ui/core';
+import DialogChangeLocation from './DialogChangeLocation';
 import '../Styles/PublishStore.css';
 
 const GreenCheckbox = withStyles({
@@ -36,6 +34,10 @@ const PublishStore = () => {
     const { user } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
     const [ sector, setSector ] = useState('');
+    const [ actualCoords, setActualCoords ] = useState({
+        latitude: user.location.latitude,
+        longitude: user.location.longitude
+    });
     const [ payments, setState ] = useState({
         checkedA: false,
         checkedB: false,
@@ -84,7 +86,6 @@ const PublishStore = () => {
 
     return (
         <React.Fragment>
-            <br/> <br/> <br/>
              <CssBaseline />
              <Container fixed>
                     <div className="containerPublishStore">
@@ -101,14 +102,8 @@ const PublishStore = () => {
                                     fullWidth
                                     inputRef={register}
                                 />
-                                    <Button className="location-button" fullWidth >
-                                        <LocationOn style={{ position: 'absolute', left: '0' }}/>
-                                        <Box textOverflow="ellipsis" overflow="hidden" className="location-address" >
-                                            Dirección
-                                        </Box>
-                                            <ArrowDropDownIcon style={{ position: 'absolute', right: '0' }}/>
-                                    </Button>
-                                <TextField
+                               <DialogChangeLocation actualCoords={actualCoords} setActualCoords={setActualCoords} /> 
+                               <TextField
                                     autoFocus
                                     margin="dense"
                                     required
@@ -166,8 +161,9 @@ const PublishStore = () => {
                                     Crear tienda
                                 </Button>
                             </div>
-                        </div>
+                            </div>
                         </form>
+
                     </div>
              </Container>
         </React.Fragment>
