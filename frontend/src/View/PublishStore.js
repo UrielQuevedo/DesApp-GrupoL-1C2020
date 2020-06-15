@@ -34,6 +34,7 @@ const PublishStore = () => {
     const { user } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
     const [ sector, setSector ] = useState('');
+    const [ location, setLocation ] = useState({});
     const [ actualCoords, setActualCoords ] = useState({
         latitude: user.location.latitude,
         longitude: user.location.longitude
@@ -70,7 +71,11 @@ const PublishStore = () => {
 
         const result = {
             name: store.name,
-            location: user.location,
+            location: {
+                address: location.address,
+                latitude: location.latitude,
+                longitude: location.longitude
+            },
             maxDistance: store.maxDistance,
             sector: sector,
             payments: payments
@@ -102,7 +107,8 @@ const PublishStore = () => {
                                     fullWidth
                                     inputRef={register}
                                 />
-                               <DialogChangeLocation actualCoords={actualCoords} setActualCoords={setActualCoords} /> 
+                               <DialogChangeLocation actualCoords={actualCoords} setActualCoords={setActualCoords}
+                                                     location={location} setLocation={setLocation} /> 
                                <TextField
                                     autoFocus
                                     margin="dense"
@@ -163,7 +169,6 @@ const PublishStore = () => {
                             </div>
                             </div>
                         </form>
-
                     </div>
              </Container>
         </React.Fragment>
