@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import { useGet } from "./HTTPService";
 
+const path = '/stores';
+
 export const useGetCategories = (store_id) => {
   const [ categories, setCategories ] = useState([]);
-  const { method, loading: categoriesLoading } = useGet(`/stores/${store_id}/categories`);
+  const { method, loading: categoriesLoading } = useGet(`${path}/${store_id}/categories`);
 
   useEffect(() => {
     method(setCategories);
@@ -13,12 +15,16 @@ export const useGetCategories = (store_id) => {
   return { categoriesLoading, categories };
 }
 
-export const useGetStore = (store_id) => {
+export const useGetStore = (store_id, storeProps) => {
   const [ store, setStore ] = useState({});
-  const { method, loading: storeLoading } = useGet(`/stores/${store_id}`);
+  const { method, loading: storeLoading } = useGet(`${path}/${store_id}`);
 
   useEffect(() => {
-    method(setStore);
+    if (storeProps.state) {
+      setStore(storeProps.state);
+    } else {
+      method(setStore);
+    }
   }, [store_id])
 
   return { storeLoading, store };
@@ -27,15 +33,16 @@ export const useGetStore = (store_id) => {
 const useGetStoresFiltered = (url, category = null) => {
   const [ stores, setStores ] = useState([]);
   const [ totalPages, setTotalPages ] = useState(0);
+  const search = new URLSearchParams(window.location.search).get('search') ?? '';
   const [ filter, setFilter ] = useState({
-    search: '',
+    search: search,
     size: 10,
     page: 0,
     payment: null
   });
   const [ storesLoading, setStoresLoading ] = useState(true);
   const { method: getStores } = useGet(url, filter);
-  const { method: getOffers } = useGet('/stores/offers', filter);
+  const { method: getOffers } = useGet(`${path}/offers`, filter);
 
   const setContent = (data) => {
     setStores(data.content);
@@ -57,9 +64,9 @@ const useGetStoresFiltered = (url, category = null) => {
 
 
 export const useGetAllStoresFiltered = () => {
-  return useGetStoresFiltered('/stores/all');
+  return useGetStoresFiltered(`${path}/all`);
 }
 
 export const useGetStoresBySectorFiltered = (category) => {
-  return useGetStoresFiltered(`/stores?category=${category}`, category);
+  return useGetStoresFiltered(`${path}?category=${category}`, category);
 }

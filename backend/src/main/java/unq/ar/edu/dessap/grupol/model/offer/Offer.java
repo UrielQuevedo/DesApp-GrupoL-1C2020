@@ -13,6 +13,7 @@ public abstract class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Getter @Setter
     private Integer percentage;
     @Getter @Setter
     private LocalDate startOffer;

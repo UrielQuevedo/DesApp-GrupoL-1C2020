@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const server = process.env.REACT_APP_API_BACKEND || 'http://localhost:8080';
+const server = process.env.REACT_APP_API_BACKEND;
 
 const request = (type, path, body, params) => axios
     .request({

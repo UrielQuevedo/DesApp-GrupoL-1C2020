@@ -1,10 +1,10 @@
 import React from 'react';
-import { Fade } from '@material-ui/core';
+import { Grow } from '@material-ui/core';
 
 const ProductItem = ({ product }) => {
   const { name, brand, price } = product;
   return (
-    <Fade in={true}>
+    <Grow in={true}>
       <div className="store-item-container">
         <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
         <div className="name">
@@ -17,7 +17,7 @@ const ProductItem = ({ product }) => {
           {brand}
         </div>
       </div>
-    </Fade>
+    </Grow>
   );
 }
 
