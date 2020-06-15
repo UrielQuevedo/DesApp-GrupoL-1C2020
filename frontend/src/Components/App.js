@@ -15,6 +15,7 @@ import AllStoresWrapper from '../Wrapper/AllStoresWrapper';
 import StoresCategoriesWrapper from '../Wrapper/StoresByCategoriesWrapper';
 import NavigationBar from './NavigationBar/NavigationBar';
 import ScrollToTop from './ScrollToTop';
+import User from '../View/User';
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
                 <Route exact path='/stores' component={AllStoresWrapper} />
                 <Route exact path='/stores/category/:category' component={StoresCategoriesWrapper} />
                 <Route exact path='/stores/:store_id/products/:category' component={Products} />
-                <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
+                <Route exact path='/profile' component={User} />
                 <Route path='*' render={() => <MessagePage errorNumnber="404" title="Not Found" />} />
               </Switch>
             </ScrollToTop>

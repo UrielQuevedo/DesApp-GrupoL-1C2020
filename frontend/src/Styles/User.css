@@ -1,0 +1,58 @@
+.user-menu {
+  font-family: 'Segoe UI semibold', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #909695;
+  background: #ffffff;
+  margin-top: 20px;
+  border-radius: 2px;
+  height: 150px;
+  width: 250px;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+
+.user-menu .item {
+  padding-left: 20px;
+  padding-right: 30px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.user-menu .item:hover {
+  background: #F5F7FA;
+}
+
+.default-link {
+  text-decoration: none;
+  color: #909695;
+}
+
+.container-settings {
+  font-family: 'Segoe UI semibold', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 20px;
+  background: #FB849D;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  width: 90%;
+}
+
+.container-settings .container-title {
+  text-align: center;
+  background: #ffffff;
+  padding: 1px;
+}
+
+.container-settings .container-form {
+  width: 50%;
+
+}
+
+.container-settings .container-form .form-item {
+  background-color: #ffffff;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.container-settings .container-form .form-item .MuiOutlinedInput-root {
+  border-radius: 0px;
+  border: 0px;
+}
