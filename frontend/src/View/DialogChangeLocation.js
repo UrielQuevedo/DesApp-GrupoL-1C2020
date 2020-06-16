@@ -12,6 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHereMapService } from '../Service/HereMapService';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import '../Styles/Location.css';
+import '../Styles/PublishStore.css';
 
 const DialogChangeLocation = ({ actualCoords, setActualCoords, location, setLocation }) => {
 
@@ -36,35 +37,37 @@ const DialogChangeLocation = ({ actualCoords, setActualCoords, location, setLoca
 
     return (
         <div> 
-            <Button className="location-button" onClick={handlerIsChangeLocation} >
+            <Button className="locationButton" onClick={handlerIsChangeLocation} >
                 <LocationOn style={{ position: 'absolute', left: '0' }}/>
                 <Box textOverflow="ellipsis" overflow="hidden" className="location-address" >
                     { location?.address || 'ingresar dirección' }
                 </Box>
                     <ArrowDropDownIcon style={{ position: 'absolute', right: '0' }}/>
             </Button>
-            <Dialog open={isLocationChangeView} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Dirección de tienda</DialogTitle>
-                <DialogContent>
-                    <LocationMap currentCoords={actualCoords} setCurrentCoords={setActualCoords} />
-                </DialogContent>
-                <DialogActions>
-                    <Grid container justify="flex-end" className="accept-button-container">
-                    { loading && <CircularProgress className="circularProgress-pink" /> }
-                    <Button
-                        size="small"
-                        type="submit"
-                        disabled={loading}
-                        variant="contained"
-                        className={loading ? 'mt-30' : 'mt-30 validated-button'}
-                        endIcon={<ArrowForwardIosIcon className="arrow-icon" />}
-                        onClick={getLocationByCoords}
-                    >
-                        aceptar
-                    </Button>
-                    </Grid>
-                </DialogActions>
-            </Dialog>
+            <div style={{ width:'550px'}} >
+                <Dialog open={isLocationChangeView} aria-labelledby="form-dialog-title" fullWidth>
+                    <DialogTitle id="form-dialog-title">Dirección de tienda</DialogTitle>
+                    <DialogContent>
+                        <LocationMap currentCoords={actualCoords} setCurrentCoords={setActualCoords} />
+                    </DialogContent>
+                    <DialogActions>
+                        <Grid container justify="flex-end" className="accept-button-container">
+                        { loading && <CircularProgress className="circularProgress-pink" /> }
+                        <Button
+                            size="small"
+                            type="submit"
+                            disabled={loading}
+                            variant="contained"
+                            className={loading ? 'mt-30' : 'mt-30 validated-button'}
+                            endIcon={<ArrowForwardIosIcon className="arrow-icon" />}
+                            onClick={getLocationByCoords}
+                        >
+                            aceptar
+                        </Button>
+                        </Grid>
+                    </DialogActions>
+                </Dialog>
+            </div>
         </div>
     )
 }

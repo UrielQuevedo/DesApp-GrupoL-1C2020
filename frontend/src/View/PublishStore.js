@@ -167,7 +167,7 @@ const PublishStore = () => {
                                     Crear tienda
                                 </Button>
                             </div>
-                            </div>
+                        </div>
                         </form>
                     </div>
              </Container>
