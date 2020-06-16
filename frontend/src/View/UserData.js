@@ -1,26 +1,40 @@
 import { Button, Divider, Grid, TextField } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import NavigationProfile from '../Components/ProfileView/NavigationProfile';
 import { UserContext } from '../Context/UserContext';
 import '../Styles/User.css';
 import DataContainerProfile from '../Components/ProfileView/DataContainerProfile';
+import { useEditUserProfile } from '../Service/AuthService';
 
 const UserData = () => {
-  const { user } = useContext(UserContext);
-  const [ userToEdit, setUserToEdit ] = useState({
-    username: user.username,
-    email: user.email,
-  });
+  const { user, setUser } = useContext(UserContext);
+
+  const defaultValuesToEdit = (data) => {
+    return {
+      actualEmail: data.email,
+      actualPassword: '',
+      username: data.username,
+      email: data.email,
+      password: '',
+    }
+  }
+
+  const [ userToEdit, setUserToEdit ] = useState(defaultValuesToEdit(user));
+  const { postEditUser, userEditLoading } = useEditUserProfile(userToEdit);
 
   const handleChangeUserValue = (type, value) => {
     setUserToEdit({ ...userToEdit, [type]: value });
   }
 
+  const setValuesToEdit = (data) => {
+    setUserToEdit(defaultValuesToEdit(data))
+    setUser(data);
+  }
+
   const onSubmitSendEdit = (e) => {
     e.preventDefault();
-    setUserToEdit(userToEdit);
+    postEditUser(setValuesToEdit);
     e.target.reset();
-    //Enviar datos
   }
 
   const customInput = (title, type, defaultValue, placeholder) => {
@@ -36,7 +50,7 @@ const UserData = () => {
           className="form-item"
           variant="outlined"
           onChange={(e) => handleChangeUserValue(defaultValue, e.target.value)}
-          defaultValue={userToEdit[defaultValue]}
+          value={userToEdit[defaultValue]}
         />
       </div>
     );

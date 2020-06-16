@@ -11,8 +11,8 @@ const request = (type, path, body, params) => axios
     })
     .then(req => req.data);
 
-export const registerRequest = (user_data) => request('POST', '/api/v1/auth/register', user_data);
-export const loginRequest = (user_data) => request('POST', '/api/v1/auth/login', user_data);
+export const registerRequest = (user_data) => request('POST', '/api/auth/register', user_data);
+export const loginRequest = (user_data) => request('POST', '/api/auth/login', user_data);
 export const sendBuyerLocationRequest = (id, location) => request('PUT', `/api/v1/users/${id}/location`, location);
 export const getStoreByIdUserRequest = (idUser) => request('GET', `/api/${idUser}/stores`);
 export const addProductRequest = (idStore, product_data) => request('POST', `/api/stores/${idStore}/products`, product_data);
