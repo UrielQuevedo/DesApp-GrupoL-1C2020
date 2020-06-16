@@ -11,6 +11,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHereMapService } from '../Service/HereMapService';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import '../Styles/Location.css';
 
 const DialogChangeLocation = ({ actualCoords, setActualCoords, location, setLocation }) => {
 
@@ -49,6 +50,7 @@ const DialogChangeLocation = ({ actualCoords, setActualCoords, location, setLoca
                 </DialogContent>
                 <DialogActions>
                     <Grid container justify="flex-end" className="accept-button-container">
+                    { loading && <CircularProgress className="circularProgress-pink" /> }
                     <Button
                         size="small"
                         type="submit"
