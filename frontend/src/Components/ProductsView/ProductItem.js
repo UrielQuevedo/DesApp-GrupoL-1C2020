@@ -8,7 +8,7 @@ const ProductItem = ({ product }) => {
       <div className="store-item-container">
         <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
         <div className="name">
-          {price},00$
+          ${price}
         </div>
         <div className="address">
           {name}

@@ -52,7 +52,7 @@ const LanguageSelector = () => {
         <ListItemIcon className="icons">
           <LanguageIcon />
         </ListItemIcon>
-        <ListItemText primary="Idioma" />
+        <ListItemText primary={t("Idioma")} />
         { open ? <ExpandLess /> : <ExpandMore /> }
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>

@@ -36,7 +36,6 @@ function App() {
                 <Route exact path='/stores' component={AllStoresWrapper} />
                 <Route exact path='/stores/category/:category' component={StoresCategoriesWrapper} />
                 <Route exact path='/stores/:store_id/products/:category' component={Products} />
-                <Route exact path='/stores/:store_id/products' component={ProductsWrapper} />
                 <Route exact path='/publish/store' component={PublishStore} />
                 <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
                 <Route exact path='/profile/mydata' component={UserData} />

@@ -26,7 +26,7 @@ const Home = () => {
             <TextField
               className="search"
               inputRef={register}
-              placeholder="Busca cualquier tienda o producto"
+              placeholder={t("Busca cualquier tienda o producto")}
               variant="outlined"
               name="search"
               required
@@ -53,13 +53,13 @@ const Home = () => {
         className="searchLayout-container"
       >
         <Grid item xs={12} sm={10} md={7} style={{ transform: 'scale(0.9)' }}>
-          <p title="¿Que estas buscando hoy?">
-            ¿Que estas buscando hoy?
+          <p title={t("¿Qué estas buscando hoy?")}>
+            {t("¿Qué estas buscando hoy?")}
           </p>
           <SearchForm />
           <Link style={{ textDecoration:'none' }} to="/stores">
             <Button name="viewStrores" variant="contained" className="buttonStores">
-              ver tiendas
+              {t("ver tiendas")}
             </Button>
           </Link>
         </Grid>
@@ -89,10 +89,10 @@ const Home = () => {
     return (
       <div className="storeCategories">
         <span className="title">
-          Nuestros rubros
+          {t("Nuestros rubros")}
         </span>
         <p className="subtitle" >
-          Lo mas cercano de tu casa
+          {t("Lo mas cercano de tu casa")}
         </p>
         <Grid container direction="row" justify="center" alignContent="center" alignItems="center">
           <StoreCategoriesList />
@@ -131,16 +131,16 @@ const Home = () => {
       <Grid container justify="center" style={{height:'10%', marginTop:'-4rem'}}>
         {/* Offer */}
         <InformationPaper
-          title="Ofertas"
-          description="No te pierdas las ultimas ofertas que las tiendas tienen para vos, y bla bla bla.."
-          nameButtom="ver ofertas"
+          title={t("Ofertas")}
+          description={t("No te pierdas las ultimas ofertas que las tiendas tienen para vos, y") + " bla bla bla.."}
+          nameButtom={t("ver ofertas")}
           link="/stores/category/offer"
         />
         {/* Store */}
         <InformationPaper
-          title="Publica tu tienda"
-          description="Texto motivador y convincente para publicar tu tienda, y bla bla bla.."
-          nameButtom="publicar tienda"
+          title={t("Publica tu tienda")}
+          description={t("Texto motivador y convincente para publicar tu tienda, y")  + " bla bla bla.."}
+          nameButtom={t("publicar")}
           link="/publish/store"
         />
         <div className="background-color" />

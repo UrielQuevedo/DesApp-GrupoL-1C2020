@@ -1,5 +1,22 @@
 {
   "buscar": "search",
   "Español": "Spanish",
-  "Salir": "Exit"
+  "Salir": "Exit",
+  "Ingles":"English",
+  "¿Qué estas buscando hoy?": "What are you looking for today?",
+  "ver tiendas":"all stores",
+  "Busca cualquier tienda o producto":"Search any stores or product",
+  "Nuestros rubros": "Our sectors",
+  "Lo mas cercano de tu casa": "The closest thing to your home",
+  "tu tienda": "my store",
+  "tiendas": "stores",
+  "Mis ordenes": "My orders",
+  "Mis datos": "My data",
+  "Idioma": "Language",
+  "Ofertas": "Offers",
+  "Publica tu tienda": "Publish your store",
+  "ver ofertas": "all offers",
+  "publicar": "publish",
+  "No te pierdas las ultimas ofertas que las tiendas tienen para vos, y":"Don't miss out on the latest offers that stores have for you and",
+  "Texto motivador y convincente para publicar tu tienda, y":"Motivating and compelling text to publish your store and"
 }
