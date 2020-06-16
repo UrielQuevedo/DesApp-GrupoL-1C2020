@@ -8,16 +8,10 @@ const NavigationProfile = ({ actualView }) => {
       <AppBar position="static" color="default" style={{ background:'#ffff' }}>
         <Tabs
           value={actualView}
-          indicatorColor="primary"
-          textColor="primary"
           centered
         >
-          <Link to="/profile/myorders" className="default-link">
-            <Tab label="Mis Ordenes" />
-          </Link>
-          <Link to="/profile/mydata" className="default-link">
-            <Tab label="Mis Datos" />
-          </Link>
+          <Tab component={Link} label="Mis Ordenes" to="/profile/myorders" className="default-link"/>
+          <Tab component={Link} label="Mis Datos" to="/profile/mydata" className="default-link" />
           <Tab label="Cubrir Gastos" />
         </Tabs>
       </AppBar>

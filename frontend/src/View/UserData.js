@@ -1,10 +1,12 @@
-import { Button, Divider, Grid, TextField } from '@material-ui/core';
-import React, { useContext, useState, useEffect } from 'react';
+import { Button, CircularProgress, Divider, Grid, TextField } from '@material-ui/core';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import React, { useContext, useState } from 'react';
+import DataContainerProfile from '../Components/ProfileView/DataContainerProfile';
 import NavigationProfile from '../Components/ProfileView/NavigationProfile';
 import { UserContext } from '../Context/UserContext';
-import '../Styles/User.css';
-import DataContainerProfile from '../Components/ProfileView/DataContainerProfile';
 import { useEditUserProfile } from '../Service/AuthService';
+import '../Styles/User.css';
 
 const UserData = () => {
   const { user, setUser } = useContext(UserContext);
@@ -21,19 +23,28 @@ const UserData = () => {
 
   const [ userToEdit, setUserToEdit ] = useState(defaultValuesToEdit(user));
   const { postEditUser, userEditLoading } = useEditUserProfile(userToEdit);
+  const [ error, setError ] = useState('');
+  const [ isCorrectly, setIsCorrectly ] = useState(false);
 
   const handleChangeUserValue = (type, value) => {
     setUserToEdit({ ...userToEdit, [type]: value });
   }
 
   const setValuesToEdit = (data) => {
-    setUserToEdit(defaultValuesToEdit(data))
+    setUserToEdit(defaultValuesToEdit(data));
+    setError('');
+    setIsCorrectly(true);
     setUser(data);
+  }
+
+  const handlerError = (response) => {
+    setIsCorrectly(false);
+    setError(response.data.message);
   }
 
   const onSubmitSendEdit = (e) => {
     e.preventDefault();
-    postEditUser(setValuesToEdit);
+    postEditUser(setValuesToEdit, handlerError);
     e.target.reset();
   }
 
@@ -77,8 +88,11 @@ const UserData = () => {
                 placeholder="Ingresar contraseña actual"
                 onChange={(e) => handleChangeUserValue("actualPassword", e.target.value)}
               />
+              { error && <div style={{ color:'#ffff', display:'flex', borderLeft:'3px solid #ffff' }}> <HighlightOffIcon style={{ color:'#ffff', margin:'0 5px 0 5px' }} />  { error }. </div>}
             </div>
             <Grid container item justify="flex-end" style={{ marginBottom:'10px' }}>
+              { userEditLoading && <CircularProgress size={28} style={{ color:'#ffff', marginRight:'15px', position:'relative', top:'3px' }} /> }
+              { isCorrectly && !userEditLoading && <CheckCircleOutlineIcon style={{ color:'#0f0', position:'relative', marginRight:'10px', top:'5px', transform:'scale(1.2)' }} /> }
               <Button type="submit" variant="contained" color="primary">
                 Aceptar
               </Button>

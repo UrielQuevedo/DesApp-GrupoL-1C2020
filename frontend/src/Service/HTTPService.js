@@ -4,13 +4,16 @@ import { useState } from 'react';
 const API_URL = process.env.REACT_APP_API_BACKEND + '/api';
 
 const useApi = (axiosFunction) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const method = (nextFunction) => {
+  const method = (nextFunction, handlerErrorFunction = () => null) => {
     setLoading(true);
     axiosFunction()
       .then((response) => nextFunction(response.data))
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error.response);
+        handlerErrorFunction(error.response);
+      })
       .finally(() => setLoading(false));
   }
 

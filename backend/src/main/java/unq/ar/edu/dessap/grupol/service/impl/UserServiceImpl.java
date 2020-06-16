@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(String _username, String _password, String _email) {
+        if(userDao.existEmail(_email)) throw new EmailExistException();
         User user = User.builder()
                 .email(_email)
                 .password(this.encryptPassword(_password))
@@ -85,12 +86,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setPasswordUser(User user, String newPassword) {
-        System.out.println("CONSOLAAAAAAAAAAAAAAAAAAAAAAAAAA: " +!newPassword.equals(""));
         if(!newPassword.equals("") && !isPasswordCorrect(newPassword, user.getPassword())){
-            System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             user.setPassword(this.encryptPassword(newPassword));
         }
-        System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
     }
 
     private Boolean isPasswordCorrect(String passwordToVerify, String passwordCorrectly){

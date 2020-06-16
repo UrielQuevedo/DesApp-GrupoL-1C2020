@@ -26,10 +26,10 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping(value = "/register")
+    @ExceptionHandling
     public ResponseEntity<User> register(@Valid @RequestBody UserDto userData) {
         User user = userService.create(userData.getUsername(), userData.getPassword(), userData.getEmail());
 
-        //TODO handlear la excepcion cuando esta repetido el email
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
