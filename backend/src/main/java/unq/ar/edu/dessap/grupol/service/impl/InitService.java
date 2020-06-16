@@ -87,6 +87,7 @@ public class InitService {
                 .brand("matarasos")
                 .name("fideos largos")
                 .price(80.00)
+                .image_url("https://walmartar.vteximg.com.br/arquivos/ids/848517-1000-1000/Fideos-Tallarin-Matarazzo-500gr-1-13350.jpg?v=636994053716730000")
                 .stock(60)
                 .build();
 
@@ -95,6 +96,7 @@ public class InitService {
                 .brand("oreo")
                 .name("chocolate")
                 .price(100.00)
+                .image_url("https://mayoristaencountry.com/25419-large_default/galletas-oreo-117-gr.jpg")
                 .stock(50)
                 .build();
 
@@ -103,6 +105,7 @@ public class InitService {
                 .brand("don satur")
                 .name("salado")
                 .price(150.00)
+                .image_url("https://www.deliargentina.com/image/cache/catalog/product/alimentacion/bizcochitos-salados-de-grasa-don-satur-argentinos/bizcochitos-salados-de-grasa-don-satur-argentinos-550x550.jpg")
                 .stock(100)
                 .build();
 
@@ -110,6 +113,7 @@ public class InitService {
                 .category(Category.FIAMBRE)
                 .brand("paladini")
                 .name("queso")
+                .image_url("https://www.paladini.com.ar/assets/img/productos/productos/danbo.jpg")
                 .price(80.00)
                 .stock(100)
                 .build();
@@ -119,6 +123,7 @@ public class InitService {
                 .brand("214")
                 .name("salame")
                 .price(80.00)
+                .image_url("https://www.riosma.com/adminriosma/views/img/plantilla/logo-salame-tipo-milan-grande-101-388.png")
                 .stock(60)
                 .build();
 
@@ -127,6 +132,7 @@ public class InitService {
                 .brand("cocacola")
                 .name("zero")
                 .price(160.00)
+                .image_url("https://d26lpennugtm8s.cloudfront.net/stores/001/157/846/products/coca-zero-1-51-0bcc196c41b2d8eeca15871731141912-640-0.jpg")
                 .stock(20)
                 .build();
 
