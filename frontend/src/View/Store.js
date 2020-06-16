@@ -1,4 +1,4 @@
-import React , { useState, useEffect } from 'react';
+import React , { useState, useEffect, useContext } from 'react';
 import ListProduct from './ListProduct';
 import DialogAddProduct from './DialogAddProduct';
 import { getStoreByIdUserRequest } from '../Service/Api';
@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { UserContext } from '../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,10 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Store = (props) => {
+const Store = () => {
 
   const classes = useStyles();
-  const idUser = props.location.state.user.id;
+  const { user } = useContext(UserContext);
+  const idUser = user.id;
   const [ id, setId ] = useState(null); 
   const [ name, setName ] = useState(null); 
   const [ products, setProducts] = useState(null);

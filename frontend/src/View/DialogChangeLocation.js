@@ -44,7 +44,6 @@ const DialogChangeLocation = ({ actualCoords, setActualCoords, location, setLoca
                 </Box>
                     <ArrowDropDownIcon style={{ position: 'absolute', right: '0' }}/>
             </Button>
-            <div style={{ width:'550px'}} >
                 <Dialog open={isLocationChangeView} aria-labelledby="form-dialog-title" fullWidth>
                     <DialogTitle id="form-dialog-title">Dirección de tienda</DialogTitle>
                     <DialogContent>
@@ -67,7 +66,6 @@ const DialogChangeLocation = ({ actualCoords, setActualCoords, location, setLoca
                         </Grid>
                     </DialogActions>
                 </Dialog>
-            </div>
         </div>
     )
 }

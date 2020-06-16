@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import DialogChangeLocation from './DialogChangeLocation';
+import { useHistory } from 'react-router';
 import '../Styles/PublishStore.css';
 
 const GreenCheckbox = withStyles({
@@ -35,6 +36,7 @@ const PublishStore = () => {
     const { register, handleSubmit } = useForm();
     const [ sector, setSector ] = useState('');
     const [ location, setLocation ] = useState({});
+    const { push } = useHistory();
     const [ actualCoords, setActualCoords ] = useState({
         latitude: user.location.latitude,
         longitude: user.location.longitude
@@ -54,6 +56,7 @@ const PublishStore = () => {
         publishStoreRequest(user.id, store_data)
         .then(data => {
             console.log(data);
+            push('/store');
         })
         .catch(error => {
             console.log(error.message);
@@ -76,7 +79,7 @@ const PublishStore = () => {
                 latitude: location.latitude,
                 longitude: location.longitude
             },
-            maxDistance: store.maxDistance,
+            maxDistance: parseInt(store.maxDistance),
             sector: sector,
             payments: payments
         }
