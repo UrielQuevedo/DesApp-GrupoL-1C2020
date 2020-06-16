@@ -30,7 +30,7 @@ public class Product {
     @JoinColumn(name = "fk_store_id")
     @JsonIgnore
     private Store store;
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_offer_id")
     private Offer offerToApply;
 }

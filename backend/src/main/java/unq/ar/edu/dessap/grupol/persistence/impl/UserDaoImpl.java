@@ -32,4 +32,9 @@ public class UserDaoImpl implements UserDao {
         if (optionalUser.isPresent()) return optionalUser.get();
         throw new LoginException();
     }
+
+    @Override
+    public boolean existEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
 }

@@ -10,20 +10,12 @@ import SearchLayout from '../Components/ProductsAndStores/SearchLayout';
 import ShowStoreOnMap from '../Components/ProductsAndStores/ShowStoresOnMap';
 import { UserContext } from '../Context/UserContext';
 import '../Styles/Stores.css';
+import { categories } from '../Utils/Constans';
 
 const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
   const { category } = useParams();
   const [ isMapView, setisMapView ] = useState(false);
   const { user } = useContext(UserContext);
-
-  const categories = [
-    { name: 'carniceria' },
-    { name: 'farmacia' },
-    { name: 'verduleria' },
-    { name: 'almacen' },
-    { name: 'kiosco' },
-    { name: 'dietetica' },
-  ];
 
   const filters = [
     { name: 'tarjeta' },
@@ -104,20 +96,26 @@ const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
   }
 
   const StoresItemsView = () => {
-    return stores.map(({ name, sector, id, location }, i) => (
+    return stores.map((store, i) => (
       <div key={i} className="store-item-container">
-        <Link to={`/stores/${id}/products`} style={{textDecoration:'none', color:'#000'}}>
+        <Link
+          to={{
+            pathname:`/stores/${store.id}/products/BEBIDAS`,
+            state: store,
+          }}
+          style={{textDecoration:'none', color:'#000'}}
+        >
           <Fade in={true}>
             <div>
               <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
               <div className="name">
-                {name}
+                {store.name}
               </div>
               <div className="address">
-                {location.address}
+                {store.location.address}
               </div>
               <div className="sector">
-                {sector}
+                {store.sector}
               </div>
             </div>
           </Fade>

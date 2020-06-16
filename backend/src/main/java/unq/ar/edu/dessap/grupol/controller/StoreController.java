@@ -64,7 +64,7 @@ public class StoreController {
     }
 
     @GetMapping(value = "/stores")
-    public ResponseEntity<Page<Store>> getStoresFiltered(@RequestParam Sector category,
+    public ResponseEntity<Page<Store>> getStoresFiltered(@RequestParam Optional<Sector> category,
                                                          @RequestParam Optional<String> search,
                                                          @RequestParam Optional<Payment> payment,
                                                          Pageable pageable) {

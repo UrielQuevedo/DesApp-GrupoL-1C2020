@@ -5,19 +5,19 @@ import { Alert } from '@material-ui/lab';
 import React, { useContext, useState } from 'react';
 import { Link, NavLink, useParams } from 'react-router-dom';
 import PaginationComponent from '../Components/ProductsAndStores/Pagination';
-import ProductItem from '../Components/ProductsView/ProductItem';
 import SearchLayout from '../Components/ProductsAndStores/SearchLayout';
 import ShowStoreOnMap from '../Components/ProductsAndStores/ShowStoresOnMap';
+import ProductItem from '../Components/ProductsView/ProductItem';
 import { UserContext } from '../Context/UserContext';
 import { useGetProductsFiltered } from '../Service/ProductService';
 import { useGetCategories, useGetStore } from '../Service/StoreService';
 import '../Styles/Stores.css';
 
-const Products = () => {
+const Products = ({ location }) => {
   const { category, store_id } = useParams();
   const [ isInfoView, setIsInfoView ] = useState(false);
   const { categoriesLoading, categories } = useGetCategories(store_id);
-  const { store } = useGetStore(store_id);
+  const { store } = useGetStore(store_id, location);
   const { productsLoading, products, setFilter, filter, totalPages } = useGetProductsFiltered(store_id, category);
   const { user } = useContext(UserContext);
 
@@ -146,13 +146,12 @@ const Products = () => {
     return (
       <Grid container item direction="column" className="stores-container">
         <StoreNavigationBar />
+        { isInfoView && <StoreInformation /> }
         { productsLoading && <CircularProgress className="stores-loading-data mt-20" /> }
         { !productsLoading && products.length <= 0 && <Alert className="mt-20" severity="warning">No se encontro ningun producto</Alert>}
-        { !productsLoading && products.length > 0 &&
+        { !isInfoView && !productsLoading && products.length > 0 &&
           <Grid container justify="center" item direction="row" style={{ marginTop:'10px' }}>
-            {
-              isInfoView ? <StoreInformation /> : <ProductsItemsView />
-            }
+            <ProductsItemsView />
           </Grid>
         }
       </Grid>

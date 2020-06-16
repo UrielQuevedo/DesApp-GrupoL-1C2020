@@ -93,8 +93,8 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Page<Store> getStoresFiltered(Sector category, Optional<String> search,  Optional<Payment> payment, Pageable pageable) {
-        return storeDao.getStoresFiltered(category, search.orElse(""), payment.orElse(null), pageable);
+    public Page<Store> getStoresFiltered(Optional<Sector> category, Optional<String> search,  Optional<Payment> payment, Pageable pageable) {
+        return storeDao.getStoresFiltered(category.orElse(null), search.orElse(""), payment.orElse(null), pageable);
     }
 
     @Override

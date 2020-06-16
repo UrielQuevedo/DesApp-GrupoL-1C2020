@@ -23,7 +23,7 @@ const UserMenuItems = ({ handleCloseMenu }) => {
 
   return (
     <>
-      <Link to="/profile" style={{ textDecoration:'none' }}>
+      <Link to="/profile/myorders" style={{ textDecoration:'none' }}>
         <ListItem button onClick={handleCloseMenu}>
           <ListItemIcon className="icons">
           <span>
@@ -33,7 +33,7 @@ const UserMenuItems = ({ handleCloseMenu }) => {
           <ListItemText primary="Mis ordenes" style={{ color:'#000000de' }} />
         </ListItem>
       </Link>
-      <Link to='/profile' style={{ textDecoration:'none' }}>
+      <Link to='/profile/mydata' style={{ textDecoration:'none' }}>
         <ListItem button onClick={handleCloseMenu}>
           <ListItemIcon className="icons">
             <AccountCircleIcon />

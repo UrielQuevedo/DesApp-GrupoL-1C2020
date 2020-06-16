@@ -1,5 +1,6 @@
 package unq.ar.edu.dessap.grupol.model.offer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import unq.ar.edu.dessap.grupol.model.Product;
@@ -14,6 +15,7 @@ public class ProductOffer extends Offer{
     @OneToOne
     @JoinColumn(name = "fk_product_id")
     @Getter @Setter
+    @JsonIgnore
     private Product product;
 
     public ProductOffer(){}

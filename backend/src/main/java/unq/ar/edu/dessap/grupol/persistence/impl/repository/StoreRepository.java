@@ -26,7 +26,7 @@ public interface StoreRepository extends JpaRepository<Store, Long>  {
                                                             @Param("payment") Payment payment,
                                                             Pageable pageable);
 
-    @Query("SELECT s FROM Store s WHERE s.sector = :sector " +
+    @Query("SELECT s FROM Store s WHERE :sector IS NULL OR s.sector = :sector " +
             "AND lower(s.name) LIKE lower(concat('%',:search,'%')) " +
             "AND (:payment IS NULL OR :payment MEMBER s.payments)")
     Page<Store> getStoresFindByNameAndSectorAndFilter(@Param("sector") Sector sector,

@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { TextField, Chip, InputAdornment, Button } from '@material-ui/core';
+import { useHistory } from 'react-router';
 
 const SearchLayout = ({ name, subName, filter, setFilter }) => {
 
   const [ searchDataToSend, setSearchDataToSend ] = useState('');
+  const query = new URLSearchParams(window.location.search);
+  const search = query.get('search');
+  const { push } = useHistory();
 
   const deleteSearchFilter = () => {
+    if(search) {
+      query.delete('search');
+      push(window.location.pathname);
+    }
     setFilter({...filter, search: '' });
   }
 
