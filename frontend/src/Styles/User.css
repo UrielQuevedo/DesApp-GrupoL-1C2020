@@ -23,7 +23,7 @@
 
 .default-link {
   text-decoration: none;
-  color: #909695;
+  color: currentColor;
 }
 
 .container-settings {
@@ -42,7 +42,7 @@
 
 .container-settings .container-form {
   width: 50%;
-
+  margin-top: 20px;
 }
 
 .container-settings .container-form .form-item {
