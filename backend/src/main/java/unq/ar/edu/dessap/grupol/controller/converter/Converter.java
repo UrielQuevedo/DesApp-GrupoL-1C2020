@@ -27,8 +27,8 @@ public class Converter {
                 .name(storeDto.getName())
                 .sector(storeDto.getSector())
                 .location(storeDto.getLocation())
-                .openDays(storeDto.getOpenDays())
-                .times(toListTimes(storeDto.getTimes()))
+                .openDays(new ArrayList<>())
+                .times(new ArrayList<>())
                 .payments(storeDto.getPayments())
                 .maxDistance(storeDto.getMaxDistance())
                 .products(new ArrayList<>())
@@ -45,6 +45,7 @@ public class Converter {
         storeDto.setOpenDays(store.getOpenDays());
         //storeDto.setPayments(store.getPayments());
         storeDto.setTimes(toTimesDtos(store.getTimes()));
+        storeDto.setProducts(toProductsDtos(store.getProducts()));
         return storeDto;
     }
 

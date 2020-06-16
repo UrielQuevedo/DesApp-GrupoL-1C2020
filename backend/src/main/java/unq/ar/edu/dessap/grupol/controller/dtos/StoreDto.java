@@ -5,6 +5,7 @@ import lombok.Setter;
 import unq.ar.edu.dessap.grupol.model.*;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter

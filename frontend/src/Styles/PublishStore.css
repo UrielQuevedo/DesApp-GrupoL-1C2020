@@ -1,0 +1,38 @@
+.containerPublishStore {
+    position: relative;
+    left: 170px;
+    top: 85px;
+    width: 550px;
+}
+
+.containerData {
+    position: absolute;
+    background: white;
+    width: 550px;
+    padding: 20px;
+    border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+.containerButton {
+    position: relative;
+    width: 550px;
+    top: 350px;
+}
+
+.buttonRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.locationButton {
+    border-bottom: 1px solid black !important;
+    white-space: nowrap;
+    width: 508px;
+    margin-top: 15px;
+    border-radius: 0px !important;
+  }
+  
