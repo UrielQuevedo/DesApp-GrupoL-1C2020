@@ -8,10 +8,12 @@ import { Link, NavLink } from 'react-router-dom';
 import '../../../Styles/NavigationBar.css';
 import UserLocationButton from '../UserLocationButton';
 import UserMenuItems from '../UserMenuItems';
+import { useTranslation } from 'react-i18next';
 
 
 const DesktopNavigationBar = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const { t } = useTranslation();
 
   const Logo = () => {
     return (
@@ -35,7 +37,7 @@ const DesktopNavigationBar = ({ user }) => {
         }}>
 
           <Button size="small" variant="contained">
-            tu tienda
+            {t("tu tienda")}
           </Button>
         </Link>
       </div>
@@ -82,7 +84,7 @@ const DesktopNavigationBar = ({ user }) => {
         <MyStoreButton />
         <UserLocationButton actualLocation={user.location} />
         <NavLink to="/stores" activeClassName="item-actived" className="item">
-          tiendas
+          {t("tiendas")}
         </NavLink>
         {userMenu()}
       </Toolbar>

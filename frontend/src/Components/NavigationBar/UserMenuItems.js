@@ -30,7 +30,7 @@ const UserMenuItems = ({ handleCloseMenu }) => {
             <Svg xlink='/svg/Icons.svg#orders' />
           </span>
           </ListItemIcon>
-          <ListItemText primary="Mis ordenes" style={{ color:'#000000de' }} />
+          <ListItemText primary={t("Mis ordenes")} style={{ color:'#000000de' }} />
         </ListItem>
       </Link>
       <Link to='/profile/mydata' style={{ textDecoration:'none' }}>
@@ -38,7 +38,7 @@ const UserMenuItems = ({ handleCloseMenu }) => {
           <ListItemIcon className="icons">
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="Mis datos" style={{ color:'#000000de' }} />
+          <ListItemText primary={t("Mis datos")} style={{ color:'#000000de' }} />
         </ListItem>
       </Link>
       <LanguageSelector />

@@ -121,7 +121,7 @@ const Register = () => {
                 >
                 Registrarse
               </Button>
-              { loading && <CircularProgress className="loading" size={24} /> }
+              { loading && <CircularProgress style={{ position:'absolute', top:'37%', left:'47%' }} size={24} /> }
             </Box>
             <Grid container justify="center" style={{ marginBottom:'20px' }}>
               <div>
