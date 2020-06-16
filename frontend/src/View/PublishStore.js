@@ -74,14 +74,14 @@ const PublishStore = () => {
 
         const result = {
             name: store.name,
+            sector: sector,
             location: {
                 address: location.address,
                 latitude: location.latitude,
                 longitude: location.longitude
             },
-            maxDistance: parseInt(store.maxDistance),
-            sector: sector,
-            payments: payments
+            payments: payments,
+            maxDistance: parseInt(store.maxDistance)
         }
 
         return result;

@@ -31,6 +31,7 @@ const Store = () => {
   const [ loading, setLoading] = useState(true);
 
   useEffect(() => {
+    {console.log(user)}
     setLoading(false);
       if(!id) {
         getStoreByIdUserRequest(idUser)

@@ -15,8 +15,8 @@ public class StoreDto {
     private Location location;
     private Double maxDistance;
     private Sector sector;
-    private List<DayOfWeek> openDays = new ArrayList<>();
+    private List<DayOfWeek> openDays;
     private List<Payment> payments;
-    private List<TimeDto> times = new ArrayList<>();
+    private List<TimeDto> times;
     private List<ProductDto> products;
 }
