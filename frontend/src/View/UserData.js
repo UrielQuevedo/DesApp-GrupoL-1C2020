@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Divider, Grid, TextField } from '@material-ui/core';
+import { Button, CircularProgress, Divider, Grid, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import React, { useContext, useState } from 'react';
@@ -7,6 +7,8 @@ import NavigationProfile from '../Components/ProfileView/NavigationProfile';
 import { UserContext } from '../Context/UserContext';
 import { useEditUserProfile } from '../Service/AuthService';
 import '../Styles/User.css';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const UserData = () => {
   const { user, setUser } = useContext(UserContext);
@@ -22,9 +24,9 @@ const UserData = () => {
   }
 
   const [ userToEdit, setUserToEdit ] = useState(defaultValuesToEdit(user));
-  const { postEditUser, userEditLoading } = useEditUserProfile(userToEdit);
-  const [ error, setError ] = useState('');
+  const { postEditUser, userEditLoading, error, setError } = useEditUserProfile(userToEdit);
   const [ isCorrectly, setIsCorrectly ] = useState(false);
+  const [ showPassword, setShowPassword ] = useState(false);
 
   const handleChangeUserValue = (type, value) => {
     setUserToEdit({ ...userToEdit, [type]: value });
@@ -67,6 +69,21 @@ const UserData = () => {
     );
   }
 
+  const inputPropsShowPassowrd = () => {
+    return {
+      endAdornment: (
+        <InputAdornment position="end">
+          <IconButton
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label="toggle password visibility"
+          >
+            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </IconButton>
+        </InputAdornment>
+      )
+    }
+  }
+
   const settingView = () => {
     return (
       <Grid container item justify="center" style={{padding:'10px'}}>
@@ -81,12 +98,13 @@ const UserData = () => {
                 Para confirmar los cambios debe ingresar la contraseña actual
               </p>
               <TextField
-                type="password"
+                type={ showPassword ? "text" : "password" }
                 required size="small"
                 className="form-item"
                 variant="outlined"
                 placeholder="Ingresar contraseña actual"
                 onChange={(e) => handleChangeUserValue("actualPassword", e.target.value)}
+                InputProps={inputPropsShowPassowrd()}
               />
               { error && <div style={{ color:'#ffff', display:'flex', borderLeft:'3px solid #ffff' }}> <HighlightOffIcon style={{ color:'#ffff', margin:'0 5px 0 5px' }} />  { error }. </div>}
             </div>
