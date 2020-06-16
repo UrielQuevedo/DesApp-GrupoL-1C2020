@@ -26,3 +26,21 @@ NOTES:
 KNOWN ISSUES:
 
 - 
+
+---------------------------------------------------------------------
+TAG ENTREGA 2.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Configurar coverage.
+* Agregar carrito de compras.
+* Agregar turnos.
+* Poder realizar una compra.
+* Poder registrarse con una cuenta de Gmail.
+
+NOTES:
+
+-
+
+KNOWN ISSUES:
+
+- 
