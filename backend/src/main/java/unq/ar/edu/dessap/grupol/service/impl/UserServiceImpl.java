@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
+import unq.ar.edu.dessap.grupol.controller.exception.EmailExistException;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
+import unq.ar.edu.dessap.grupol.controller.exception.PasswordIncorrectException;
 import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.OrderHistory;
 import unq.ar.edu.dessap.grupol.model.User;
@@ -24,9 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(String _username, String _password, String _email) {
+        if(userDao.existEmail(_email)) throw new EmailExistException();
         User user = User.builder()
                 .email(_email)
-                .password(passwordEncoder.encode(_password))
+                .password(this.encryptPassword(_password))
                 .username(_username)
                 .build();
 
@@ -41,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmailAndPassword(String email, String password) {
         User user = userDao.getUserByEmail(email);
-        if (passwordEncoder.matches(password, user.getPassword())) {
+        if (this.isPasswordCorrect(password, user.getPassword())) {
             return user;
         }
         throw new LoginException();
@@ -59,5 +63,39 @@ public class UserServiceImpl implements UserService {
         user.setLocation(location);
         userDao.save(user);
         return user;
+    }
+
+    @Override
+    public User editUser(EditUserDto userData) {
+        User user = userDao.getUserByEmail(userData.getActualEmail());
+        if (this.isPasswordCorrect(userData.getActualPassword(), user.getPassword())) {
+            this.setEmailUser(user, userData.getEmail());
+            this.setPasswordUser(user, userData.getPassword());
+            user.setUsername(userData.getUsername());
+            userDao.save(user);
+            return user;
+        }
+        throw new PasswordIncorrectException();
+    }
+
+    private void setEmailUser(User user, String newEmail) {
+        if(!user.getEmail().equals(newEmail)) {
+            if(userDao.existEmail(newEmail)) throw new EmailExistException();
+            user.setEmail(newEmail);
+        }
+    }
+
+    private void setPasswordUser(User user, String newPassword) {
+        if(!newPassword.equals("") && !isPasswordCorrect(newPassword, user.getPassword())){
+            user.setPassword(this.encryptPassword(newPassword));
+        }
+    }
+
+    private Boolean isPasswordCorrect(String passwordToVerify, String passwordCorrectly){
+        return passwordEncoder.matches(passwordToVerify, passwordCorrectly);
+    }
+
+    private String encryptPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }

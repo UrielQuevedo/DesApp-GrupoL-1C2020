@@ -13,14 +13,17 @@ import '../Styles/Location.css';
 const Location = () => {
   const [ isLocationChangeView, setIsLocationChangeView ] = useState(false);
   const [ actualCoords, setActualCoords ] = useState({});
+  const [ loadingActualCoords, setLoadingActualCoords] = useState(true);
   const { loading, fetchPositionsByCoords } = useHereMapService();
   const [ location, setLocation ] = useState({});
   const { setUser } = useContext(UserContext);
   const { push } = useHistory();
 
   useEffect(() => {
+    setLoadingActualCoords(true);
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       setActualCoords(coords);
+      setLoadingActualCoords(false);
     });
   }, [])
 
@@ -108,9 +111,9 @@ const Location = () => {
     <Grid container justify="center" alignItems="center" style={{ height:'100vh' }}>
       <div className="color-strip" />
         <Box
+          item="true"
           borderRadius="12px"
           padding="40px"
-          item
           boxShadow={4}
           textAlign="center"
           className="location-container"
@@ -118,7 +121,7 @@ const Location = () => {
           <h1>
             Dirección de entrega
           </h1>
-          { isLocationChangeView ? <LocationChangeView /> : <LocationView /> }
+          { isLocationChangeView && !loadingActualCoords ? <LocationChangeView /> : <LocationView /> }
         </Box>
     </Grid>
   );

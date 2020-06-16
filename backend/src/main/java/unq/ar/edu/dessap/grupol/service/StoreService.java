@@ -25,7 +25,7 @@ public interface StoreService  {
 
     Page<Store> getFilteredByNameAndPayment(Optional<String> name, Optional<Payment> payment, Pageable pageable);
 
-    Page<Store> getStoresFiltered(Sector category, Optional<String> search, Optional<Payment> payment, Pageable pageable);
+    Page<Store> getStoresFiltered(Optional<Sector> category, Optional<String> search, Optional<Payment> payment, Pageable pageable);
 
     Page<Store> getStoresThatHaveOffer(Optional<String> search, Optional<Payment> payment, Pageable pageable);
 

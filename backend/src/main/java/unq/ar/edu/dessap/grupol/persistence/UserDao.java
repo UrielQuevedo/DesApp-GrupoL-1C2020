@@ -8,4 +8,5 @@ public interface UserDao {
     User save(User user);
     User getUserById(long id);
     User getUserByEmail(String email);
+    boolean existEmail(String email);
 }

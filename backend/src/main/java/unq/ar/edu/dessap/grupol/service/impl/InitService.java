@@ -5,10 +5,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.model.*;
+import unq.ar.edu.dessap.grupol.model.offer.Offer;
+import unq.ar.edu.dessap.grupol.model.offer.ProductOffer;
 import unq.ar.edu.dessap.grupol.persistence.StoreDao;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +37,8 @@ public class InitService {
         this.createUserWithStoreAndHisProducts2();
         this.createUserWithStoreAndHisProducts3();
         this.createUserWithStoreAndHisProducts4();
+        this.createProductsOffer();
+        this.testDeCreacion(10);
     }
 
     private void createSimpleUsers() {
@@ -414,5 +419,122 @@ public class InitService {
         userDao.save(user);
     }
 
+    public void createProductsOffer() {
+        List<Product> products = new ArrayList<>();
+        List<Payment> payments = new ArrayList<>(Arrays.asList(Payment.EFECTIVO, Payment.TARJETA));
+
+        Product product = Product.builder()
+                .brand("Oreo")
+                .category(Category.GALLETITAS)
+                .image_url("https://images.rappi.com.ar/products/1258550-1591318565542.png?d=200x200&e=webp")
+                .name("Galletitas Oreo Rellenas de Chocolate")
+                .stock(60)
+                .price(57.80)
+                .build();
+
+        Offer productOfert = new ProductOffer(product, 10, LocalDate.now(), LocalDate.now());
+
+        product.setOfferToApply(productOfert);
+
+        Location location = Location.builder()
+                .address("Calle falsa 123")
+                .latitude(-34.716614)
+                .longitude(-58.260760)
+                .build();
+
+        products.add(product);
+
+        Store store = Store.builder()
+                .location(location)
+                .maxDistance(2.0)
+                .name("Doña rosa")
+                .payments(payments)
+                .sector(Sector.ALMACEN)
+                .products(products)
+                .build();
+
+        product.setStore(store);
+
+        User user = User.builder()
+                .email("marian@gmail.com")
+                .location(location)
+                .password("sarasa")
+                .username("mariano")
+                .store(store)
+                .build();
+
+        userDao.save(user);
+    }
+
+    private void testDeCreacion(int quantity) {
+        List<Sector> sectors = new ArrayList<>(Arrays.asList(
+                Sector.VERDULERIA, Sector.KIOSCO, Sector.FARMACIA, Sector.DIETETICA, Sector.CARNICERIA));
+
+        sectors.forEach(sector -> {
+            List<Store> stores = getCreateStoresByNames(sector, quantity);
+            this.setLocationToStores(stores, quantity);
+            System.out.println(stores);
+            this.setUsersToStoresAndSave(stores);
+        });
+    }
+
+    private List<Location> getXLocations(int x) {
+        List<Location> locations = new ArrayList<>();
+        for (int i = 0; i < x; i++) {
+            Location location = Location.builder()
+                    .address("Calle falsa " + (int) (Math.random() * 1000))
+                    .latitude(this.generateRandomDouble(-34.73, -34.71))
+                    .longitude(this.generateRandomDouble(-58.26,-58.25))
+                    .build();
+            locations.add(location);
+        }
+        return locations;
+    }
+
+    private double generateRandomDouble(double max, double min) {
+        return (double) Math.round((Math.random()*(max - min) + min) * 100000d) / 100000d;
+    }
+
+    private List<Store> getCreateStoresByNames(Sector sector, int quantity) {
+        List<Payment> payments = new ArrayList<>(Arrays.asList(Payment.EFECTIVO, Payment.TARJETA));
+        List<Store> stores = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            stores.add(Store.builder()
+                    .name(sector.toString() + " " + i)
+                    .maxDistance(10.0)
+                    .sector(sector)
+                    .payments(payments)
+                    .build());
+        }
+        return stores;
+    }
+
+    private void setLocationToStores(List<Store> stores, int numberLocation) {
+        int index = 0;
+        for (Location location : this.getXLocations(numberLocation) ) {
+            Store store = stores.get(index);
+            store.setLocation(location);
+            index++;
+        }
+    }
+
+    private void setUsersToStoresAndSave(List<Store> stores) {
+        Location location = Location.builder()
+                .address("Calle falsa 123")
+                .latitude(-34.716614)
+                .longitude(-58.260760)
+                .build();
+
+        stores.forEach(store -> {
+            User user = User.builder()
+                    .email("marian" + store.getName() + "@gmail.com")
+                    .location(location)
+                    .password("sarasa")
+                    .username("mariano")
+                    .store(store)
+                    .build();
+            userDao.save(user);
+        });
+    }
 
 }
