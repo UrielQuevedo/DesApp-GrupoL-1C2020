@@ -31,16 +31,19 @@ KNOWN ISSUES:
 TAG ENTREGA 2.0
 ---------------------------------------------------------------------
 NEW FEATURES:
-* Configurar coverage.
-* Agregar carrito de compras.
-* Agregar turnos.
-* Poder realizar una compra.
-* Poder registrarse con una cuenta de Gmail.
+* Home.
+* Buscador de productos o tienda.
+* Deploy en Heroku.
+* Agregar, modificar, eliminar productos de una tienda especifica.
+* Editar informacion del usuario.
+* Login/Register de un usuario.
 
 NOTES:
-
--
+- Terminar la view para crear una tienda.
+- Terminar de implementar I18n (solo traduce la pagina del home).
+- Carrito de compras.
+- Realizar una compra.
+- Register con cuenta de Gmail.
 
 KNOWN ISSUES:
-
 - 
