@@ -5,11 +5,13 @@
   position: relative;
   bottom: 0;
   right: 0;
-  transform: translate(15px, -15px);
+  transform: translate(-25px, -15px);
+  padding: 2px;
   position: fixed;
+  box-shadow: -4px 16px 22px 0px rgba(0,0,0,0.15) !important;
   cursor: pointer;
   transition: 0.5s;
-  z-index: 1;
+  z-index: 10000;
 }
 
 .alert {
@@ -50,8 +52,8 @@
 
 .desktop-shopping-cart .shoppingCart {
   position: absolute;
-  left: 18px;
-  top: 18px;
+  left: 20px;
+  top: 20px;
 }
 
 .button:hover {
@@ -72,7 +74,7 @@
   font-family: Segoe UI;
   color: #ffffff;
   right: 0;
-  transform: translate(-19px, 20px);
+  transform: translate(-20px, 18px);
 }
 
 .mobile-shopping-cart {
