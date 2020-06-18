@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
-import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.OrderHistory;
-import unq.ar.edu.dessap.grupol.model.User;
+import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.validation.Valid;

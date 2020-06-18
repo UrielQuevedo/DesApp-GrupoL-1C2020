@@ -9,6 +9,7 @@ import unq.ar.edu.dessap.grupol.model.offer.Offer;
 import unq.ar.edu.dessap.grupol.model.offer.ProductOffer;
 import unq.ar.edu.dessap.grupol.persistence.StoreDao;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
+import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -25,6 +26,9 @@ public class InitService {
 
     @Autowired
     private StoreDao storeDao;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -44,12 +48,7 @@ public class InitService {
     private void createSimpleUsers() {
         List<String> names = new ArrayList<>(Arrays.asList("24Open"));
         for (String name : names) {
-            User user = User.builder()
-                    .email(name + "@gmail.com")
-                    .password("test")
-                    .username(name)
-                    .build();
-            userDao.save(user);
+            userService.create(name, "test", name + "@gmail.com");
         }
     }
 

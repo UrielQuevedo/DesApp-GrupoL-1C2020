@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,8 +23,13 @@ public class User {
     private String email;
     @Transient
     @JsonIgnore
-    private List<OrderHistory> orders;
+    @Builder.Default
+    private List<OrderHistory> orders = new ArrayList<>();
     private Location location;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_shopping_cart_id", referencedColumnName = "id")
+    private ShoppingCart shoppingCart;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_store_id", referencedColumnName = "id")
