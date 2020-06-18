@@ -38,7 +38,6 @@ public class Order {
     private ShoppingCart shoppingCart;
 
     public void addProductOrder(Product product, int quantity, Double totalPrice) {
-        System.out.println("ESTOY AGREGANDO EL NUEVO PRODUCTO A LA ORDEN");
         Optional<ProductOrder> productOrderOptional = this.productOrders.stream()
                 .filter(po -> po.getProduct().getId() == product.getId())
                 .findAny();
@@ -58,5 +57,9 @@ public class Order {
         }
         this.totalPrice += totalPrice;
         this.totalQuantity += quantity;
+    }
+
+    public Long getStoreId() {
+        return this.store.getId();
     }
 }
