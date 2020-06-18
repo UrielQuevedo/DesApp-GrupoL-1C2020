@@ -10,7 +10,7 @@
 
 .button-controler {
   position: absolute;
-  transform: translate(2rem, -7rem);
+  transform: translate(3.2rem, -6.9rem);
   transition: 0.4s !important;
 }
 
