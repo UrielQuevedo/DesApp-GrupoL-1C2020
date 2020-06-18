@@ -39,11 +39,9 @@ public class ShoppingCartImpl implements ShoppingCartService {
         Optional<Order> optionalOrder = shoppingCart.getOrder(product.getStore().getId());
 
         if(optionalOrder.isPresent()) {
-            System.out.println("YA ESTA CREADA LA ORDER");
             Order order = optionalOrder.get();
             this.addProductToOrder(order, product, shoppingCartProductDto);
         } else {
-            System.out.println("NO ESTA CREADA LA ORDEN");
             Order newOrder = shoppingCart.createOrder(product.getStore());
             this.addProductToOrder(newOrder, product, shoppingCartProductDto);
         }

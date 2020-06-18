@@ -45,7 +45,9 @@ public class Order {
 
         if(productOrderOptional.isPresent()) {
             ProductOrder productOrder = productOrderOptional.get();
-            productOrder.addQuantity(quantity);
+            this.totalQuantity -= productOrder.getQuantity();
+            this.totalPrice -= productOrder.getTotalPrice();
+            productOrder.setQuantity(quantity);
         } else {
             ProductOrder newProductOrder = ProductOrder.builder()
                     .order(this)

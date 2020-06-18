@@ -35,7 +35,6 @@ public class ShoppingCart {
     }
 
     public Order createOrder(Store store) {
-        System.out.println("ESTOY CREANDO LA NUEVA ORDEN");
         Order order = Order.builder()
                 .shoppingCart(this)
                 .store(store)

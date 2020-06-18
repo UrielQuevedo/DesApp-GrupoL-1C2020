@@ -23,7 +23,7 @@ public class ProductOrder {
     @JoinColumn(name = "fk_product_id")
     private Product product;
 
-    public void addQuantity(int quantity) {
-        this.quantity += quantity;
+    public Double getTotalPrice() {
+        return this.product.getPrice() * this.quantity;
     }
 }
