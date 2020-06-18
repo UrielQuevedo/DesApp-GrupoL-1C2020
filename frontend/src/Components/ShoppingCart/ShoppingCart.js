@@ -7,24 +7,25 @@ import { useContext } from 'react';
 import { ShoppingCartContext } from '../../Context/ShoppingCartContext';
 
 const ShoppingCart = () => {
-  const { productsOrder, totalPrice } = useContext(ShoppingCartContext);
-  const quantityOfProducts = productsOrder.length;
+  const { shoppingCart, getShoppingCartLoading } = useContext(ShoppingCartContext);
 
   const getStatusStyle = () => {
-    if (totalPrice <= 1000) return "correct";
-    if (totalPrice > 1000 && totalPrice <= 3000) return "alert";
+    if (shoppingCart.totalPrice <= 1000) return "correct";
+    if (shoppingCart.totalPrice > 1000 && shoppingCart.totalPrice <= 3000) return "alert";
     return "danger";
   }
 
-  if(quantityOfProducts <= 0) return null;
+  if(getShoppingCartLoading) return null;
+  if(shoppingCart.totalQuantity <= 0) return null;
 
   return (
     <>
       <Hidden smDown>
-        <DesktopShoppingCart stateStyle={getStatusStyle()} totalPrice={totalPrice} totalAmount={quantityOfProducts}/>
+        {console.log(shoppingCart)}
+        <DesktopShoppingCart stateStyle={getStatusStyle()} totalPrice={shoppingCart.totalPrice} totalAmount={shoppingCart.totalQuantity}/>
       </Hidden>
       <Hidden mdUp>
-        <MobileShoppingCart stateStyle={getStatusStyle()} totalPrice={totalPrice} totalAmount={quantityOfProducts}/>
+        <MobileShoppingCart stateStyle={getStatusStyle()} totalPrice={shoppingCart.totalPrice} totalAmount={shoppingCart.totalQuantity}/>
       </Hidden>
     </>
   );

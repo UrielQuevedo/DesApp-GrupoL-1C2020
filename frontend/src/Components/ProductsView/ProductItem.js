@@ -3,20 +3,17 @@ import { Grow, Button, ButtonGroup, Dialog, DialogTitle, Typography, DialogActio
 import { ShoppingCartContext } from '../../Context/ShoppingCartContext';
 import EditIcon from '@material-ui/icons/Edit';
 import '../../Styles/ProductItem.css';
+import { UserContext } from '../../Context/UserContext';
+import { usePostProductToShoppingCart } from '../../Service/ShoppingCartService';
 
 const ProductItem = ({ product }) => {
-  const { name, brand, price } = product;
-  const { productsOrder, setProductsOrder, totalPrice, setTotalPrice } = useContext(ShoppingCartContext);
+  const { name, brand, price, id } = product;
+  const { shoppingCart, setShoppingCart } = useContext(ShoppingCartContext);
+  const { user } = useContext(UserContext);
+  const [ productToAdd, setProductToAdd ] = useState({ productId: id, totalPrice: price, quantity: 1 });
+  const { postProductToShoppingCart, postProductToShoppingCartLoading } = usePostProductToShoppingCart(user.id, productToAdd);
   const [ isAdded, setIsAdded ] = useState(false);
-  const [ quantity, setQuantity ] = useState(1);
   const [ open, setOpen ] = useState(false);
-
-  const addToShoppingCart = () => {
-    setProductsOrder([...productsOrder, product]);
-    setTotalPrice(totalPrice + price);
-    setQuantity(quantity + 1);
-    setIsAdded(true);
-  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,7 +24,8 @@ const ProductItem = ({ product }) => {
   }
 
   const handleNewQuantity = (e) => {
-    setQuantity(e.target.value);
+    const newQuantity = e.target.value;
+    setProductToAdd({...productToAdd, quantity: newQuantity, totalPrice: price * newQuantity});
   }
 
   const ButtonToAdd = () => {
@@ -40,8 +38,7 @@ const ProductItem = ({ product }) => {
 
   const handleAddProduct = (e) => {
     e.preventDefault();
-    setProductsOrder([...productsOrder, product]);
-    setTotalPrice(totalPrice + price * quantity);
+    postProductToShoppingCart(setShoppingCart);
     setIsAdded(true);
     handleClose();
   }
@@ -49,7 +46,7 @@ const ProductItem = ({ product }) => {
   const ButtonToControl = () => {
     return (
       <ButtonGroup className="button-controler">
-        <Button style={{ background:'#ffff', padding:'0' }} variant="contained">{quantity}</Button>
+        <Button style={{ background:'#ffff', padding:'0' }} variant="contained">{productToAdd.quantity}</Button>
         <Button onClick={handleClickOpen} variant="contained" color="secondary" style={{ padding:'5px 0 5px 0' }}>
           <EditIcon style={{ transform:'scale(0.8)'}} />
         </Button>
@@ -80,7 +77,7 @@ const ProductItem = ({ product }) => {
                 <TextField
                   style={{ width:'100%' }}
                   onChange={handleNewQuantity}
-                  defaultValue={1}
+                  defaultValue={productToAdd.quantity}
                   type="number"
                   label="Cantidad"
                   required
@@ -88,7 +85,7 @@ const ProductItem = ({ product }) => {
                 />
                 <Grid container item direction="column">
                   <div> Su pedido quedaria en: </div>
-                  <div> ${ totalPrice + price * quantity } </div>
+                  <div> ${ shoppingCart.totalPrice + productToAdd.totalPrice } </div>
                 </Grid>
               </Grid>
             </Grid>
@@ -99,7 +96,7 @@ const ProductItem = ({ product }) => {
           <DialogActions>
             <Button color="secondary">Cancelar</Button>
             <Button type="submit" variant="contained" color="primary">
-              Agregar a mi pedido (${price * quantity})
+              Agregar a mi pedido (${productToAdd.totalPrice})
             </Button>
           </DialogActions>
         </form>
