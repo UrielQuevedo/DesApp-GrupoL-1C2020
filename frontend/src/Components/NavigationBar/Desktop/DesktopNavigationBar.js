@@ -1,5 +1,7 @@
 import { AppBar, Box, Button, List, Menu, Toolbar } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { getStoreByIdUserRequest } from '../../../Service/Api';
+import { useHistory } from "react-router";
 // Icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import PropTypes from 'prop-types';
@@ -14,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 const DesktopNavigationBar = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { t } = useTranslation();
+  const { push } = useHistory();
 
   const Logo = () => {
     return (
@@ -25,21 +28,24 @@ const DesktopNavigationBar = ({ user }) => {
     );
   }
 
+  const checkStoreAndRedirect = () => {
+    getStoreByIdUserRequest(user.id)
+    .then(_ => {
+      push('/store');
+    })
+    .catch(_ => {
+      push('publish/store');
+    });
+  }
+
   const MyStoreButton = () => {
     return (
       <div className="myStoreButton">
-        <Link style={{ textDecoration:'none' }} 
-        to={{
-          pathname:'/store',
-          state: {
-            user: user
-          }
-        }}>
+     
 
-          <Button size="small" variant="contained">
+          <Button size="small" variant="contained" onClick={checkStoreAndRedirect}>
             {t("tu tienda")}
           </Button>
-        </Link>
       </div>
     );
   }
