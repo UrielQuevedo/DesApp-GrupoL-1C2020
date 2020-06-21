@@ -14,6 +14,7 @@ import { publishStoreRequest } from '../Service/Api';
 import { UserContext } from '../Context/UserContext';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import DialogChangeLocation from './DialogChangeLocation';
@@ -45,9 +46,22 @@ const PublishStore = () => {
         checkedA: false,
         checkedB: false,
     })
-    
+    const [ daysOfWeek, setDaysOfWeek ] = useState({
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+        sunday: false
+    })
     const handleChangePayments = (event) => {
         setState({ ...payments, [event.target.name]: event.target.checked });
+    }
+
+    const handleChangeDaysOfWeek = (event) => {
+        console.log(event.target.value);
+        setDaysOfWeek({ ...daysOfWeek, [event.target.name]: event.target.checked });
     }
 
     const publishStore = (store) => {
@@ -98,7 +112,8 @@ const PublishStore = () => {
              <Container fixed>
                     <div className="containerPublishStore">
                         <form onSubmit={handleSubmit(publishStore)}>
-                        <div className="containerData"> 
+                        <Grid container spacing={2} className="containerData"> 
+                            <Grid item xs={12} md={12}>
                                 <TextField
                                     autoFocus
                                     margin="dense"
@@ -110,39 +125,116 @@ const PublishStore = () => {
                                     fullWidth
                                     inputRef={register}
                                 />
-                               <DialogChangeLocation actualCoords={actualCoords} setActualCoords={setActualCoords}
+                                </Grid>
+                                <Grid item md={12}>
+                                    <DialogChangeLocation actualCoords={actualCoords} setActualCoords={setActualCoords}
                                                      location={location} setLocation={setLocation} /> 
-                               <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    required
-                                    id="Distancia maxima"
-                                    label="Distancia maxima"
-                                    type="number"
-                                    name="maxDistance"
-                                    fullWidth
-                                    inputRef={register}
-                                /> 
-                                <FormControl fullWidth>
-                                    <InputLabel id="select-sector">Sector</InputLabel>
-                                    <Select
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        autoFocus
+                                        required
+                                        id="Distancia maxima"
+                                        label="Distancia maxima"
+                                        type="number"
+                                        name="maxDistance"
                                         fullWidth
-                                        labelId="select-sector"
-                                        id="sector"
-                                        label="SECTOR"
-                                        value={sector}
-                                        onChange={handleChangeSector}
-                                        >
-                                        <MenuItem value={"FARMACIA"}>Farmacia</MenuItem>
-                                        <MenuItem value={"KIOSCO"}>Kiosco</MenuItem>
-                                        <MenuItem value={"DIETICA"}>Dietetica</MenuItem>
-                                        <MenuItem value={"ALMACEN"}>Almacen</MenuItem>
-                                        <MenuItem value={"VERDULERIA"}>Verduleria</MenuItem>
-                                        <MenuItem value={"CARNICERIA"}>Carniceria</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <div>
-                                    <p>Metodos de pago</p>
+                                        inputRef={register}
+                                    /> 
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <FormControl fullWidth >
+                                        <InputLabel id="select-sector">Sector</InputLabel>
+                                        <Select
+                                            fullWidth
+                                            labelId="select-sector"
+                                            id="sector"
+                                            label="SECTOR"
+                                            value={sector}
+                                            onChange={handleChangeSector}
+                                            >
+                                            <MenuItem value={"FARMACIA"}>Farmacia</MenuItem>
+                                            <MenuItem value={"KIOSCO"}>Kiosco</MenuItem>
+                                            <MenuItem value={"DIETICA"}>Dietetica</MenuItem>
+                                            <MenuItem value={"ALMACEN"}>Almacen</MenuItem>
+                                            <MenuItem value={"VERDULERIA"}>Verduleria</MenuItem>
+                                            <MenuItem value={"CARNICERIA"}>Carniceria</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item md={12}>
+                                    <p style={{ textAlign: 'center', margin: '0px' }}> Dias </p>
+                                </Grid> 
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.monday} onChange={handleChangeDaysOfWeek} name="monday" />}
+                                        label="Lunes"
+                                        name="MONDAY"
+                                        value="MONDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.tuesday} onChange={handleChangeDaysOfWeek} name="tuesday" />}
+                                        label="Martes"
+                                        name="TUESDAY"
+                                        value="TUESDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.wednesday} onChange={handleChangeDaysOfWeek} name="wednesday" />}
+                                        label="Miercoles"
+                                        name="WEDNESDAY"
+                                        value="WEDNESDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.thursday} onChange={handleChangeDaysOfWeek} name="thursday" />}
+                                        label="Jueves"
+                                        name="THURSDAY"
+                                        value="THURSDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.friday} onChange={handleChangeDaysOfWeek} name="friday" />}
+                                        label="Viernes"
+                                        name="FRIDAY"
+                                        value="FRIDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>  
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.saturday} onChange={handleChangeDaysOfWeek} name="saturday" />}
+                                        label="Sabado"
+                                        name="SATURDAY"
+                                        value="SATURDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.sunday} onChange={handleChangeDaysOfWeek} name="sunday" />}
+                                        label="Domingo"
+                                        name="SUNDAY"
+                                        value="SUNDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid md={6}>
+                                    <p style={{ textAlign: 'center' }}> Metodos de pago </p>
+                                </Grid>
+                                <Grid md={6}>
+                                    <p style={{ textAlign: 'center' }}> Horarios </p>
+                                </Grid>
+                                <Grid md={6} >
                                     <FormControlLabel
                                         control={<GreenCheckbox checked={payments.checkedA} onChange={handleChangePayments} name="checkedA" />}
                                         label="Efectivo"
@@ -157,9 +249,54 @@ const PublishStore = () => {
                                         value="TARJETA"
                                         inputRef={register}
                                     />
-                                </div>
-                        </div>
-                        <div className="containerButton">
+                                </Grid>
+                                <Grid md={3} style={{ paddingLeft: '25px' }}>
+                                    <TextField
+                                        id="time"
+                                        type="time"
+                                        InputLabelProps={{
+                                        shrink: true,
+                                        }}
+                                        inputProps={{
+                                        step: 300, // 5 min
+                                        }}
+                                        style={{ margin:'dense' }}
+                                    />
+                                     <TextField
+                                        id="time"
+                                        type="time"
+                                        InputLabelProps={{
+                                        shrink: true,
+                                        }}
+                                        inputProps={{
+                                        step: 300, // 5 min
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid md={3} style={{ paddingLeft: '25px' }}>
+                                    <TextField
+                                        id="time"
+                                        type="time"
+                                        InputLabelProps={{
+                                        shrink: true,
+                                        }}
+                                        inputProps={{
+                                        step: 300, // 5 min
+                                        }}
+                                    />
+                                     <TextField
+                                        id="time"
+                                        type="time"
+                                        InputLabelProps={{
+                                        shrink: true,
+                                        }}
+                                        inputProps={{
+                                        step: 300, // 5 min
+                                        }}
+                                    />
+                                </Grid>
+                        </Grid>
+                        <Grid md={12} className='containerButton'>
                             <Link style={{ textDecoration:'none' }} to="/">
                                 <Button color="primary">
                                     Volver al home
@@ -170,7 +307,7 @@ const PublishStore = () => {
                                     Crear tienda
                                 </Button>
                             </div>
-                        </div>
+                        </Grid>
                         </form>
                     </div>
              </Container>
