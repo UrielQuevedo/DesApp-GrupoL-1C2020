@@ -78,14 +78,6 @@ const PublishStore = () => {
     }
     
     const setData = (store) => {
-        const payments = [];
-        if(store.checkedA) {
-            payments.push(store.checkedA);
-        }
-        if(store.checkedB) {
-            payments.push(store.checkedB);
-        }
-
         const result = {
             name: store.name,
             sector: sector,
@@ -94,11 +86,51 @@ const PublishStore = () => {
                 latitude: location.latitude,
                 longitude: location.longitude
             },
-            payments: payments,
-            maxDistance: parseInt(store.maxDistance)
+            payments: setPayments(store),
+            maxDistance: parseInt(store.maxDistance),
+            openDays: setOpenDays()
         }
 
         return result;
+    }
+
+    const setPayments = (store) => {
+        const payments = [];
+        if(store.checkedA) {
+            payments.push(store.checkedA);
+        }
+        if(store.checkedB) {
+            payments.push(store.checkedB);
+        }
+
+        return payments;
+    }
+
+    const setOpenDays = () => {
+        const openDays = [];
+        if(daysOfWeek.monday) {
+            openDays.push('MONDAY');
+        }
+        if(daysOfWeek.tuesday) {
+            openDays.push('TUESDAY');
+        }
+        if(daysOfWeek.wednesday) {
+            openDays.push('WEDNESDAY');
+        }
+        if(daysOfWeek.thursday) {
+            openDays.push('THURSDAY');
+        }
+        if(daysOfWeek.friday) {
+            openDays.push('FRIDAY');
+        }
+        if(daysOfWeek.saturday) {
+            openDays.push('SATURDAY');
+        }
+        if(daysOfWeek.sunday) {
+            openDays.push('SUNDAY');
+        }
+        
+        return openDays;
     }
 
     const handleChangeSector = (event) => {
@@ -255,12 +287,11 @@ const PublishStore = () => {
                                         id="time"
                                         type="time"
                                         InputLabelProps={{
-                                        shrink: true,
+                                            shrink: true,
                                         }}
                                         inputProps={{
-                                        step: 300, // 5 min
+                                            step: 300, // 5 min
                                         }}
-                                        style={{ margin:'dense' }}
                                     />
                                      <TextField
                                         id="time"
