@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "orders")
@@ -18,12 +19,12 @@ public class Order {
     private Double totalPrice;
     private int totalQuantity;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_store_id")
     @JsonIgnore
     private Store store;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ProductOrder> productOrders = new ArrayList<>();
 
@@ -37,7 +38,7 @@ public class Order {
     @JsonIgnore
     private ShoppingCart shoppingCart;
 
-    public void addProductOrder(Product product, int quantity, Double totalPrice) {
+    public void addProductOrder(Product product, int quantity) {
         Optional<ProductOrder> productOrderOptional = this.productOrders.stream()
                 .filter(po -> po.getProduct().getId() == product.getId())
                 .findAny();
@@ -55,11 +56,18 @@ public class Order {
                     .build();
             this.productOrders.add(newProductOrder);
         }
-        this.totalPrice += totalPrice;
+        this.totalPrice += product.getPrice() * quantity;
         this.totalQuantity += quantity;
     }
 
     public Long getStoreId() {
         return this.store.getId();
     }
+
+    public void removeProductOrder(ProductOrder productOrderToRemove) {
+        this.getProductOrders().removeIf(p -> p.getId() == productOrderToRemove.getId());
+        this.totalPrice -= productOrderToRemove.getTotalPrice();
+        this.totalQuantity -= productOrderToRemove.getQuantity();
+    }
+
 }

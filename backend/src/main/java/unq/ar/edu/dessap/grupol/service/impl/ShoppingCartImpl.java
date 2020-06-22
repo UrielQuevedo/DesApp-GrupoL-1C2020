@@ -3,15 +3,16 @@ package unq.ar.edu.dessap.grupol.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartDeleteProductDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartProductDto;
-import unq.ar.edu.dessap.grupol.model.Order;
-import unq.ar.edu.dessap.grupol.model.Product;
-import unq.ar.edu.dessap.grupol.model.ShoppingCart;
-import unq.ar.edu.dessap.grupol.model.User;
+import unq.ar.edu.dessap.grupol.model.*;
+import unq.ar.edu.dessap.grupol.persistence.OrderDao;
 import unq.ar.edu.dessap.grupol.persistence.ProductDao;
+import unq.ar.edu.dessap.grupol.persistence.ProductOrderDao;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.ShoppingCartService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,12 @@ public class ShoppingCartImpl implements ShoppingCartService {
     @Autowired
     private ProductDao productDao;
 
+    @Autowired
+    private OrderDao orderDao;
+
+    @Autowired
+    private ProductOrderDao productOrderDao;
+
     @Override
     public ShoppingCart getShoppingCart(Long id) {
         User user = userDao.getUserById(id);
@@ -35,21 +42,24 @@ public class ShoppingCartImpl implements ShoppingCartService {
         User user = userDao.getUserById(id);
         ShoppingCart shoppingCart = user.getShoppingCart();
         Product product = productDao.getProductById(shoppingCartProductDto.getProductId());
+        shoppingCart.addProductOrder(product, shoppingCartProductDto.getQuantity());
 
-        Optional<Order> optionalOrder = shoppingCart.getOrder(product.getStore().getId());
-
-        if(optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            this.addProductToOrder(order, product, shoppingCartProductDto);
-        } else {
-            Order newOrder = shoppingCart.createOrder(product.getStore());
-            this.addProductToOrder(newOrder, product, shoppingCartProductDto);
-        }
         userDao.save(user);
         return shoppingCart;
     }
 
-    private void addProductToOrder(Order order, Product product, ShoppingCartProductDto shoppingCartProductDto) {
-        order.addProductOrder(product, shoppingCartProductDto.getQuantity(), shoppingCartProductDto.getTotalPrice());
+    @Override
+    public List<Order> removeProductToShoppingCart(Long id, ShoppingCartDeleteProductDto shoppingCartDeleteProductDto) {
+        Order order = orderDao.getOrderByIdAndByUserId(shoppingCartDeleteProductDto.getOrderId(), id);
+        ProductOrder productOrder = productOrderDao.getProductOrderByIdAndByUserId(shoppingCartDeleteProductDto.getProductOrderId(), id);
+        order.removeProductOrder(productOrder);
+        if(order.getProductOrders().isEmpty()) {
+            orderDao.deleteById(order.getId());
+        } else {
+            productOrderDao.deleteById(productOrder.getId());
+            orderDao.save(order);
+        }
+        return this.getShoppingCart(id).getOrders();
     }
+
 }

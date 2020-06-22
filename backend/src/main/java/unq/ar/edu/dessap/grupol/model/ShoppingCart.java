@@ -5,11 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartProductDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Entity
@@ -17,14 +19,19 @@ import java.util.stream.IntStream;
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shoppingCart")
     @Builder.Default
-    List<Order> orders = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
-    Integer totalQuantity;
-    Double totalPrice;
+    private Integer totalQuantity;
+    private Double totalPrice;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
+    @JsonIgnore
+    private User user;
 
     public Double getTotalPrice() {
         return this.orders.stream().mapToDouble(Order::getTotalPrice).sum();
@@ -34,7 +41,28 @@ public class ShoppingCart {
         return this.orders.stream().flatMapToInt(order -> IntStream.of(order.getTotalQuantity())).sum();
     }
 
-    public Order createOrder(Store store) {
+    public void addProductOrder(Product product, int totalQuantity) {
+        Optional<Order> optionalOrder = this.getOrder(product.getStore().getId());
+        if(optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            this.addProductToOrder(order, product, totalQuantity);
+        } else {
+            Order newOrder = this.createOrder(product.getStore());
+            this.addProductToOrder(newOrder, product, totalQuantity);
+        }
+    }
+
+    private Optional<Order> getOrder(long id) {
+        return this.orders.stream()
+                .filter(order -> order.getStore().getId() == id)
+                .findAny();
+    }
+
+    private void addProductToOrder(Order order, Product product, int totalQuantity) {
+        order.addProductOrder(product, totalQuantity);
+    }
+
+    private Order createOrder(Store store) {
         Order order = Order.builder()
                 .shoppingCart(this)
                 .store(store)
@@ -43,11 +71,5 @@ public class ShoppingCart {
                 .build();
         this.orders.add(order);
         return order;
-    }
-
-    public Optional<Order> getOrder(long id) {
-        return this.orders.stream()
-                .filter(order -> order.getStore().getId() == id)
-                .findAny();
     }
 }

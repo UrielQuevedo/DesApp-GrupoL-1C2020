@@ -6,5 +6,4 @@ import lombok.Getter;
 public class ShoppingCartProductDto {
     Long productId;
     int quantity;
-    Double totalPrice;
 }

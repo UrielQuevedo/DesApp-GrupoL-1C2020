@@ -39,6 +39,8 @@ public class UserServiceImpl implements UserService {
                 .shoppingCart(shoppingCart)
                 .build();
 
+        shoppingCart.setUser(user);
+
         return userDao.save(user);
     }
 
