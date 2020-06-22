@@ -102,7 +102,7 @@ const PublishStore = () => {
             times.push({ of: store.of, until: store.until })
         }
         if(store.of2 && store.until2) {
-            times.push({ of: store.of, until: store.until })
+            times.push({ of: store.of2, until: store.until2 })
         }
 
         return times;
@@ -201,7 +201,7 @@ const PublishStore = () => {
                                             >
                                             <MenuItem value={"FARMACIA"}>Farmacia</MenuItem>
                                             <MenuItem value={"KIOSCO"}>Kiosco</MenuItem>
-                                            <MenuItem value={"DIETICA"}>Dietetica</MenuItem>
+                                            <MenuItem value={"DIETETICA"}>Dietetica</MenuItem>
                                             <MenuItem value={"ALMACEN"}>Almacen</MenuItem>
                                             <MenuItem value={"VERDULERIA"}>Verduleria</MenuItem>
                                             <MenuItem value={"CARNICERIA"}>Carniceria</MenuItem>
