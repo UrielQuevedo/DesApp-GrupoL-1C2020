@@ -42,7 +42,7 @@ const PublishStore = () => {
         latitude: user.location.latitude,
         longitude: user.location.longitude
     });
-    const [ payments, setState ] = useState({
+    const [ payments, setPayments ] = useState({
         checkedA: false,
         checkedB: false,
     })
@@ -56,7 +56,7 @@ const PublishStore = () => {
         sunday: false
     })
     const handleChangePayments = (event) => {
-        setState({ ...payments, [event.target.name]: event.target.checked });
+        setPayments({ ...payments, [event.target.name]: event.target.checked });
     }
 
     const handleChangeDaysOfWeek = (event) => {
@@ -65,6 +65,7 @@ const PublishStore = () => {
     }
 
     const publishStore = (store) => {
+        console.log(store);
         const store_data = setData(store);
         console.log(store_data);
         publishStoreRequest(user.id, store_data)
@@ -86,15 +87,28 @@ const PublishStore = () => {
                 latitude: location.latitude,
                 longitude: location.longitude
             },
-            payments: setPayments(store),
+            payments: setDataPayments(store),
             maxDistance: parseInt(store.maxDistance),
-            openDays: setOpenDays()
+            openDays: setDataOpenDays(),
+            times: setDataTimes(store)
         }
 
         return result;
     }
 
-    const setPayments = (store) => {
+    const setDataTimes = (store) => {
+        const times = [];
+        if(store.of && store.until) {
+            times.push({ of: store.of, until: store.until })
+        }
+        if(store.of2 && store.until2) {
+            times.push({ of: store.of, until: store.until })
+        }
+
+        return times;
+    }
+
+    const setDataPayments = (store) => {
         const payments = [];
         if(store.checkedA) {
             payments.push(store.checkedA);
@@ -106,7 +120,7 @@ const PublishStore = () => {
         return payments;
     }
 
-    const setOpenDays = () => {
+    const setDataOpenDays = () => {
         const openDays = [];
         if(daysOfWeek.monday) {
             openDays.push('MONDAY');
@@ -286,44 +300,28 @@ const PublishStore = () => {
                                     <TextField
                                         id="time"
                                         type="time"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        inputProps={{
-                                            step: 300, // 5 min
-                                        }}
+                                        name="of"
+                                        inputRef={register}
                                     />
                                      <TextField
                                         id="time"
                                         type="time"
-                                        InputLabelProps={{
-                                        shrink: true,
-                                        }}
-                                        inputProps={{
-                                        step: 300, // 5 min
-                                        }}
+                                        name="of2"
+                                        inputRef={register}
                                     />
                                 </Grid>
                                 <Grid md={3} style={{ paddingLeft: '25px' }}>
                                     <TextField
                                         id="time"
                                         type="time"
-                                        InputLabelProps={{
-                                        shrink: true,
-                                        }}
-                                        inputProps={{
-                                        step: 300, // 5 min
-                                        }}
+                                        name="until"
+                                        inputRef={register}
                                     />
                                      <TextField
                                         id="time"
                                         type="time"
-                                        InputLabelProps={{
-                                        shrink: true,
-                                        }}
-                                        inputProps={{
-                                        step: 300, // 5 min
-                                        }}
+                                        name="until2"
+                                        inputRef={register}
                                     />
                                 </Grid>
                         </Grid>
