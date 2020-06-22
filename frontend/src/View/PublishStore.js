@@ -162,7 +162,6 @@ const PublishStore = () => {
                             <Grid item xs={12} md={12}>
                                 <TextField
                                     autoFocus
-                                    margin="dense"
                                     required
                                     id="name"
                                     label="Nombre"
@@ -296,7 +295,7 @@ const PublishStore = () => {
                                         inputRef={register}
                                     />
                                 </Grid>
-                                <Grid md={3} style={{ paddingLeft: '25px' }}>
+                                <Grid md={2}>
                                     <TextField
                                         id="time"
                                         type="time"
@@ -310,7 +309,11 @@ const PublishStore = () => {
                                         inputRef={register}
                                     />
                                 </Grid>
-                                <Grid md={3} style={{ paddingLeft: '25px' }}>
+                                <Grid md={2}>
+                                    <p style={{ textIndent: '20px' }}> hasta </p>
+                                    <p style={{ textIndent: '20px' }}> hasta </p>
+                                </Grid>
+                                <Grid md={2}>
                                     <TextField
                                         id="time"
                                         type="time"
