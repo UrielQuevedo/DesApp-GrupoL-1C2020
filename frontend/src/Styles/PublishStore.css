@@ -1,7 +1,8 @@
 .containerPublishStore {
     position: relative;
-    left: 170px;
-    top: 85px;
+    margin: 115px;
+    bottom: 30px;
+    left: 230px;
     width: 550px;
 }
 
@@ -19,7 +20,7 @@
 .containerButton {
     position: relative;
     width: 550px;
-    top: 350px;
+    top: 505px;
 }
 
 .buttonRight {
@@ -31,8 +32,8 @@
 .locationButton {
     border-bottom: 1px solid black !important;
     white-space: nowrap;
-    width: 508px;
     margin-top: 15px;
     border-radius: 0px !important;
+    width: 100%;
   }
   

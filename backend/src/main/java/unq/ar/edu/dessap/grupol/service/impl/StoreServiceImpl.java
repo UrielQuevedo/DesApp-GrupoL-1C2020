@@ -37,6 +37,8 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store create(Long id, StoreDto storeDto) {
 
+        User user = userDao.getUserById(id);
+
         Store storedb = storeDao
                             .findByLatitudeAndLongitude(storeDto.getLocation().getLatitude(),
                                     storeDto.getLocation().getLongitude());
@@ -46,7 +48,8 @@ public class StoreServiceImpl implements StoreService {
         }
 
         Store store = Converter.toStore(storeDto);
-        storeDao.save(store);
+        user.setStore(store);
+        userDao.save(user);
         return store;
     }
 

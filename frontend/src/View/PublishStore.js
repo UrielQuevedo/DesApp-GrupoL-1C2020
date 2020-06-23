@@ -14,6 +14,7 @@ import { publishStoreRequest } from '../Service/Api';
 import { UserContext } from '../Context/UserContext';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import DialogChangeLocation from './DialogChangeLocation';
@@ -41,16 +42,30 @@ const PublishStore = () => {
         latitude: user.location.latitude,
         longitude: user.location.longitude
     });
-    const [ payments, setState ] = useState({
+    const [ payments, setPayments ] = useState({
         checkedA: false,
         checkedB: false,
     })
-    
+    const [ daysOfWeek, setDaysOfWeek ] = useState({
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+        sunday: false
+    })
     const handleChangePayments = (event) => {
-        setState({ ...payments, [event.target.name]: event.target.checked });
+        setPayments({ ...payments, [event.target.name]: event.target.checked });
+    }
+
+    const handleChangeDaysOfWeek = (event) => {
+        console.log(event.target.value);
+        setDaysOfWeek({ ...daysOfWeek, [event.target.name]: event.target.checked });
     }
 
     const publishStore = (store) => {
+        console.log(store);
         const store_data = setData(store);
         console.log(store_data);
         publishStoreRequest(user.id, store_data)
@@ -64,14 +79,6 @@ const PublishStore = () => {
     }
     
     const setData = (store) => {
-        const payments = [];
-        if(store.checkedA) {
-            payments.push(store.checkedA);
-        }
-        if(store.checkedB) {
-            payments.push(store.checkedB);
-        }
-
         const result = {
             name: store.name,
             sector: sector,
@@ -80,11 +87,64 @@ const PublishStore = () => {
                 latitude: location.latitude,
                 longitude: location.longitude
             },
-            payments: payments,
-            maxDistance: parseInt(store.maxDistance)
+            payments: setDataPayments(store),
+            maxDistance: parseInt(store.maxDistance),
+            openDays: setDataOpenDays(),
+            times: setDataTimes(store)
         }
 
         return result;
+    }
+
+    const setDataTimes = (store) => {
+        const times = [];
+        if(store.of && store.until) {
+            times.push({ of: store.of, until: store.until })
+        }
+        if(store.of2 && store.until2) {
+            times.push({ of: store.of2, until: store.until2 })
+        }
+
+        return times;
+    }
+
+    const setDataPayments = (store) => {
+        const payments = [];
+        if(store.checkedA) {
+            payments.push(store.checkedA);
+        }
+        if(store.checkedB) {
+            payments.push(store.checkedB);
+        }
+
+        return payments;
+    }
+
+    const setDataOpenDays = () => {
+        const openDays = [];
+        if(daysOfWeek.monday) {
+            openDays.push('MONDAY');
+        }
+        if(daysOfWeek.tuesday) {
+            openDays.push('TUESDAY');
+        }
+        if(daysOfWeek.wednesday) {
+            openDays.push('WEDNESDAY');
+        }
+        if(daysOfWeek.thursday) {
+            openDays.push('THURSDAY');
+        }
+        if(daysOfWeek.friday) {
+            openDays.push('FRIDAY');
+        }
+        if(daysOfWeek.saturday) {
+            openDays.push('SATURDAY');
+        }
+        if(daysOfWeek.sunday) {
+            openDays.push('SUNDAY');
+        }
+        
+        return openDays;
     }
 
     const handleChangeSector = (event) => {
@@ -98,10 +158,10 @@ const PublishStore = () => {
              <Container fixed>
                     <div className="containerPublishStore">
                         <form onSubmit={handleSubmit(publishStore)}>
-                        <div className="containerData"> 
+                        <Grid container spacing={2} className="containerData"> 
+                            <Grid item xs={12} md={12}>
                                 <TextField
                                     autoFocus
-                                    margin="dense"
                                     required
                                     id="name"
                                     label="Nombre"
@@ -110,39 +170,116 @@ const PublishStore = () => {
                                     fullWidth
                                     inputRef={register}
                                 />
-                               <DialogChangeLocation actualCoords={actualCoords} setActualCoords={setActualCoords}
+                                </Grid>
+                                <Grid item md={12}>
+                                    <DialogChangeLocation actualCoords={actualCoords} setActualCoords={setActualCoords}
                                                      location={location} setLocation={setLocation} /> 
-                               <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    required
-                                    id="Distancia maxima"
-                                    label="Distancia maxima"
-                                    type="number"
-                                    name="maxDistance"
-                                    fullWidth
-                                    inputRef={register}
-                                /> 
-                                <FormControl fullWidth>
-                                    <InputLabel id="select-sector">Sector</InputLabel>
-                                    <Select
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        autoFocus
+                                        required
+                                        id="Distancia maxima"
+                                        label="Distancia maxima"
+                                        type="number"
+                                        name="maxDistance"
                                         fullWidth
-                                        labelId="select-sector"
-                                        id="sector"
-                                        label="SECTOR"
-                                        value={sector}
-                                        onChange={handleChangeSector}
-                                        >
-                                        <MenuItem value={"FARMACIA"}>Farmacia</MenuItem>
-                                        <MenuItem value={"KIOSCO"}>Kiosco</MenuItem>
-                                        <MenuItem value={"DIETICA"}>Dietetica</MenuItem>
-                                        <MenuItem value={"ALMACEN"}>Almacen</MenuItem>
-                                        <MenuItem value={"VERDULERIA"}>Verduleria</MenuItem>
-                                        <MenuItem value={"CARNICERIA"}>Carniceria</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <div>
-                                    <p>Metodos de pago</p>
+                                        inputRef={register}
+                                    /> 
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <FormControl fullWidth >
+                                        <InputLabel id="select-sector">Sector</InputLabel>
+                                        <Select
+                                            fullWidth
+                                            labelId="select-sector"
+                                            id="sector"
+                                            label="SECTOR"
+                                            value={sector}
+                                            onChange={handleChangeSector}
+                                            >
+                                            <MenuItem value={"FARMACIA"}>Farmacia</MenuItem>
+                                            <MenuItem value={"KIOSCO"}>Kiosco</MenuItem>
+                                            <MenuItem value={"DIETETICA"}>Dietetica</MenuItem>
+                                            <MenuItem value={"ALMACEN"}>Almacen</MenuItem>
+                                            <MenuItem value={"VERDULERIA"}>Verduleria</MenuItem>
+                                            <MenuItem value={"CARNICERIA"}>Carniceria</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item md={12}>
+                                    <p style={{ textAlign: 'center', margin: '0px' }}> Dias </p>
+                                </Grid> 
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.monday} onChange={handleChangeDaysOfWeek} name="monday" />}
+                                        label="Lunes"
+                                        name="MONDAY"
+                                        value="MONDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.tuesday} onChange={handleChangeDaysOfWeek} name="tuesday" />}
+                                        label="Martes"
+                                        name="TUESDAY"
+                                        value="TUESDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.wednesday} onChange={handleChangeDaysOfWeek} name="wednesday" />}
+                                        label="Miercoles"
+                                        name="WEDNESDAY"
+                                        value="WEDNESDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.thursday} onChange={handleChangeDaysOfWeek} name="thursday" />}
+                                        label="Jueves"
+                                        name="THURSDAY"
+                                        value="THURSDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.friday} onChange={handleChangeDaysOfWeek} name="friday" />}
+                                        label="Viernes"
+                                        name="FRIDAY"
+                                        value="FRIDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>  
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.saturday} onChange={handleChangeDaysOfWeek} name="saturday" />}
+                                        label="Sabado"
+                                        name="SATURDAY"
+                                        value="SATURDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid item md={3}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={daysOfWeek.sunday} onChange={handleChangeDaysOfWeek} name="sunday" />}
+                                        label="Domingo"
+                                        name="SUNDAY"
+                                        value="SUNDAY"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid md={6}>
+                                    <p style={{ textAlign: 'center' }}> Metodos de pago </p>
+                                </Grid>
+                                <Grid md={6}>
+                                    <p style={{ textAlign: 'center' }}> Horarios </p>
+                                </Grid>
+                                <Grid md={6} >
                                     <FormControlLabel
                                         control={<GreenCheckbox checked={payments.checkedA} onChange={handleChangePayments} name="checkedA" />}
                                         label="Efectivo"
@@ -157,9 +294,41 @@ const PublishStore = () => {
                                         value="TARJETA"
                                         inputRef={register}
                                     />
-                                </div>
-                        </div>
-                        <div className="containerButton">
+                                </Grid>
+                                <Grid md={2}>
+                                    <TextField
+                                        id="time"
+                                        type="time"
+                                        name="of"
+                                        inputRef={register}
+                                    />
+                                     <TextField
+                                        id="time"
+                                        type="time"
+                                        name="of2"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                                <Grid md={2}>
+                                    <p style={{ textIndent: '20px' }}> hasta </p>
+                                    <p style={{ textIndent: '20px' }}> hasta </p>
+                                </Grid>
+                                <Grid md={2}>
+                                    <TextField
+                                        id="time"
+                                        type="time"
+                                        name="until"
+                                        inputRef={register}
+                                    />
+                                     <TextField
+                                        id="time"
+                                        type="time"
+                                        name="until2"
+                                        inputRef={register}
+                                    />
+                                </Grid>
+                        </Grid>
+                        <Grid md={12} className='containerButton'>
                             <Link style={{ textDecoration:'none' }} to="/">
                                 <Button color="primary">
                                     Volver al home
@@ -170,7 +339,7 @@ const PublishStore = () => {
                                     Crear tienda
                                 </Button>
                             </div>
-                        </div>
+                        </Grid>
                         </form>
                     </div>
              </Container>
