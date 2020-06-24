@@ -27,3 +27,7 @@ export const useGet = (url, queryParams = {}) => {
 export const usePost = (url, body) => {
   return useApi(() => axios.post(API_URL + url, body));
 }
+
+export const useDelete = (url, body) => {
+  return useApi(() => axios.delete(API_URL + url, { data: body }));
+}

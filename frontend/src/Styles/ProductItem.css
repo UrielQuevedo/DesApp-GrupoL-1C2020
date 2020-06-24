@@ -1,0 +1,27 @@
+.button-item-product {
+  position: absolute;
+  background: #FB849D !important;
+  color: #ffffff !important;
+  bottom: 7rem;
+  opacity: 0;
+  transition: 0.3s !important;
+  left: 2.6rem;
+}
+
+.button-controler {
+  position: absolute;
+  transform: translate(3.2rem, -6.9rem);
+  transition: 0.4s !important;
+}
+
+.product-item-container {
+  margin: 0 30px 30px 0;
+}
+
+.product-item-container-info:hover ~ .button-item-product {
+  opacity: 1;
+}
+
+.button-item-product:hover {
+  opacity: 1;
+}

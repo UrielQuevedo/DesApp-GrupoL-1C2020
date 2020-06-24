@@ -33,4 +33,8 @@ public class Product {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_offer_id")
     private Offer offerToApply;
+
+    public Long getStoreId() {
+        return store.getId();
+    }
 }

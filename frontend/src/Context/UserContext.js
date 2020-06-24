@@ -9,7 +9,7 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [ user, setUser ] = useState({});
   const { authState, setAuth } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     if(authState.isAuth) {

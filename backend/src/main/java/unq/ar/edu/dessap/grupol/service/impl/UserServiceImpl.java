@@ -8,13 +8,12 @@ import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
 import unq.ar.edu.dessap.grupol.controller.exception.EmailExistException;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.controller.exception.PasswordIncorrectException;
-import unq.ar.edu.dessap.grupol.model.Location;
-import unq.ar.edu.dessap.grupol.model.OrderHistory;
-import unq.ar.edu.dessap.grupol.model.User;
+import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,11 +27,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(String _username, String _password, String _email) {
         if(userDao.existEmail(_email)) throw new EmailExistException();
+        ShoppingCart shoppingCart = ShoppingCart.builder()
+                .totalPrice(0.00)
+                .totalQuantity(0)
+                .build();
+
         User user = User.builder()
                 .email(_email)
                 .password(this.encryptPassword(_password))
                 .username(_username)
+                .shoppingCart(shoppingCart)
                 .build();
+
+        shoppingCart.setUser(user);
 
         return userDao.save(user);
     }

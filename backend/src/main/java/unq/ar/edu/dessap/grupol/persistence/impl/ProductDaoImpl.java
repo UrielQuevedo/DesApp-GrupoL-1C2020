@@ -42,4 +42,13 @@ public class ProductDaoImpl implements ProductDao {
     public Page<Product> getProductsFiltered(Long idStore, Category category, String search, Pageable pageable) {
         return productRepository.getProductsByStoreIdAndProductNameAndCategory(idStore, search, category, pageable);
     }
+
+    @Override
+    public Product getProductById(Long productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if (productOptional.isPresent()) {
+            return productOptional.get();
+        }
+        throw new RuntimeException("No se encuentra el id del producto");
+    }
 }

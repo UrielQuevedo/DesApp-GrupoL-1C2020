@@ -18,6 +18,7 @@ import ScrollToTop from './ScrollToTop';
 import PublishStore from '../View/PublishStore';
 import UserData from '../View/UserData';
 import UserOrders from '../View/UserOrders';
+import ShoppingCartProvider from '../Context/ShoppingCartContext';
 
 function App() {
   return (
@@ -27,19 +28,22 @@ function App() {
           <Route path='/register' exact component={Register} />
           <Route path="/login" exact component={Login} />
           <UserProvider>
-            <Route exact path="/mylocation" component={Location} />
+            <Switch>
+              <Route exact path="/mylocation" component={Location} />
+            </Switch>
             <NavigationBar />
             <ScrollToTop>
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/store' component={Store} />
-                <Route exact path='/stores' component={AllStoresWrapper} />
-                <Route exact path='/stores/category/:category' component={StoresCategoriesWrapper} />
-                <Route exact path='/stores/:store_id/products/:category' component={Products} />
-                <Route exact path='/publish/store' component={PublishStore} />
-                <Route exact path='/profile' render={() => <MessagePage title="Coming Soon" />} />
                 <Route exact path='/profile/mydata' component={UserData} />
                 <Route exact path='/profile/myorders' component={UserOrders} />
+                <Route exact path='/publish/store' component={PublishStore} />
+                <ShoppingCartProvider>
+                  <Route exact path='/stores' component={AllStoresWrapper} />
+                  <Route exact path='/stores/category/:category' component={StoresCategoriesWrapper} />
+                  <Route exact path='/stores/:store_id/products/:category' component={Products} />
+                </ShoppingCartProvider>
                 <Route path='*' render={() => <MessagePage errorNumnber="404" title="Not Found" />} />
               </Switch>
             </ScrollToTop>
