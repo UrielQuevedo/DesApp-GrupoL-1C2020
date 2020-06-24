@@ -24,7 +24,7 @@ export const useDeleteProductToShoppingCart = (id) => {
   const { method, loading: removeProductToShoppingCartLoading } = useDelete(`${pathname}/${id}/shoppingcart/product`, productToRemove);
 
   const removeProductToShoppingCart = (functionSetShoppingCart) => {
-    method((orders) => functionSetShoppingCart((shoppingCart) => { return {...shoppingCart, orders: orders } }));
+    method((shoppingCart) => functionSetShoppingCart(shoppingCart));
   }
 
   return { removeProductToShoppingCart, removeProductToShoppingCartLoading, setProductToRemove };

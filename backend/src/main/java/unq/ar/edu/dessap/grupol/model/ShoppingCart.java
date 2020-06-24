@@ -30,7 +30,6 @@ public class ShoppingCart {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
-    @JsonIgnore
     private User user;
 
     public Double getTotalPrice() {
@@ -71,5 +70,9 @@ public class ShoppingCart {
                 .build();
         this.orders.add(order);
         return order;
+    }
+
+    public void removeOrder(long id) {
+        this.orders.removeIf(order -> order.getId() == id);
     }
 }

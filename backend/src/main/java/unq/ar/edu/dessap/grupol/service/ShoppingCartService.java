@@ -13,5 +13,5 @@ import java.util.List;
 public interface ShoppingCartService {
     ShoppingCart getShoppingCart(Long id);
     ShoppingCart addProductToShoppingCart(Long id, ShoppingCartProductDto shoppingCartProductDto);
-    List<Order> removeProductToShoppingCart(Long id, ShoppingCartDeleteProductDto shoppingCartProductDto);
+    ShoppingCart removeProductToShoppingCart(Long id, ShoppingCartDeleteProductDto shoppingCartProductDto);
 }

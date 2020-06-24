@@ -29,6 +29,7 @@ public class User {
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_shopping_cart_id", referencedColumnName = "id")
+    @JsonIgnore
     private ShoppingCart shoppingCart;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

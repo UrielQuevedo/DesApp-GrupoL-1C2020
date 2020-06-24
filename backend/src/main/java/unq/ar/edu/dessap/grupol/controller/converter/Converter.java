@@ -92,4 +92,13 @@ public class Converter {
 
         return product;
     }
+
+    public static ShoppingCartDto toShoppingCartDto(ShoppingCart shoppingCart) {
+        return ShoppingCartDto.builder()
+                .id(shoppingCart.getId())
+                .orders(shoppingCart.getOrders())
+                .totalPrice(shoppingCart.getTotalPrice())
+                .totalQuantity(shoppingCart.getTotalQuantity())
+                .build();
+    }
 }

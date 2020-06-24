@@ -49,17 +49,19 @@ public class ShoppingCartImpl implements ShoppingCartService {
     }
 
     @Override
-    public List<Order> removeProductToShoppingCart(Long id, ShoppingCartDeleteProductDto shoppingCartDeleteProductDto) {
+    public ShoppingCart removeProductToShoppingCart(Long id, ShoppingCartDeleteProductDto shoppingCartDeleteProductDto) {
+        ShoppingCart shoppingCart = this.getShoppingCart(id);
         Order order = orderDao.getOrderByIdAndByUserId(shoppingCartDeleteProductDto.getOrderId(), id);
         ProductOrder productOrder = productOrderDao.getProductOrderByIdAndByUserId(shoppingCartDeleteProductDto.getProductOrderId(), id);
         order.removeProductOrder(productOrder);
         if(order.getProductOrders().isEmpty()) {
+            shoppingCart.removeOrder(order.getId());
             orderDao.deleteById(order.getId());
         } else {
             productOrderDao.deleteById(productOrder.getId());
             orderDao.save(order);
         }
-        return this.getShoppingCart(id).getOrders();
+        return shoppingCart;
     }
 
 }
