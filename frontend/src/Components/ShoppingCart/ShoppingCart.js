@@ -21,7 +21,6 @@ const ShoppingCart = () => {
   return (
     <>
       <Hidden smDown>
-        {console.log(shoppingCart)}
         <DesktopShoppingCart stateStyle={getStatusStyle()} totalPrice={shoppingCart.totalPrice} totalAmount={shoppingCart.totalQuantity}/>
       </Hidden>
       <Hidden mdUp>

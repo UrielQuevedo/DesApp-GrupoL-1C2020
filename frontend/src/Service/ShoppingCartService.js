@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useGet, usePost } from "./HTTPService";
+import { useGet, usePost, useDelete } from "./HTTPService";
 import { useEffect, useState } from "react";
 const pathname = '/users';
 
@@ -17,4 +17,15 @@ export const useGetShoppingCart = (id) => {
 export const usePostProductToShoppingCart = (id, product) => {
   const { method: postProductToShoppingCart, loading: postProductToShoppingCartLoading } = usePost(`${pathname}/${id}/shoppingcart/product`, product);
   return { postProductToShoppingCart, postProductToShoppingCartLoading };
+}
+
+export const useDeleteProductToShoppingCart = (id) => {
+  const [ productToRemove, setProductToRemove ] = useState();
+  const { method, loading: removeProductToShoppingCartLoading } = useDelete(`${pathname}/${id}/shoppingcart/product`, productToRemove);
+
+  const removeProductToShoppingCart = (functionSetShoppingCart) => {
+    method((orders) => functionSetShoppingCart((shoppingCart) => { return {...shoppingCart, orders: orders } }));
+  }
+
+  return { removeProductToShoppingCart, removeProductToShoppingCartLoading, setProductToRemove };
 }
