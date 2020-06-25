@@ -53,7 +53,7 @@ const DialogAddProduct = ( { idStore, setProducts }) => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="primary" style={{ marginTop: '20px' }}onClick={handleClickOpen}>
         Agregar producto
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

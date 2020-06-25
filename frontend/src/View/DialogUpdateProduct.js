@@ -58,7 +58,7 @@ const DialogUpdateProduct = ({ product, setProducts }) => {
 
     return (
         <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen} style={ {marginTop:'10px', marginBottom:'10px', width:'217px'}}>
+      <Button variant="contained" color="primary" onClick={handleClickOpen} style={{ marginTop:'10px', marginBottom:'10px', width: '100%' }}>
         Modificar
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

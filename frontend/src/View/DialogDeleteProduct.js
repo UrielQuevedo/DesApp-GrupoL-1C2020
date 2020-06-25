@@ -10,16 +10,9 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import Icon from '@material-ui/core/Icon';
 
-const useStyles = makeStyles((theme) => ({
-    button: {
-      width: '217px'
-    },
-  }));
-
 const DialogDeleteProduct = ( { idProduct, setProducts } ) => {
     
     const [open, setOpen] = React.useState(false);
-    const classes = useStyles();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -47,7 +40,7 @@ const DialogDeleteProduct = ( { idProduct, setProducts } ) => {
             variant="contained"
             color="secondary"
             onClick={handleClickOpen}
-            className={classes.button}
+            style= {{ width: '100%' }}
             startIcon={<DeleteIcon />}
         >
             Eliminar
