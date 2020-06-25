@@ -1,5 +1,7 @@
 package unq.ar.edu.dessap.grupol.service.impl;
 
+import com.csvreader.CsvReader;
+import com.csvreader.CsvWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,15 @@ import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.io.File;
+
 
 @Service
 @Transactional
@@ -34,13 +41,14 @@ public class InitService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostConstruct
-    public void initialize() {
+    public void initialize() throws IOException {
         this.createSimpleUsers();
         this.createStores();
         this.createUserWithStoreAndHisProducts();
         this.createUserWithStoreAndHisProducts2();
         this.createUserWithStoreAndHisProducts3();
         this.createUserWithStoreAndHisProducts4();
+        this.createUserWithStoreAndHisProductsFromCsv();
         this.createProductsOffer();
         this.testDeCreacion(10);
     }
@@ -489,7 +497,7 @@ public class InitService {
             Location location = Location.builder()
                     .address("Calle falsa " + (int) (Math.random() * 1000))
                     .latitude(this.generateRandomDouble(-34.73, -34.71))
-                    .longitude(this.generateRandomDouble(-58.26,-58.25))
+                    .longitude(this.generateRandomDouble(-58.26, -58.25))
                     .build();
             locations.add(location);
         }
@@ -497,7 +505,7 @@ public class InitService {
     }
 
     private double generateRandomDouble(double max, double min) {
-        return (double) Math.round((Math.random()*(max - min) + min) * 100000d) / 100000d;
+        return (double) Math.round((Math.random() * (max - min) + min) * 100000d) / 100000d;
     }
 
     private List<Store> getCreateStoresByNames(Sector sector, int quantity) {
@@ -516,7 +524,7 @@ public class InitService {
 
     private void setLocationToStores(List<Store> stores, int numberLocation) {
         int index = 0;
-        for (Location location : this.getXLocations(numberLocation) ) {
+        for (Location location : this.getXLocations(numberLocation)) {
             Store store = stores.get(index);
             store.setLocation(location);
             index++;
@@ -542,4 +550,166 @@ public class InitService {
         });
     }
 
+    private void createUserWithStoreAndHisProductsFromCsv() throws IOException {
+        List<Product> products = new ArrayList<>();
+
+        Product product = Product.builder()
+                .category(Category.BEBIDAS)
+                .brand("cocacola")
+                .name("fanta")
+                .price(150.00)
+                .stock(200)
+                .build();
+
+        Product product2 = Product.builder()
+                .category(Category.BEBIDAS)
+                .brand("cocacola")
+                .name("zero")
+                .price(100.00)
+                .stock(300)
+                .build();
+
+        Product product3 = Product.builder()
+                .category(Category.BEBIDAS)
+                .brand("pepsi")
+                .name("cola")
+                .price(150.00)
+                .stock(100)
+                .build();
+
+        Product product4 = Product.builder()
+                .category(Category.GALLETITAS)
+                .brand("terrabusi")
+                .name("combinado")
+                .price(150.00)
+                .stock(80)
+                .build();
+
+        Product product5 = Product.builder()
+                .category(Category.GALLETITAS)
+                .brand("express")
+                .name("light")
+                .price(250.00)
+                .stock(200)
+                .build();
+
+        Product product6 = Product.builder()
+                .category(Category.GALLETITAS)
+                .brand("oreo")
+                .name("blanco")
+                .price(150.00)
+                .stock(350)
+                .build();
+
+        products.add(product);
+        products.add(product2);
+        products.add(product3);
+        products.add(product4);
+        products.add(product5);
+        products.add(product6);
+        this.exportCSV(products);
+
+        Location location = new Location(-34.735310, -58.260750, "Calle larga");
+
+        List<Product> importProducts = this.importCSV();
+        Store store = Store.builder()
+                .maxDistance(20.00)
+                .name("test")
+                .sector(Sector.ALMACEN)
+                .products(importProducts)
+                .location(location)
+                .build();
+
+        importProducts.forEach(p -> p.setStore(store));
+
+        User user = User.builder()
+                .email("dani@gmail.com")
+                .password(passwordEncoder.encode("test"))
+                .username("danistone")
+                .store(store)
+                .build();
+
+        userDao.save(user);
+    }
+
+    private void exportCSV(List<Product> products) throws IOException {
+        String fileName = "Products.csv"; // Nombre del archivo
+        boolean exists = new File(fileName).exists(); // Verifica si exists
+
+        // Si exists un archivo llamado asi lo borra
+        if (exists) {
+            File fileProducts = new File(fileName);
+            fileProducts.delete();
+        }
+
+        try {
+            // Crea el archivo
+            CsvWriter outputCSV = new CsvWriter(new FileWriter(fileName, true), ',');
+
+            // Datos para identificar las columnas
+            outputCSV.write("Name");
+            outputCSV.write("Brand");
+            outputCSV.write("Price");
+            outputCSV.write("Stock");
+            outputCSV.write("Category");
+            outputCSV.write("Image_url");
+
+            outputCSV.endRecord(); // Deja de escribir en el archivo
+
+            // Recorremos la lista y lo insertamos en el archivo
+            for (Product product : products) {
+                outputCSV.write(product.getName());
+                outputCSV.write(product.getBrand());
+                outputCSV.write(String.valueOf(product.getPrice()));
+                outputCSV.write(String.valueOf(product.getStock()));
+                outputCSV.write(product.getCategory().toString());
+                outputCSV.write(product.getImage_url());
+
+                outputCSV.endRecord(); // Deja de escribir en el archivo
+            }
+
+            outputCSV.close(); // Cierra el archivo
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Product> importCSV() {
+        try {
+            List<Product> products = new ArrayList<Product>(); // Lista donde guardaremos los datos del archivo
+
+            CsvReader readProducts = new CsvReader("Products.csv");
+            readProducts.readHeaders();
+
+            // Mientras haya lineas obtenemos los datos del archivo
+            while (readProducts.readRecord()) {
+                String name = readProducts.get(0);
+                String brand = readProducts.get(1);
+                double price = Double.parseDouble(readProducts.get(2));
+                int stock = Integer.parseInt(readProducts.get(3));
+                Category category = Category.parse(readProducts.get(4));
+                String image_url = readProducts.get(5);
+
+                Product product = Product.builder()
+                        .name(name)
+                        .brand(brand)
+                        .price(price)
+                        .stock(stock)
+                        .category(category)
+                        .image_url(image_url)
+                        .build();
+
+                products.add(product); // Añade la informacion a la lista
+            }
+
+            readProducts.close(); // Cierra el archivo
+            return products;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

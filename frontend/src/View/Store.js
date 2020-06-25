@@ -4,25 +4,31 @@ import DialogAddProduct from './DialogAddProduct';
 import { getStoreByIdUserRequest } from '../Service/Api';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withTheme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { UserContext } from '../Context/UserContext';
+import '../Styles/Store.css';
 
+/*
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    fontFamily: ''
+    color: 'white',
+    marginTop: '75px',
+    background: 'black'
   },
 }));
+*/
 
 const Store = () => {
 
-  const classes = useStyles();
+ //w const classes = useStyles();
   const { user } = useContext(UserContext);
   const idUser = user.id;
   const [ id, setId ] = useState(null); 
@@ -55,10 +61,11 @@ const Store = () => {
         <div>
           <CssBaseline />
           <Container fixed>
-            <div className={classes.root}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>{name}</Paper>
+              <Paper className="containerPaperName">
+                { name }
+              </Paper>
             </Grid>
             <Grid item xs={12}>
               <DialogAddProduct idStore={id} setProducts={setProducts} />
@@ -67,7 +74,6 @@ const Store = () => {
                 <ListProduct products={products} idStore={id} setProducts={setProducts}/>
             }     
           </Grid>
-            </div>
           </Container>
         </div>
       }
