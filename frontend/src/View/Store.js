@@ -8,6 +8,7 @@ import { makeStyles, withTheme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { UserContext } from '../Context/UserContext';
+import UploadFileCSV from './UploadFileCSV';
 import '../Styles/Store.css';
 
 /*
@@ -25,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 */
-
 const Store = () => {
 
  //w const classes = useStyles();
@@ -67,8 +67,11 @@ const Store = () => {
                 { name }
               </Paper>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item md={6}>
               <DialogAddProduct idStore={id} setProducts={setProducts} />
+            </Grid> 
+            <Grid item md={12}>
+              <UploadFileCSV />
             </Grid> 
             { products  &&
                 <ListProduct products={products} idStore={id} setProducts={setProducts}/>
