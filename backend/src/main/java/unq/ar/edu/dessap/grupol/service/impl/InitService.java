@@ -1,11 +1,10 @@
 package unq.ar.edu.dessap.grupol.service.impl;
 
-import com.csvreader.CsvReader;
-import com.csvreader.CsvWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import unq.ar.edu.desapp.grupol.utils.Csv;
 import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.model.offer.Offer;
 import unq.ar.edu.dessap.grupol.model.offer.ProductOffer;
@@ -14,14 +13,11 @@ import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.annotation.PostConstruct;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.io.File;
 
 
 @Service
@@ -595,8 +591,8 @@ public class InitService {
 
         Product product6 = Product.builder()
                 .category(Category.GALLETITAS)
-                .brand("oreo")
-                .name("blanco")
+                .brand("toddys")
+                .name("con chips")
                 .price(150.00)
                 .stock(350)
                 .build();
@@ -607,11 +603,11 @@ public class InitService {
         products.add(product4);
         products.add(product5);
         products.add(product6);
-        this.exportCSV(products);
+        Csv.exportCSV(products);
 
         Location location = new Location(-34.735310, -58.260750, "Calle larga");
 
-        List<Product> importProducts = this.importCSV();
+        List<Product> importProducts = Csv.importCSV();
         Store store = Store.builder()
                 .maxDistance(20.00)
                 .name("test")
@@ -632,84 +628,5 @@ public class InitService {
         userDao.save(user);
     }
 
-    private void exportCSV(List<Product> products) throws IOException {
-        String fileName = "Products.csv"; // Nombre del archivo
-        boolean exists = new File(fileName).exists(); // Verifica si exists
 
-        // Si exists un archivo llamado asi lo borra
-        if (exists) {
-            File fileProducts = new File(fileName);
-            fileProducts.delete();
-        }
-
-        try {
-            // Crea el archivo
-            CsvWriter outputCSV = new CsvWriter(new FileWriter(fileName, true), ',');
-
-            // Datos para identificar las columnas
-            outputCSV.write("Name");
-            outputCSV.write("Brand");
-            outputCSV.write("Price");
-            outputCSV.write("Stock");
-            outputCSV.write("Category");
-            outputCSV.write("Image_url");
-
-            outputCSV.endRecord(); // Deja de escribir en el archivo
-
-            // Recorremos la lista y lo insertamos en el archivo
-            for (Product product : products) {
-                outputCSV.write(product.getName());
-                outputCSV.write(product.getBrand());
-                outputCSV.write(String.valueOf(product.getPrice()));
-                outputCSV.write(String.valueOf(product.getStock()));
-                outputCSV.write(product.getCategory().toString());
-                outputCSV.write(product.getImage_url());
-
-                outputCSV.endRecord(); // Deja de escribir en el archivo
-            }
-
-            outputCSV.close(); // Cierra el archivo
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private List<Product> importCSV() {
-        try {
-            List<Product> products = new ArrayList<Product>(); // Lista donde guardaremos los datos del archivo
-
-            CsvReader readProducts = new CsvReader("Products.csv");
-            readProducts.readHeaders();
-
-            // Mientras haya lineas obtenemos los datos del archivo
-            while (readProducts.readRecord()) {
-                String name = readProducts.get(0);
-                String brand = readProducts.get(1);
-                double price = Double.parseDouble(readProducts.get(2));
-                int stock = Integer.parseInt(readProducts.get(3));
-                Category category = Category.parse(readProducts.get(4));
-                String image_url = readProducts.get(5);
-
-                Product product = Product.builder()
-                        .name(name)
-                        .brand(brand)
-                        .price(price)
-                        .stock(stock)
-                        .category(category)
-                        .image_url(image_url)
-                        .build();
-
-                products.add(product); // Añade la informacion a la lista
-            }
-
-            readProducts.close(); // Cierra el archivo
-            return products;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
