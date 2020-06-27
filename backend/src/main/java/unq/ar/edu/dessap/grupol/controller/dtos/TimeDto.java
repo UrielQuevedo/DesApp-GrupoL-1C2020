@@ -1,5 +1,8 @@
 package unq.ar.edu.dessap.grupol.controller.dtos;
 
+import lombok.Data;
+
+@Data
 public class TimeDto {
 
     private String of;

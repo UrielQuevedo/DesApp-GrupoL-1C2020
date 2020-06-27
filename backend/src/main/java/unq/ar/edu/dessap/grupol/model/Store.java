@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,5 +81,31 @@ public class Store {
 
     public void addTimes(Time time) {
         this.times.add(time);
+    }
+
+    public boolean getIsOpen() {
+        DateTimeFormatter isoTime = DateTimeFormatter.ofPattern("HH:mm");
+        String today = LocalDate.now().getDayOfWeek().toString();
+        boolean isOpenToday = this.getOpenDays().stream().anyMatch(dayOfWeek -> dayOfWeek.name().equals(today));
+
+        return isOpenToday && this.times.stream().anyMatch(time -> {
+            LocalTime start = LocalTime.parse(time.getOf(), isoTime);
+            LocalTime end = LocalTime.parse(time.getUntil(), isoTime);
+            LocalTime timeNow = LocalTime.now();
+            if (start.isAfter(end)) {
+                return !timeNow.isBefore(start) || !timeNow.isAfter(end);
+            } else {
+                return !timeNow.isBefore(start) && !timeNow.isAfter(end);
+            }
+        });
+    }
+
+    public List<String> getTickets() {
+        DateTimeFormatter isoTime = DateTimeFormatter.ofPattern("HH:mm");
+        List<String> tickets = new ArrayList<>();
+        this.times.forEach(time -> tickets.addAll(GenerateTickets
+                .generateTickets( LocalTime.parse(time.getOf(), isoTime),  LocalTime.parse(time.getUntil(), isoTime), 15)
+        .stream().map(localTime -> localTime.format(isoTime)).collect(Collectors.toList())));
+        return tickets;
     }
 }
