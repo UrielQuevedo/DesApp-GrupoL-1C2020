@@ -4,10 +4,9 @@ import Button from '@material-ui/core/Button';
 import { parse } from 'papaparse';
 import { updateProductRequest } from '../Service/Api';
 
-const UploadFileCSV = () => {
+const UploadFileCSV = ({ products, setProducts }) => {
     
     const readFile = (e) => {
-        e.preventDefault();
         parse(document.getElementById('files').files[0], {
             download: true,
             header: true,
@@ -17,18 +16,33 @@ const UploadFileCSV = () => {
                        console.log("Nothing")
                    } else {
                        const dataUpdated = transformFields(data);
-                       console.log(dataUpdated);
-                       updateProductRequest(dataUpdated.id, dataUpdated)
-                       .then(data => {
-                           console.log(data);
-                        })
-                       .catch(error => {
-                           console.log(error);
-                       })         
+                       fetchUpdateProduct(dataUpdated); 
                    }
                 })
             }
         });
+    }
+
+    const fetchUpdateProduct = (_product) => {
+        updateProductRequest(_product.id, _product)
+        .then(data => {
+            console.log(data);
+            setProducts(oldProducts => {
+             let productsUpdated = [];
+             oldProducts.forEach(product => productsUpdated.push(product));
+             let oldProduct = productsUpdated.find(product => product.id === data.id);
+             oldProduct.name = data.name;
+             oldProduct.brand = data.brand;
+             oldProduct.stock = data.stock;
+             oldProduct.price = data.price;
+             oldProduct.category = data.category;
+             oldProduct.image_url = data.image_url;
+             return productsUpdated;
+           })
+         })
+        .catch(error => {
+            console.log(error);
+        })         
     }
 
     const transformFields = (data) => {
