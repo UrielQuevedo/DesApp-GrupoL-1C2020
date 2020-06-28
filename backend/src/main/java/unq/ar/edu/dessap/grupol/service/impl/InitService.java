@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import unq.ar.edu.desapp.grupol.utils.Csv;
 import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.model.offer.Offer;
 import unq.ar.edu.dessap.grupol.model.offer.ProductOffer;
@@ -44,7 +43,6 @@ public class InitService {
         this.createUserWithStoreAndHisProducts2();
         this.createUserWithStoreAndHisProducts3();
         this.createUserWithStoreAndHisProducts4();
-        this.createUserWithStoreAndHisProductsFromCsv();
         this.createProductsOffer();
         this.testDeCreacion(10);
     }
@@ -545,88 +543,5 @@ public class InitService {
             userDao.save(user);
         });
     }
-
-    private void createUserWithStoreAndHisProductsFromCsv() throws IOException {
-        List<Product> products = new ArrayList<>();
-
-        Product product = Product.builder()
-                .category(Category.BEBIDAS)
-                .brand("cocacola")
-                .name("fanta")
-                .price(150.00)
-                .stock(200)
-                .build();
-
-        Product product2 = Product.builder()
-                .category(Category.BEBIDAS)
-                .brand("cocacola")
-                .name("zero")
-                .price(100.00)
-                .stock(300)
-                .build();
-
-        Product product3 = Product.builder()
-                .category(Category.BEBIDAS)
-                .brand("pepsi")
-                .name("cola")
-                .price(150.00)
-                .stock(100)
-                .build();
-
-        Product product4 = Product.builder()
-                .category(Category.GALLETITAS)
-                .brand("terrabusi")
-                .name("combinado")
-                .price(150.00)
-                .stock(80)
-                .build();
-
-        Product product5 = Product.builder()
-                .category(Category.GALLETITAS)
-                .brand("express")
-                .name("light")
-                .price(250.00)
-                .stock(200)
-                .build();
-
-        Product product6 = Product.builder()
-                .category(Category.GALLETITAS)
-                .brand("toddys")
-                .name("con chips")
-                .price(150.00)
-                .stock(350)
-                .build();
-
-        products.add(product);
-        products.add(product2);
-        products.add(product3);
-        products.add(product4);
-        products.add(product5);
-        products.add(product6);
-        Csv.exportCSV(products);
-
-        Location location = new Location(-34.735310, -58.260750, "Calle larga");
-
-        List<Product> importProducts = Csv.importCSV();
-        Store store = Store.builder()
-                .maxDistance(20.00)
-                .name("test")
-                .sector(Sector.ALMACEN)
-                .products(importProducts)
-                .location(location)
-                .build();
-
-        importProducts.forEach(p -> p.setStore(store));
-
-        User user = User.builder()
-                .email("dani@gmail.com")
-                .password(passwordEncoder.encode("test"))
-                .username("danistone")
-                .store(store)
-                .build();
-
-        userDao.save(user);
-    }
-
 
 }
