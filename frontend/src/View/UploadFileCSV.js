@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import { parse } from 'papaparse';
 import { updateProductRequest, existsProductsRequest } from '../Service/Api';
 
-const UploadFileCSV = ({ products, setProducts }) => {
+const DialogError = ({ error, setError }) => {
+    return (
+        <div>
+            { error }
+        </div>
+    )
+}
+
+const UploadFileCSV = ({ setProducts }) => {
     
+    const [ error, setError ] = useState(null);
+
     const readFile = (e) => {
         e.preventDefault();
         parse(document.getElementById('files').files[0], {
@@ -22,9 +32,7 @@ const UploadFileCSV = ({ products, setProducts }) => {
                         fetchUpdateProduct(dataUpdated); 
                     }) 
                 })
-                .catch(error => {
-                    console.log(error.response.data.message);
-                })
+                .catch(error => setError(error.response.data.message));
             }
         });
     }
@@ -47,7 +55,7 @@ const UploadFileCSV = ({ products, setProducts }) => {
            })
          })
         .catch(error => {
-            console.log(error);
+            console.log(error.response.data.message);
         })         
     }
 
@@ -85,7 +93,6 @@ const UploadFileCSV = ({ products, setProducts }) => {
 		        <button type="submit" id="submit-file" class="btn btn-primary" onClick={readFile}>Subir archivo</button>
 	        </div>
             
-        
             {/*<Button
             className="form-group"
             type="submit"
@@ -99,6 +106,8 @@ const UploadFileCSV = ({ products, setProducts }) => {
             */}
     
             </form>
+
+            { error && <DialogError error={error} setError={setError}/> }
         </div>
     )
 }

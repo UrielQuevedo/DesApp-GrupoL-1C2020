@@ -71,7 +71,7 @@ const Store = () => {
               <DialogAddProduct idStore={id} setProducts={setProducts} />
             </Grid> 
             <Grid item md={12}>
-              <UploadFileCSV products={products} setProducts={setProducts}/>
+              <UploadFileCSV setProducts={setProducts}/>
             </Grid> 
             { products  &&
                 <ListProduct products={products} idStore={id} setProducts={setProducts}/>
