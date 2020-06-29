@@ -21,13 +21,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const DialogSuccess = ({ open, handleClose }) => {
+const DialogError = ({ message, open, handleClose }) => {
 
     const classes = useStyles();
 
     return (
         <div>
-            <Dialog
+             <Dialog
             open={open}
             TransitionComponent={Transition}
             keepMounted
@@ -38,9 +38,9 @@ const DialogSuccess = ({ open, handleClose }) => {
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                     <div className={classes.root}>
-                        <Alert severity="success">
-                            <AlertTitle>Se han guardado los datos con exito!</AlertTitle>
-                        </Alert>
+                    <Alert severity="error">
+                        <AlertTitle>{message}</AlertTitle>
+                    </Alert>
                     </div>    
                 </DialogContentText>
                 </DialogContent>
@@ -54,4 +54,4 @@ const DialogSuccess = ({ open, handleClose }) => {
     )
 }
 
-export default DialogSuccess;
+export default DialogError;

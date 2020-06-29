@@ -4,19 +4,13 @@ import Button from '@material-ui/core/Button';
 import { parse } from 'papaparse';
 import { updateProductRequest, existsProductsRequest } from '../Service/Api';
 import DialogSuccess from './DialogSuccess';
-
-const DialogError = ({ error, setError }) => {
-    return (
-        <div>
-           {console.log(error)}
-        </div>
-    )
-}
+import DialogError from './DialogError';
 
 const UploadFileCSV = ({ setProducts }) => {
     
     const [ error, setError ] = useState(null);
     const [ open, setOpen ] = useState(false);
+    const [ openError, setOpenError ] = useState(false);
 
     const readFile = (e) => {
         e.preventDefault();
@@ -35,7 +29,10 @@ const UploadFileCSV = ({ setProducts }) => {
                         handleClickOpen(); 
                     }) 
                 })
-                .catch(error => setError(error.response.data.message));
+                .catch(error => { 
+                    setError(error.response.data.message)
+                    handleClickOpenError();
+                })
             }
         });
     }
@@ -92,6 +89,14 @@ const UploadFileCSV = ({ setProducts }) => {
         setOpen(false);
     }
 
+    const handleClickOpenError = () => {
+        setOpenError(true);
+    }
+
+    const handleCloseError = () => {
+        setOpenError(false);
+    }
+
     return (
         <div>
             <form>
@@ -118,7 +123,7 @@ const UploadFileCSV = ({ setProducts }) => {
     
             </form>
             { open && <DialogSuccess open={open} handleClose={handleClose}/> }
-            { error && <DialogError error={error} setError={setError}/> }
+            { openError && <DialogError message={error} open={openError} handleClose={handleCloseError}/> }
         </div>
     )
 }
