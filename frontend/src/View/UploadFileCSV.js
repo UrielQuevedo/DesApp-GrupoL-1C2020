@@ -3,11 +3,12 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import { parse } from 'papaparse';
 import { updateProductRequest, existsProductsRequest } from '../Service/Api';
+import DialogSuccess from './DialogSuccess';
 
 const DialogError = ({ error, setError }) => {
     return (
         <div>
-            { error }
+           {console.log(error)}
         </div>
     )
 }
@@ -15,6 +16,7 @@ const DialogError = ({ error, setError }) => {
 const UploadFileCSV = ({ setProducts }) => {
     
     const [ error, setError ] = useState(null);
+    const [ open, setOpen ] = useState(false);
 
     const readFile = (e) => {
         e.preventDefault();
@@ -29,7 +31,8 @@ const UploadFileCSV = ({ setProducts }) => {
                 .then(_ => {
                     list.map(data => {
                         const dataUpdated = transformFields(data);
-                        fetchUpdateProduct(dataUpdated); 
+                        fetchUpdateProduct(dataUpdated);
+                        handleClickOpen(); 
                     }) 
                 })
                 .catch(error => setError(error.response.data.message));
@@ -81,6 +84,14 @@ const UploadFileCSV = ({ setProducts }) => {
         }
     }
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    }
+    
+    const handleClose = () => {
+        setOpen(false);
+    }
+
     return (
         <div>
             <form>
@@ -106,7 +117,7 @@ const UploadFileCSV = ({ setProducts }) => {
             */}
     
             </form>
-
+            { open && <DialogSuccess open={open} handleClose={handleClose}/> }
             { error && <DialogError error={error} setError={setError}/> }
         </div>
     )
