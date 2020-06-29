@@ -11,6 +11,7 @@ import unq.ar.edu.dessap.grupol.persistence.impl.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -51,4 +52,11 @@ public class ProductDaoImpl implements ProductDao {
         }
         throw new RuntimeException("No se encuentra el id del producto");
     }
+
+    @Override
+    public List<Long> existsProducts(List<Long> ids) {
+        return productRepository.findAllById(ids).stream().map(product -> product.getId())
+                .collect(Collectors.toList());
+    }
+
 }

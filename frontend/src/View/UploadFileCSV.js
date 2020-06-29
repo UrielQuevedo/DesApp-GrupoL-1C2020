@@ -2,22 +2,28 @@ import React from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import { parse } from 'papaparse';
-import { updateProductRequest } from '../Service/Api';
+import { updateProductRequest, existsProductsRequest } from '../Service/Api';
 
 const UploadFileCSV = ({ products, setProducts }) => {
     
     const readFile = (e) => {
+        e.preventDefault();
         parse(document.getElementById('files').files[0], {
             download: true,
             header: true,
             complete: results => {
-                results.data.map(data => {
-                   if(data.Id == "") {
-                       console.log("Nothing")
-                   } else {
-                       const dataUpdated = transformFields(data);
-                       fetchUpdateProduct(dataUpdated); 
-                   }
+                const list = results.data.filter(product => product.Id !== "");
+                const ids = list.map(product => product.Id).toString();
+                console.log(ids);
+                existsProductsRequest(ids)
+                .then(_ => {
+                    list.map(data => {
+                        const dataUpdated = transformFields(data);
+                        fetchUpdateProduct(dataUpdated); 
+                    }) 
+                })
+                .catch(error => {
+                    console.log(error.response.data.message);
                 })
             }
         });
@@ -76,7 +82,7 @@ const UploadFileCSV = ({ products, setProducts }) => {
             </div>
     
             <div class="form-group">
-		        <button type="submit" id="submit-file" class="btn btn-primary" onClick={readFile}>Upload File</button>
+		        <button type="submit" id="submit-file" class="btn btn-primary" onClick={readFile}>Subir archivo</button>
 	        </div>
             
         
