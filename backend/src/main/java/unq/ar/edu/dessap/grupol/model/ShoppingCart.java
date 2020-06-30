@@ -1,17 +1,14 @@
 package unq.ar.edu.dessap.grupol.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartProductDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Entity
@@ -74,5 +71,10 @@ public class ShoppingCart {
 
     public void removeOrder(long id) {
         this.orders.removeIf(order -> order.getId() == id);
+    }
+
+    public void removeAllOrders() {
+        this.orders.forEach(order -> order.setShoppingCart(null));
+        this.orders = new ArrayList<>();
     }
 }

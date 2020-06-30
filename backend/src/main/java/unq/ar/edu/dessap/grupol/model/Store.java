@@ -64,8 +64,9 @@ public class Store {
     @JsonIgnore
     private List<Product> products = new ArrayList<>();
 
-    @Transient
-    private List<Turn> turns;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "store")
+    @Builder.Default
+    private List<Turn> turns = new ArrayList<>();
 
     public void addProduct(Product product) {
         this.products.add(product);
@@ -107,5 +108,17 @@ public class Store {
                 .generateTickets( LocalTime.parse(time.getOf(), isoTime),  LocalTime.parse(time.getUntil(), isoTime), 15)
         .stream().map(localTime -> localTime.format(isoTime)).collect(Collectors.toList())));
         return tickets;
+    }
+
+    public void verifyPayment(Payment payment) {
+        if (!this.payments.contains(payment)) throw new RuntimeException("El Payment no es valido");
+    }
+
+    public void verifyTurn(String turnTime) {
+        if (this.turns.stream().anyMatch(turn -> turn.getTime().equals(turnTime))) throw new RuntimeException("El Turno ya esta tomado");
+    }
+
+    public void addTurn(Turn turn) {
+        this.turns.add(turn);
     }
 }

@@ -8,12 +8,14 @@ import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
 import unq.ar.edu.dessap.grupol.controller.exception.EmailExistException;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.controller.exception.PasswordIncorrectException;
-import unq.ar.edu.dessap.grupol.model.*;
+import unq.ar.edu.dessap.grupol.model.Location;
+import unq.ar.edu.dessap.grupol.model.OrderHistory;
+import unq.ar.edu.dessap.grupol.model.ShoppingCart;
+import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -61,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<OrderHistory> getUserOrdersById(long id) {
         User user = userDao.getUserById(id);
-        return user.getOrders();
+        return user.getOrdersHistory();
     }
 
     @Override

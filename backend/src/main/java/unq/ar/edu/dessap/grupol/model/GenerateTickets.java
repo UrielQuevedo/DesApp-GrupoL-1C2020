@@ -3,7 +3,6 @@ package unq.ar.edu.dessap.grupol.model;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class GenerateTickets {
 
     public static List<LocalTime> generateTickets(LocalTime start, LocalTime end, int difference) {
         List<LocalTime> tickets = new ArrayList<>();
-        DateTimeFormatter isoTime = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime currentTime = LocalTime.now();
         LocalTime ticket = start;
         int ticketHour = ticket.getHour();

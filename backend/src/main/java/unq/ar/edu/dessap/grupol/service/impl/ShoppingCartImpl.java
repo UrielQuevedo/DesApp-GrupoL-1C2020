@@ -3,17 +3,14 @@ package unq.ar.edu.dessap.grupol.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import unq.ar.edu.dessap.grupol.controller.dtos.PurchaseDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartDeleteProductDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartProductDto;
 import unq.ar.edu.dessap.grupol.model.*;
-import unq.ar.edu.dessap.grupol.persistence.OrderDao;
-import unq.ar.edu.dessap.grupol.persistence.ProductDao;
-import unq.ar.edu.dessap.grupol.persistence.ProductOrderDao;
-import unq.ar.edu.dessap.grupol.persistence.UserDao;
+import unq.ar.edu.dessap.grupol.persistence.*;
 import unq.ar.edu.dessap.grupol.service.ShoppingCartService;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.HashMap;
 
 @Service
 @Transactional
@@ -21,6 +18,9 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private StoreDao storeDao;
 
     @Autowired
     private ProductDao productDao;
@@ -64,4 +64,28 @@ public class ShoppingCartImpl implements ShoppingCartService {
         return shoppingCart;
     }
 
+    @Override
+    public ShoppingCart makePurchase(Long userId, HashMap<Long, PurchaseDto> body) {
+        User user = userDao.getUserById(userId);
+        ShoppingCart shoppingCart = user.getShoppingCart();
+        shoppingCart.getOrders().forEach(order -> {
+            PurchaseDto purchaseDto = body.get(order.getId());
+            if (purchaseDto == null) throw new RuntimeException("Faltan datos para finalizar la compra");
+            order.verify(purchaseDto.getTurnTime(), purchaseDto.getPayment());
+            this.manageTurn(order.getStore(), purchaseDto.getTurnTime(), user);
+        });
+        user.makeAOrderHistory();
+        userDao.save(user);
+        return shoppingCart;
+    }
+
+    private void manageTurn(Store store, String time, User user) {
+        Turn turn = Turn.builder()
+                .user(user)
+                .store(store)
+                .time(time)
+                .build();
+        store.addTurn(turn);
+        storeDao.save(store);
+    }
 }

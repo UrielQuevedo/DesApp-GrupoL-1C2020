@@ -85,14 +85,14 @@ public class UserTest {
         user1.setUsername("user1");
         user1.setId(1);
         user1.setPassword("hashed");
-        user1.setOrders(orders);
+        user1.setOrdersHistory(orders);
         user1.setLocation(location);
 
         Assert.assertEquals(1, user1.getId());
         Assert.assertEquals("user1", user1.getUsername());
         Assert.assertEquals("hashed", user1.getPassword());
         Assert.assertEquals("user1@compras.en.casa", user1.getEmail());
-        Assert.assertEquals(orders, user1.getOrders());
+        Assert.assertEquals(orders, user1.getOrdersHistory());
         Assert.assertEquals(location, user1.getLocation());
     }
 
@@ -103,9 +103,9 @@ public class UserTest {
         orders.add(mock(OrderHistory.class));
 
         User user = User.builder().
-                orders(orders).build();
+                ordersHistory(orders).build();
 
-        Assert.assertEquals(1, user.getOrders().size());
+        Assert.assertEquals(1, user.getOrdersHistory().size());
     }
 
     @Test

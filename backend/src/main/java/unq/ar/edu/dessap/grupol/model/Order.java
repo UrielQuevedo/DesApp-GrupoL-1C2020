@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "orders")
@@ -70,4 +69,9 @@ public class Order {
         this.totalQuantity -= productOrderToRemove.getQuantity();
     }
 
+    public void verify(String turnTime, Payment payment) {
+        this.store.verifyPayment(payment);
+        this.store.verifyTurn(turnTime);
+        this.productOrders.forEach(ProductOrder::verify);
+    }
 }
