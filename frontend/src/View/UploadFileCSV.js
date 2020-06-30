@@ -1,37 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import { parse } from 'papaparse';
 import { updateProductRequest, existsProductsRequest } from '../Service/Api';
 import DialogSuccess from './DialogSuccess';
 import DialogError from './DialogError';
+import { useForm } from 'react-hook-form';
 
 const UploadFileCSV = ({ setProducts }) => {
     
     const [ error, setError ] = useState(null);
-    const [ open, setOpen ] = useState(false);
+    const [ openSuccess, setOpenSuccess ] = useState(false);
     const [ openError, setOpenError ] = useState(false);
+    const { register, handleSubmit } = useForm();
 
-    const readFile = (e) => {
-        e.preventDefault();
+    const readFile = (data, e) => {
         parse(document.getElementById('files').files[0], {
             download: true,
             header: true,
             complete: results => {
+                console.log(results.data);
                 const list = results.data.filter(product => product.Id !== "");
                 const ids = list.map(product => product.Id).toString();
-                console.log(ids);
                 existsProductsRequest(ids)
                 .then(_ => {
                     list.map(data => {
                         const dataUpdated = transformFields(data);
                         fetchUpdateProduct(dataUpdated);
-                        handleClickOpen(); 
+                        handleClickOpenSuccess();
+                        e.target.reset();
                     }) 
                 })
                 .catch(error => { 
-                    setError(error.response.data.message)
+                    setError(error.response.data.message);
                     handleClickOpenError();
+                    e.target.reset();
                 })
             }
         });
@@ -73,7 +76,6 @@ const UploadFileCSV = ({ setProducts }) => {
     
     const checkCategory = (category) => {
         const toUpperCase = category.toUpperCase();
-        console.log(toUpperCase);
         if(toUpperCase == "BEBIDAS" || toUpperCase == "FIDEOS" || toUpperCase == "GALLETITAS" || toUpperCase == "FIAMBRE") {
             return toUpperCase;        
         } else {
@@ -81,12 +83,12 @@ const UploadFileCSV = ({ setProducts }) => {
         }
     }
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClickOpenSuccess = () => {
+        setOpenSuccess(true);
     }
     
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseSuccess = () => {
+        setOpenSuccess(false);
     }
 
     const handleClickOpenError = () => {
@@ -99,31 +101,30 @@ const UploadFileCSV = ({ setProducts }) => {
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit(readFile)}>
             <div class="form-group">
                 <label for="files">Modificar productos mediante CSV </label>
-                <input type="file" id="files" class="form-control" accept=".csv" required />
+                <input type="file" id="files" accept=".csv" required  inputRef={register} name='select-file'/>
             </div>
     
             <div class="form-group">
-		        <button type="submit" id="submit-file" class="btn btn-primary" onClick={readFile}>Subir archivo</button>
+		        <button type="submit" id="submit-file" class="btn btn-primary"  inputRef={register} name='upload-file'>Upload File</button>
 	        </div>
-            
-            {/*<Button
+            {/*
+            <Button
             className="form-group"
             type="submit"
             variant="contained"
             color="default"
-            onClick={handleData}
+            onClick={readFile}
             startIcon={<CloudUploadIcon />}
             >
             Subir archivo
             </Button>
-            */}
-    
+            */ }
             </form>
-            { open && <DialogSuccess open={open} handleClose={handleClose}/> }
-            { openError && <DialogError message={error} open={openError} handleClose={handleCloseError}/> }
+            { openSuccess && <DialogSuccess open={openSuccess} handleClose={handleCloseSuccess}/> }
+            { openError && <DialogError message={error} setMessage={setError} open={openError} handleClose={handleCloseError}/> }
         </div>
     )
 }

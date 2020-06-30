@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const DialogError = ({ message, open, handleClose }) => {
+const DialogError = ({ message, open, setMessage, handleClose }) => {
 
     const classes = useStyles();
 
