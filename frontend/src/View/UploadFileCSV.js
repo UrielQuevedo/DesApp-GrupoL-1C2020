@@ -6,8 +6,9 @@ import { updateProductRequest, existsProductsRequest } from '../Service/Api';
 import DialogSuccess from './DialogSuccess';
 import DialogError from './DialogError';
 import { useForm } from 'react-hook-form';
+import '../Styles/Store.css';
 
-const UploadFileCSV = ({ setProducts }) => {
+const UploadFileCSV = ({ close, setProducts }) => {
     
     const [ error, setError ] = useState(null);
     const [ openSuccess, setOpenSuccess ] = useState(false);
@@ -28,12 +29,14 @@ const UploadFileCSV = ({ setProducts }) => {
                         const dataUpdated = transformFields(data);
                         fetchUpdateProduct(dataUpdated);
                         handleClickOpenSuccess();
+                        close();
                         e.target.reset();
                     }) 
                 })
                 .catch(error => { 
                     setError(error.response.data.message);
                     handleClickOpenError();
+                    close();
                     e.target.reset();
                 })
             }
@@ -103,26 +106,18 @@ const UploadFileCSV = ({ setProducts }) => {
         <div>
             <form onSubmit={handleSubmit(readFile)}>
             <div class="form-group">
-                <label for="files">Modificar productos mediante CSV </label>
-                <input type="file" id="files" accept=".csv" required  inputRef={register} name='select-file'/>
+                <label for="files">Cargar archivo </label>
+                <br/>
+                <input type="file" id="files" accept=".csv" required inputRef={register} name='select-file'/>
             </div>
-    
-            <div class="form-group">
-		        <button type="submit" id="submit-file" class="btn btn-primary"  inputRef={register} name='upload-file'>Upload File</button>
-	        </div>
-            {/*
-            <Button
-            className="form-group"
-            type="submit"
-            variant="contained"
-            color="default"
-            onClick={readFile}
-            startIcon={<CloudUploadIcon />}
-            >
-            Subir archivo
+            <Button onClick={close} className="moveButton" color="primary">
+                Cancelar
             </Button>
-            */ }
+            <Button type="submit" id="submit-file" className="moveButton" color="primary">
+                Guardar
+            </Button>
             </form>
+            
             { openSuccess && <DialogSuccess open={openSuccess} handleClose={handleCloseSuccess}/> }
             { openError && <DialogError message={error} setMessage={setError} open={openError} handleClose={handleCloseError}/> }
         </div>

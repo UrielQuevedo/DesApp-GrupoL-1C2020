@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { UserContext } from '../Context/UserContext';
 import UploadFileCSV from './UploadFileCSV';
+import DialogUploadFile from './DialogUploadFile';
 import '../Styles/Store.css';
 
 /*
@@ -70,8 +71,8 @@ const Store = () => {
             <Grid item md={6}>
               <DialogAddProduct idStore={id} setProducts={setProducts} />
             </Grid> 
-            <Grid item md={12}>
-              <UploadFileCSV setProducts={setProducts}/>
+            <Grid item md={6} sm={12} className="containerUploadFile">
+              <DialogUploadFile setProducts={setProducts} />
             </Grid> 
             { products  &&
                 <ListProduct products={products} idStore={id} setProducts={setProducts}/>
