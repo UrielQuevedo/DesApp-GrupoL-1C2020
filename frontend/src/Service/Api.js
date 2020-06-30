@@ -20,3 +20,4 @@ export const deleteProductRequest = (idProduct) => request('DELETE', `/api/store
 export const updateProductRequest = (idProduct, product_data) => request('PUT', `/api/stores/products/${idProduct}`, product_data);
 export const getUserById = (idUser) => request('GET', `/api/v1/users/${idUser}`);
 export const publishStoreRequest = (idUser, store_data) => request('POST', `/api/users/${idUser}/stores`, store_data);
+export const existsProductsRequest = (ids) => request('GET', `/api/stores/products/exists/${ids}`);

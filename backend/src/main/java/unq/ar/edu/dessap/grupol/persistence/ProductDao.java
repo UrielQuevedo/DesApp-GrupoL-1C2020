@@ -23,4 +23,6 @@ public interface ProductDao {
     Page<Product> getProductsFiltered(Long idStore, Category category, String search, Pageable pageable);
 
     Product getProductById(Long productId);
+
+    List<Long> existsProducts(List<Long> ids);
 }

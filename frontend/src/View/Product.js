@@ -5,23 +5,26 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DialogUpdateProduct from './DialogUpdateProduct';
+import DialogDeleteProduct from './DialogDeleteProduct';
 
 const useStyles = makeStyles({
     root: {
       maxWidth: 345,
     },
     media: {
-      height: 150,
+      height: 200,
     },
   });
 
-const Product = ( { name, price, image_url, brand, stock, category } ) => {
+const Product = ( { idStore, product, setProducts } ) => {
 
+    const { name, price, image_url, brand, stock, category } = product;
     const classes = useStyles();
   
     return (
+      <div>
         <Card className={classes.root}>
             <CardActionArea>
             <CardMedia
@@ -37,11 +40,14 @@ const Product = ( { name, price, image_url, brand, stock, category } ) => {
                 <p> Stock: {stock} </p>
                 <p> Precio: ${price} </p>
                 <p> Categoria: {category} </p>
-                </Typography>
+                </Typography>    
             </CardContent>
             </CardActionArea>
         </Card>
-    )
+        <DialogUpdateProduct idStore={idStore} product={product} setProducts={setProducts}/>
+        <DialogDeleteProduct idProduct={product.id} setProducts={setProducts}/>
+     </div>   
+    ) 
 }
 
 export default Product;

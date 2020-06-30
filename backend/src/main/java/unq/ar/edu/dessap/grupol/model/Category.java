@@ -4,5 +4,5 @@ public enum Category {
     BEBIDAS,
     GALLETITAS,
     FIAMBRE,
-    FIDEOS,
+    FIDEOS
 }

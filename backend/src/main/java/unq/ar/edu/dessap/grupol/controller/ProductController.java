@@ -32,6 +32,12 @@ public class ProductController {
         return new ResponseEntity<>(productDto, HttpStatus.CREATED);
     }
 
+    @GetMapping(value = "/products/{id}")
+    public ResponseEntity<ProductDto> get(@PathVariable("id") Long id) {
+        ProductDto productDto = productService.get(id);
+        return new ResponseEntity<>(productDto, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{idStore}/products")
     public ResponseEntity<List<ProductDto>> getAll(@PathVariable("idStore") Long idStore) {
         List<ProductDto> productDtos = productService.getAll(idStore);
@@ -51,6 +57,12 @@ public class ProductController {
                                              @RequestBody ProductDto productDto) {
         ProductDto productDtoUpdated = productService.update(id, productDto);
         return new ResponseEntity<>(productDtoUpdated, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/products/exists/{ids}")
+    public ResponseEntity<Boolean> exists(@PathVariable("ids") String ids) {
+        Boolean result = productService.exists(ids);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/products/{id}")

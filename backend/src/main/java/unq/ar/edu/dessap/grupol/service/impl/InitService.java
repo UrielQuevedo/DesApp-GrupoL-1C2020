@@ -12,10 +12,12 @@ import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 @Service
 @Transactional
@@ -34,7 +36,7 @@ public class InitService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostConstruct
-    public void initialize() {
+    public void initialize() throws IOException {
         this.createSimpleUsers();
         this.createStores();
         this.createUserWithStoreAndHisProducts();
@@ -489,7 +491,7 @@ public class InitService {
             Location location = Location.builder()
                     .address("Calle falsa " + (int) (Math.random() * 1000))
                     .latitude(this.generateRandomDouble(-34.73, -34.71))
-                    .longitude(this.generateRandomDouble(-58.26,-58.25))
+                    .longitude(this.generateRandomDouble(-58.26, -58.25))
                     .build();
             locations.add(location);
         }
@@ -497,7 +499,7 @@ public class InitService {
     }
 
     private double generateRandomDouble(double max, double min) {
-        return (double) Math.round((Math.random()*(max - min) + min) * 100000d) / 100000d;
+        return (double) Math.round((Math.random() * (max - min) + min) * 100000d) / 100000d;
     }
 
     private List<Store> getCreateStoresByNames(Sector sector, int quantity) {
@@ -516,7 +518,7 @@ public class InitService {
 
     private void setLocationToStores(List<Store> stores, int numberLocation) {
         int index = 0;
-        for (Location location : this.getXLocations(numberLocation) ) {
+        for (Location location : this.getXLocations(numberLocation)) {
             Store store = stores.get(index);
             store.setLocation(location);
             index++;
