@@ -7,7 +7,7 @@ import DialogError from './DialogError';
 import { useForm } from 'react-hook-form';
 import '../Styles/Store.css';
 
-const UploadFileCSV = ({ close, setProducts }) => {
+const UploadFileCSVUpdate = ({ close, setProducts }) => {
     
     const [ error, setError ] = useState(null);
     const [ openSuccess, setOpenSuccess ] = useState(false);
@@ -123,4 +123,4 @@ const UploadFileCSV = ({ close, setProducts }) => {
     )
 }
 
-export default UploadFileCSV;
+export default UploadFileCSVUpdate;

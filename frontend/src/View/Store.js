@@ -8,28 +8,11 @@ import { makeStyles, withTheme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { UserContext } from '../Context/UserContext';
-import UploadFileCSV from './UploadFileCSV';
 import DialogUploadFile from './DialogUploadFile';
 import '../Styles/Store.css';
 
-/*
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    fontFamily: ''
-    color: 'white',
-    marginTop: '75px',
-    background: 'black'
-  },
-}));
-*/
 const Store = () => {
 
- //w const classes = useStyles();
   const { user } = useContext(UserContext);
   const idUser = user.id;
   const [ id, setId ] = useState(null); 

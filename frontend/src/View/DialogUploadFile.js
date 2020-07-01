@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogContentText, Button } from '@material-ui/core';
+import { Dialog, DialogContent, DialogContentText, Button } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import UploadFileCSV from './UploadFileCSV';
+import UploadFileCSVUpdate from './UploadFileCSVUpdate';
 import UploadFileCSVAdd from './UploadFileCSVAdd';
 
 const DialogUploadFile = ({ idStore, text, setProducts, isUpdate }) => {
@@ -37,7 +37,7 @@ const DialogUploadFile = ({ idStore, text, setProducts, isUpdate }) => {
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                      { isUpdate ?
-                         <UploadFileCSV close={handleClose} setProducts={setProducts} /> :
+                         <UploadFileCSVUpdate close={handleClose} setProducts={setProducts} /> :
                          <UploadFileCSVAdd idStore={idStore} close={handleClose} setProducts={setProducts} /> 
                      }
                 </DialogContentText>
