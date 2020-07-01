@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, Button } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import UploadFileCSV from './UploadFileCSV';
+import UploadFileCSVAdd from './UploadFileCSVAdd';
 
-const DialogUploadFile = ({ setProducts }) => {
+const DialogUploadFile = ({ idStore, text, setProducts, isUpdate }) => {
 
     const [ open, setOpen ] = useState(false);
-
     const handleClose = () => {
         setOpen(false);
     }
@@ -24,7 +24,7 @@ const DialogUploadFile = ({ setProducts }) => {
             startIcon={<CloudUploadIcon />}
             style={{ top: '20px' }}
             >
-            Modificar productos
+            { text }
             </Button>
             <div>
             <Dialog
@@ -36,7 +36,10 @@ const DialogUploadFile = ({ setProducts }) => {
             >
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    <UploadFileCSV close={handleClose} setProducts={setProducts} />
+                     { isUpdate ?
+                         <UploadFileCSV close={handleClose} setProducts={setProducts} /> :
+                         <UploadFileCSVAdd idStore={idStore} close={handleClose} setProducts={setProducts} /> 
+                     }
                 </DialogContentText>
                 </DialogContent>
             </Dialog>

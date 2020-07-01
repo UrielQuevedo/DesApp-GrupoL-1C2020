@@ -71,11 +71,14 @@ const Store = () => {
             <Grid item md={6}>
               <DialogAddProduct idStore={id} setProducts={setProducts} />
             </Grid> 
-            <Grid item md={6} sm={12} className="containerUploadFile">
-              <DialogUploadFile setProducts={setProducts} />
+            <Grid item md={3} sm={12} className="containerUploadFile">
+              <DialogUploadFile text="Modificar productos" setProducts={setProducts} isUpdate={true} />
             </Grid> 
-            { products  &&
-                <ListProduct products={products} idStore={id} setProducts={setProducts}/>
+            <Grid item md={3} sm={12}>
+              <DialogUploadFile idStore={id} text="Agregar productos" setProducts={setProducts} />
+            </Grid>  
+            { products &&
+                <ListProduct products={products} idStore={id} setProducts={setProducts} />
             }     
           </Grid>
           </Container>
