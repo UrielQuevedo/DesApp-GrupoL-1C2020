@@ -20,6 +20,7 @@ const UploadFileCSVAdd = ({ idStore, close, setProducts }) => {
             download: true,
             header: true,
             complete: results => {
+                console.log(results.data);
                 if (checkFields(results.meta.fields)) {
                     e.target.reset();
                     return ;

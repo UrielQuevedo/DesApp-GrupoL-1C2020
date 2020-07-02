@@ -17,10 +17,13 @@ const UploadFileCSVUpdate = ({ close, setProducts }) => {
     const readFile = (data, e) => {
         parse(document.getElementById('files').files[0], {
             download: true,
-            header: false,
+            header: true,
             complete: results => {
-                checkFields(results.meta.fields);
                 console.log(results.data);
+                if (checkFields(results.meta.fields)) {
+                    e.target.reset();
+                    return ;
+                }
                 const list = results.data.filter(product => product.Id !== "");
                 const ids = list.map(product => product.Id).toString();
                 existsProductsRequest(ids)
@@ -66,8 +69,15 @@ const UploadFileCSVUpdate = ({ close, setProducts }) => {
     }
 
     const checkFields = (fields) => {
-            const toLowerCaseFields = fields.map(field => field.toLowerCase());
-            console.log(toLowerCaseFields)
+        const toLowerCaseFields = fields.map(field => field.toLowerCase());
+        if (toLowerCaseFields[0] != "id" || toLowerCaseFields[1] != "nombre" || toLowerCaseFields[2] != "marca" || 
+            toLowerCaseFields[3] != "stock" || toLowerCaseFields[4] != "precio" || toLowerCaseFields[5] != "imagen" || toLowerCaseFields[6] != "categoria") {
+            setError("¡Ups! Introdujo mal un campo...");
+            handleClickOpenError();
+            close();
+            return true;
+        }
+        return false;
     }
 
     const transformFields = (data) => {
