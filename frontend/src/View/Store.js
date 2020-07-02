@@ -4,32 +4,13 @@ import DialogAddProduct from './DialogAddProduct';
 import { getStoreByIdUserRequest } from '../Service/Api';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { makeStyles, withTheme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { UserContext } from '../Context/UserContext';
-import UploadFileCSV from './UploadFileCSV';
 import DialogUploadFile from './DialogUploadFile';
 import '../Styles/Store.css';
 
-/*
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    fontFamily: ''
-    color: 'white',
-    marginTop: '75px',
-    background: 'black'
-  },
-}));
-*/
 const Store = () => {
 
- //w const classes = useStyles();
   const { user } = useContext(UserContext);
   const idUser = user.id;
   const [ id, setId ] = useState(null); 
@@ -63,19 +44,17 @@ const Store = () => {
           <CssBaseline />
           <Container fixed>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Paper className="containerPaperName">
-                { name }
-              </Paper>
-            </Grid>
-            <Grid item md={6}>
+            <Grid item md={6} sm={12}>
               <DialogAddProduct idStore={id} setProducts={setProducts} />
             </Grid> 
-            <Grid item md={6} sm={12} className="containerUploadFile">
-              <DialogUploadFile setProducts={setProducts} />
+            <Grid item md={3} sm={12}>
+              <DialogUploadFile text="Modificar productos" setProducts={setProducts} isUpdate={true} />
             </Grid> 
-            { products  &&
-                <ListProduct products={products} idStore={id} setProducts={setProducts}/>
+            <Grid item md={3} sm={12}>
+              <DialogUploadFile idStore={id} text="Agregar productos" setProducts={setProducts} />
+            </Grid>  
+            { products &&
+                <ListProduct products={products} idStore={id} setProducts={setProducts} />
             }     
           </Grid>
           </Container>

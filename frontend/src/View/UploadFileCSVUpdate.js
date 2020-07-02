@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import { parse } from 'papaparse';
 import { updateProductRequest, existsProductsRequest } from '../Service/Api';
@@ -8,7 +7,7 @@ import DialogError from './DialogError';
 import { useForm } from 'react-hook-form';
 import '../Styles/Store.css';
 
-const UploadFileCSV = ({ close, setProducts }) => {
+const UploadFileCSVUpdate = ({ close, setProducts }) => {
     
     const [ error, setError ] = useState(null);
     const [ openSuccess, setOpenSuccess ] = useState(false);
@@ -21,6 +20,10 @@ const UploadFileCSV = ({ close, setProducts }) => {
             header: true,
             complete: results => {
                 console.log(results.data);
+                if (checkFields(results.meta.fields)) {
+                    e.target.reset();
+                    return ;
+                }
                 const list = results.data.filter(product => product.Id !== "");
                 const ids = list.map(product => product.Id).toString();
                 existsProductsRequest(ids)
@@ -65,6 +68,18 @@ const UploadFileCSV = ({ close, setProducts }) => {
         })         
     }
 
+    const checkFields = (fields) => {
+        const toLowerCaseFields = fields.map(field => field.toLowerCase());
+        if (toLowerCaseFields[0] != "id" || toLowerCaseFields[1] != "nombre" || toLowerCaseFields[2] != "marca" || 
+            toLowerCaseFields[3] != "stock" || toLowerCaseFields[4] != "precio" || toLowerCaseFields[5] != "imagen" || toLowerCaseFields[6] != "categoria") {
+            setError("¡Ups! Introdujo mal un campo...");
+            handleClickOpenError();
+            close();
+            return true;
+        }
+        return false;
+    }
+
     const transformFields = (data) => {
         return {
             id: parseInt(data.Id),
@@ -73,7 +88,7 @@ const UploadFileCSV = ({ close, setProducts }) => {
             stock: parseInt(data.Stock),
             price: parseFloat(data.Precio),
             image_url: data.Imagen,
-            category: checkCategory(data.Categoria)
+            category: checkCategory(data.Categoria.trim())
         }
     }
     
@@ -106,7 +121,7 @@ const UploadFileCSV = ({ close, setProducts }) => {
         <div>
             <form onSubmit={handleSubmit(readFile)}>
             <div class="form-group">
-                <label for="files">Cargar archivo </label>
+                <label for="files">Subir archivo </label>
                 <br/>
                 <input type="file" id="files" accept=".csv" required inputRef={register} name='select-file'/>
             </div>
@@ -124,4 +139,4 @@ const UploadFileCSV = ({ close, setProducts }) => {
     )
 }
 
-export default UploadFileCSV;
+export default UploadFileCSVUpdate;
