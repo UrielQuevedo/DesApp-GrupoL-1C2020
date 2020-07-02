@@ -17,8 +17,9 @@ const UploadFileCSVUpdate = ({ close, setProducts }) => {
     const readFile = (data, e) => {
         parse(document.getElementById('files').files[0], {
             download: true,
-            header: true,
+            header: false,
             complete: results => {
+                checkFields(results.meta.fields);
                 console.log(results.data);
                 const list = results.data.filter(product => product.Id !== "");
                 const ids = list.map(product => product.Id).toString();
@@ -62,6 +63,11 @@ const UploadFileCSVUpdate = ({ close, setProducts }) => {
         .catch(error => {
             console.log(error.response.data.message);
         })         
+    }
+
+    const checkFields = (fields) => {
+            const toLowerCaseFields = fields.map(field => field.toLowerCase());
+            console.log(toLowerCaseFields)
     }
 
     const transformFields = (data) => {

@@ -20,7 +20,10 @@ const UploadFileCSVAdd = ({ idStore, close, setProducts }) => {
             download: true,
             header: true,
             complete: results => {
-                console.log(results.data);
+                if (checkFields(results.meta.fields)) {
+                    e.target.reset();
+                    return ;
+                }
                 results.data.map(product => {
                     const product_data = transformFields(product);
                     console.log(product_data);
@@ -50,6 +53,18 @@ const UploadFileCSVAdd = ({ idStore, close, setProducts }) => {
         });
     }
 
+    const checkFields = (fields) => {
+        const toLowerCaseFields = fields.map(field => field.toLowerCase());
+        if (toLowerCaseFields[0] != "nombre" || toLowerCaseFields[1] != "marca" || toLowerCaseFields[2] != "stock" ||
+        toLowerCaseFields[3] != "precio" || toLowerCaseFields[4] != "imagen" || toLowerCaseFields[5] != "categoria") {
+            setError("¡Ups! Introdujo mal un campo...");
+            handleClickOpenError();
+            close();
+            return true;
+        }
+        return false;
+    }
+
     const transformFields = (data) => {
         return {
             name: data.Nombre,
@@ -57,7 +72,7 @@ const UploadFileCSVAdd = ({ idStore, close, setProducts }) => {
             stock: parseInt(data.Stock),
             price: parseFloat(data.Precio),
             image_url: data.Imagen,
-            category: checkCategory(data.Categoria.trim())
+            category: checkCategory(data.Categoria)
         }
     }
     
