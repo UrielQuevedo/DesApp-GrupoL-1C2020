@@ -4,8 +4,6 @@ import DialogAddProduct from './DialogAddProduct';
 import { getStoreByIdUserRequest } from '../Service/Api';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { makeStyles, withTheme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { UserContext } from '../Context/UserContext';
 import DialogUploadFile from './DialogUploadFile';
@@ -46,15 +44,10 @@ const Store = () => {
           <CssBaseline />
           <Container fixed>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Paper className="containerPaperName">
-                { name }
-              </Paper>
-            </Grid>
-            <Grid item md={6}>
+            <Grid item md={6} sm={12}>
               <DialogAddProduct idStore={id} setProducts={setProducts} />
             </Grid> 
-            <Grid item md={3} sm={12} className="containerUploadFile">
+            <Grid item md={3} sm={12}>
               <DialogUploadFile text="Modificar productos" setProducts={setProducts} isUpdate={true} />
             </Grid> 
             <Grid item md={3} sm={12}>

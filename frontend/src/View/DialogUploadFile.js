@@ -22,7 +22,7 @@ const DialogUploadFile = ({ idStore, text, setProducts, isUpdate }) => {
             color="default"
             onClick={handleOpen}
             startIcon={<CloudUploadIcon />}
-            style={{ top: '20px' }}
+            style={{ top: '80px' }}
             >
             { text }
             </Button>
