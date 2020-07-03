@@ -32,7 +32,7 @@ public class StoreController {
     public ResponseEntity<Store> create(@PathVariable("id") Long id, @RequestBody StoreDto storeDto) {
         Store store = storeService.create(id, storeDto);
         return new ResponseEntity<>(store, HttpStatus.CREATED);
-    }
+    }   
 
     @GetMapping(value = "/stores/{id}")
     public ResponseEntity<StoreDto> getById(@PathVariable("id") Long id) {

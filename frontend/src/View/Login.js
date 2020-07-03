@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
 import { loginRequest } from '../Service/Api';
+import AuthGoogleLogin from '../Utils/AuthGoogleLogin';
 import '../Styles/Auth.css';
 
 const Login = () => {
@@ -98,13 +99,16 @@ const Login = () => {
                 variant="contained"
                 color="primary"
                 disabled={loading}
-                style={{ margin: '20px 0 20px 0' }}
+                style={{ margin: '20px 0 20px 0'}}
                 >
                 Ingresar
               </Button>
               {/* //TODO mejorar el estilo del loading */}
               { loading && <CircularProgress style={{ position:'absolute', top:'50%', left:'50%', marginLeft:'-12px', marginTop:'-12px'  }}  size={24} /> }
             </Box>
+            <Grid container justify="center">
+              <AuthGoogleLogin />
+            </Grid>
             <Grid container justify="center" style={{ marginBottom:'20px' }}>
               <div>
                 ¿No tienes una cuenta?
