@@ -6,5 +6,6 @@ import unq.ar.edu.dessap.grupol.model.Payment;
 @Getter
 public class PurchaseDto {
     String turnTime;
+    String methodOfDelivery;
     Payment payment;
 }

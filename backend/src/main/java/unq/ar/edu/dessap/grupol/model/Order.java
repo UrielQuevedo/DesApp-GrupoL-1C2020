@@ -62,6 +62,9 @@ public class Order {
     public Long getStoreId() {
         return this.store.getId();
     }
+    public List<String> getStoreTurns() { return this.store.getTickets(); }
+    public String getStoreName() { return this.store.getName(); }
+    public List<Payment> getStorePayments() { return this.store.getPayments(); }
 
     public void removeProductOrder(ProductOrder productOrderToRemove) {
         this.getProductOrders().removeIf(p -> p.getId() == productOrderToRemove.getId());
@@ -69,9 +72,11 @@ public class Order {
         this.totalQuantity -= productOrderToRemove.getQuantity();
     }
 
-    public void verify(String turnTime, Payment payment) {
+    public void verify(Payment payment) {
         this.store.verifyPayment(payment);
-        this.store.verifyTurn(turnTime);
+    }
+
+    public void makePurchase() {
         this.productOrders.forEach(ProductOrder::verify);
     }
 }

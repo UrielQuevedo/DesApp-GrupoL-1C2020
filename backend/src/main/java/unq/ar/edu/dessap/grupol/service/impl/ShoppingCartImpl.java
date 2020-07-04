@@ -71,15 +71,33 @@ public class ShoppingCartImpl implements ShoppingCartService {
         shoppingCart.getOrders().forEach(order -> {
             PurchaseDto purchaseDto = body.get(order.getId());
             if (purchaseDto == null) throw new RuntimeException("Faltan datos para finalizar la compra");
-            order.verify(purchaseDto.getTurnTime(), purchaseDto.getPayment());
-            this.manageTurn(order.getStore(), purchaseDto.getTurnTime(), user);
+            this.makePurchaseSwitch(user, purchaseDto, order);
         });
         user.makeAOrderHistory();
         userDao.save(user);
         return shoppingCart;
     }
 
+    private void makePurchaseSwitch(User user, PurchaseDto purchaseDto, Order order) {
+        order.verify(purchaseDto.getPayment());
+        order.makePurchase();
+        switch (purchaseDto.getMethodOfDelivery()) {
+            case ("Delivery") : {
+                //Enviar email con en horario y dia de entrega
+                break;
+            }
+            case ("Turn") : {
+                this.manageTurn(order.getStore(), purchaseDto.getTurnTime(), user);
+                break;
+            }
+            default: {
+                throw new RuntimeException("Datos invalidos");
+            }
+        }
+    }
+
     private void manageTurn(Store store, String time, User user) {
+        store.verifyTurn(time);
         Turn turn = Turn.builder()
                 .user(user)
                 .store(store)

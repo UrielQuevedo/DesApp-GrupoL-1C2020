@@ -29,3 +29,14 @@ export const useDeleteProductToShoppingCart = (id) => {
 
   return { removeProductToShoppingCart, removeProductToShoppingCartLoading, setProductToRemove };
 }
+
+export const useMakePuchase = (id) => {
+  const [ values, setValues ] = useState({});
+  const { method, loading: makeAPurchaseLoading } = usePost(`${pathname}/${id}/shoppingcart/purchase`, values);
+
+  const makeAPurchase = () => {
+    method();
+  }
+
+  return { makeAPurchase, makeAPurchaseLoading, values, setValues };
+}
