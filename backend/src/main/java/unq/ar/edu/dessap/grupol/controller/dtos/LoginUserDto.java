@@ -9,6 +9,15 @@ public class LoginUserDto {
     @Email(message = "El email esta mal escrito")
     @NotEmpty(message = "El email esta vacio")
     private String email;
+    private String token = null;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getPassword() {
         return password;
@@ -16,5 +25,13 @@ public class LoginUserDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

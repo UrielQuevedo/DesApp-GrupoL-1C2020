@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
+import unq.ar.edu.dessap.grupol.controller.converter.Converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
@@ -35,9 +36,10 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     @ExceptionHandling
-    public ResponseEntity<User> login(@Valid @RequestBody LoginUserDto userData) {
+    public ResponseEntity<LoginUserDto> login(@Valid @RequestBody LoginUserDto userData) {
         User user = userService.getUserByEmailAndPassword(userData.getEmail(), userData.getPassword());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        LoginUserDto loginUserDto = Converter.toLoginUserDto(user);
+        return new ResponseEntity<>(loginUserDto, HttpStatus.OK);
     }
 
     @PostMapping(value = "/edit")
