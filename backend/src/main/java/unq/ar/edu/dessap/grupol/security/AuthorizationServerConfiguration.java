@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static unq.ar.edu.dessap.grupol.security.constants.Constants.LOGIN_URL;
+
 @Configuration
 @EnableWebSecurity
 public class AuthorizationServerConfiguration extends WebSecurityConfigurerAdapter {
@@ -23,7 +25,7 @@ public class AuthorizationServerConfiguration extends WebSecurityConfigurerAdapt
         http.csrf().disable()
                 .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .anyRequest().authenticated();
     }
 }

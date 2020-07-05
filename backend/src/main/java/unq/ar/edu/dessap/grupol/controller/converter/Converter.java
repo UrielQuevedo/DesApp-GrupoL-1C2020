@@ -2,10 +2,12 @@ package unq.ar.edu.dessap.grupol.controller.converter;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import unq.ar.edu.dessap.grupol.controller.dtos.*;
 import unq.ar.edu.dessap.grupol.model.*;
+import unq.ar.edu.dessap.grupol.security.JWT;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,28 +114,8 @@ public class Converter {
         LoginUserDto loginUserDto = new LoginUserDto();
         loginUserDto.setEmail(user.getEmail());
         loginUserDto.setPassword(null);
-        loginUserDto.setToken(getJWTToken(user.getUsername()));
+        loginUserDto.setToken(JWT.getJWTToken(user.getUsername()));
         return loginUserDto;
     }
 
-    private static String getJWTToken(String username) {
-        String secretKey = "mySecretKey";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_USER");
-
-        String token = Jwts
-                .builder()
-                .setId("compras-en-casa")
-                .setSubject(username)
-                .claim("authorities",
-                        grantedAuthorities.stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-                .signWith(SignatureAlgorithm.HS512,
-                        secretKey.getBytes()).compact();
-
-        return "Bearer " + token;
-    }
 }
