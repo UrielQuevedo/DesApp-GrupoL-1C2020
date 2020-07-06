@@ -23,7 +23,7 @@ const Login = () => {
   const sendLoginForm = async (data, e) => {
     setLoading(true);
     try {
-      const userData = await loginRequest(data);
+      const userData = await loginRequest(data.email, data.password);
       console.log(userData);
       localStorage.setItem('token', userData.token);
       setAuth({ type:'LOG_IN', isRemember:true, id: userData.id });

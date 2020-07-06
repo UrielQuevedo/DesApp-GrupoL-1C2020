@@ -35,9 +35,9 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    @ExceptionHandling
-    public ResponseEntity<LoginUserDto> login(@Valid @RequestBody LoginUserDto userData) {
-        User user = userService.getUserByEmailAndPassword(userData.getEmail(), userData.getPassword());
+    public ResponseEntity<LoginUserDto> login(@RequestParam(name="email", required=true) String email,
+                                              @RequestParam(name="password", required=true) String password) {
+        User user = userService.getUserByEmailAndPassword(email, password);
         LoginUserDto loginUserDto = Converter.toLoginUserDto(user);
         return new ResponseEntity<>(loginUserDto, HttpStatus.OK);
     }
