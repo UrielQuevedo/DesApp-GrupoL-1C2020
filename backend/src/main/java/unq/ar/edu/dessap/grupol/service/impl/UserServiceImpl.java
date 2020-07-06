@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import unq.ar.edu.dessap.grupol.controller.converter.Converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
+import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
 import unq.ar.edu.dessap.grupol.controller.exception.EmailExistException;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
 import unq.ar.edu.dessap.grupol.controller.exception.PasswordIncorrectException;
 import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
+import unq.ar.edu.dessap.grupol.security.JWT;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import java.util.List;
@@ -53,6 +56,10 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmailAndPassword(String email, String password) {
         User user = userDao.getUserByEmail(email);
         if (this.isPasswordCorrect(password, user.getPassword())) {
+            if(user.getToken() == null) {
+                user.setToken(JWT.getJWTToken(user.getUsername()));
+                userDao.save(user);
+            }
             return user;
         }
         throw new LoginException();

@@ -28,4 +28,5 @@ public class AuthorizationServerConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .anyRequest().authenticated();
     }
+
 }

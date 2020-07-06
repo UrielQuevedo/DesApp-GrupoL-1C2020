@@ -2,6 +2,7 @@ package unq.ar.edu.dessap.grupol.service;
 
 import org.springframework.stereotype.Service;
 import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
+import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
 import unq.ar.edu.dessap.grupol.model.Location;
 import unq.ar.edu.dessap.grupol.model.OrderHistory;
 import unq.ar.edu.dessap.grupol.model.ShoppingCart;

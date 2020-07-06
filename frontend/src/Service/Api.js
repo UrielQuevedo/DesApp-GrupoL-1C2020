@@ -7,7 +7,7 @@ const request = (type, path, body, params) => axios
         url: `${server}${path}`,
         method: type,
         data: body,
-        params: params,
+        params: params
     })
     .then(req => req.data);
 

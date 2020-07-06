@@ -21,6 +21,8 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
+    @Column(unique = true)
+    private String token = null;
     @Transient
     @JsonIgnore
     @Builder.Default

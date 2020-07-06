@@ -24,6 +24,8 @@ const Login = () => {
     setLoading(true);
     try {
       const userData = await loginRequest(data);
+      console.log(userData);
+      localStorage.setItem('token', userData.token);
       setAuth({ type:'LOG_IN', isRemember:true, id: userData.id });
     } catch (error) {
       setError(error.response.data.message)
