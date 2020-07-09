@@ -1,30 +1,49 @@
 package unq.ar.edu.dessap.grupol.controller;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
-import unq.ar.edu.dessap.grupol.controller.converter.Converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
+import unq.ar.edu.dessap.grupol.controller.dtos.JwtResponse;
 import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
 import unq.ar.edu.dessap.grupol.model.User;
+import unq.ar.edu.dessap.grupol.security.JwtTokenUtil;
+import unq.ar.edu.dessap.grupol.security.JwtUserDetails;
+import unq.ar.edu.dessap.grupol.security.JwtUserDetailsService;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
 @Validated
 @RequestMapping(value = "/api/auth")
 @Component
+@CrossOrigin
 public class AuthController {
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
+
 
     @PostMapping(value = "/register")
     @ExceptionHandling
@@ -35,11 +54,13 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<LoginUserDto> login(@RequestParam(name="email", required=true) String email,
-                                              @RequestParam(name="password", required=true) String password) {
-        User user = userService.getUserByEmailAndPassword(email, password);
-        LoginUserDto loginUserDto = Converter.toLoginUserDto(user);
-        return new ResponseEntity<>(loginUserDto, HttpStatus.OK);
+    public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginUserDto loginUserDto) {
+        User user = userService.getUserByEmailAndPassword(loginUserDto.getEmail(), loginUserDto.getPassword());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
+                                        token), HttpStatus.OK);
     }
 
     @PostMapping(value = "/edit")

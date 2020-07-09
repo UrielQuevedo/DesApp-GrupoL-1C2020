@@ -14,14 +14,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     @JsonIgnore
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(unique = true)
     private String token = null;
     @Transient
     @JsonIgnore
@@ -38,4 +37,6 @@ public class User {
     @JoinColumn(name = "fk_store_id", referencedColumnName = "id")
     @JsonIgnore
     private Store store;
+
+    private String role;
 }

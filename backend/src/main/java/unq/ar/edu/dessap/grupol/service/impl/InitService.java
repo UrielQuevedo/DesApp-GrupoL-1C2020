@@ -37,14 +37,14 @@ public class InitService {
 
     @PostConstruct
     public void initialize() throws IOException {
-        this.createSimpleUsers();
-        this.createStores();
+//        this.createSimpleUsers();
+//        this.createStores();
         this.createUserWithStoreAndHisProducts();
-        this.createUserWithStoreAndHisProducts2();
-        this.createUserWithStoreAndHisProducts3();
-        this.createUserWithStoreAndHisProducts4();
-        this.createProductsOffer();
-        this.testDeCreacion(10);
+//        this.createUserWithStoreAndHisProducts2();
+//        this.createUserWithStoreAndHisProducts3();
+//        this.createUserWithStoreAndHisProducts4();
+ //       this.createProductsOffer();
+//        this.testDeCreacion(10);
     }
 
     private void createSimpleUsers() {
@@ -166,6 +166,7 @@ public class InitService {
                 .password(passwordEncoder.encode("test"))
                 .username("chino")
                 .store(store)
+                .role("USER")
                 .build();
 
         userDao.save(user);

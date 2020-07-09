@@ -1,18 +1,10 @@
 package unq.ar.edu.dessap.grupol.controller.converter;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import unq.ar.edu.dessap.grupol.controller.dtos.*;
 import unq.ar.edu.dessap.grupol.model.*;
-import unq.ar.edu.dessap.grupol.security.JWT;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Converter {
 
@@ -114,7 +106,7 @@ public class Converter {
         LoginUserDto loginUserDto = new LoginUserDto();
         loginUserDto.setEmail(user.getEmail());
         loginUserDto.setPassword(null);
-        loginUserDto.setToken(JWT.getJWTToken(user.getUsername()));
+       // loginUserDto.setToken(JWT.getJWTToken(user.getUsername()));
         return loginUserDto;
     }
 

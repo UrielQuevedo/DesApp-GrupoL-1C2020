@@ -9,15 +9,6 @@ public class LoginUserDto {
     @Email(message = "El email esta mal escrito")
     @NotEmpty(message = "El email esta vacio")
     private String email;
-    private String token = null;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getPassword() {
         return password;
