@@ -60,11 +60,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         return super.authenticationManagerBean();
     }
 
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*")
-                .allowedMethods("HEAD", "GET", "PUT", "POST",
-                        "DELETE", "PATCH").allowedHeaders("*");
-    }
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**").allowedOrigins("*")
+//                .allowedMethods("HEAD", "GET", "PUT", "POST",
+//                        "DELETE", "PATCH").allowedHeaders("*");
+//    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {

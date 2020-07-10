@@ -38,7 +38,7 @@ export const reducer = async (authState, action) => {
 
 const checkAuth = async (setAuthState) => {
   //TODO Verificar que el id / token (cuando se implemente) exista;
-  if (localStorage.id || sessionStorage.id) {
+  if (localStorage.id || sessionStorage.id || localStorage.getItem('authorization')) {
     setAuthState(AuthTypes.AUTH);
     return;
   }

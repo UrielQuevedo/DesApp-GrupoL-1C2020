@@ -37,14 +37,14 @@ public class InitService {
 
     @PostConstruct
     public void initialize() throws IOException {
-//        this.createSimpleUsers();
-//        this.createStores();
+        this.createSimpleUsers();
+        this.createStores();
         this.createUserWithStoreAndHisProducts();
-//        this.createUserWithStoreAndHisProducts2();
-//        this.createUserWithStoreAndHisProducts3();
-//        this.createUserWithStoreAndHisProducts4();
- //       this.createProductsOffer();
-//        this.testDeCreacion(10);
+        this.createUserWithStoreAndHisProducts2();
+        this.createUserWithStoreAndHisProducts3();
+        this.createUserWithStoreAndHisProducts4();
+        this.createProductsOffer();
+        this.testDeCreacion(10);
     }
 
     private void createSimpleUsers() {
@@ -166,7 +166,6 @@ public class InitService {
                 .password(passwordEncoder.encode("test"))
                 .username("chino")
                 .store(store)
-                .role("USER")
                 .build();
 
         userDao.save(user);
@@ -250,7 +249,7 @@ public class InitService {
         User user = User.builder()
                 .email("elchinidelaesquina@gmail.com")
                 .password(passwordEncoder.encode("test"))
-                .username("Chino Saran")
+                .username("saran")
                 .store(store)
                 .build();
 
@@ -420,7 +419,7 @@ public class InitService {
         User user = User.builder()
                 .email("test@gmail.com")
                 .password(passwordEncoder.encode("test"))
-                .username("Test")
+                .username("testing")
                 .store(store)
                 .build();
 
@@ -538,7 +537,7 @@ public class InitService {
                     .email("marian" + store.getName() + "@gmail.com")
                     .location(location)
                     .password("sarasa")
-                    .username("mariano")
+                    .username("mari " + store.getName())
                     .store(store)
                     .build();
             userDao.save(user);

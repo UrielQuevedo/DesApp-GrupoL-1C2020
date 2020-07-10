@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { verifyTokenIfNotLoginOrRegister } from '../Utils/ProviderToken';
 
 const server = process.env.REACT_APP_API_BACKEND;
 
@@ -7,12 +8,13 @@ const request = (type, path, body, params) => axios
         url: `${server}${path}`,
         method: type,
         data: body,
-        params: params
+        params: params,
+        headers: verifyTokenIfNotLoginOrRegister(path)
     })
     .then(req => req.data);
 
 export const registerRequest = (user_data) => request('POST', '/api/auth/register', user_data);
-export const loginRequest = (email, password) => request('POST', `/api/auth/login?email=${email}&password=${password}`);
+export const loginRequest = (user_data) => request('POST', '/api/auth/login', user_data);
 export const sendBuyerLocationRequest = (id, location) => request('PUT', `/api/v1/users/${id}/location`, location);
 export const getStoreByIdUserRequest = (idUser) => request('GET', `/api/${idUser}/stores`);
 export const addProductRequest = (idStore, product_data) => request('POST', `/api/stores/${idStore}/products`, product_data);

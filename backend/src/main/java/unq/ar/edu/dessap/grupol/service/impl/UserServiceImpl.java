@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
 import unq.ar.edu.dessap.grupol.controller.exception.EmailExistException;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
+import unq.ar.edu.dessap.grupol.controller.exception.NotFound;
 import unq.ar.edu.dessap.grupol.controller.exception.PasswordIncorrectException;
 import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
@@ -86,6 +87,15 @@ public class UserServiceImpl implements UserService {
             return user;
         }
         throw new PasswordIncorrectException();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        User user = userDao.getUserByEmail(email);
+        if(user == null) {
+            throw new NotFound();
+        }
+        return user;
     }
 
     private void setEmailUser(User user, String newEmail) {

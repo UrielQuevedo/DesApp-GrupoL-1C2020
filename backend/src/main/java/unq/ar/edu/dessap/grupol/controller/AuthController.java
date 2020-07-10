@@ -32,7 +32,6 @@ import java.util.List;
 @Validated
 @RequestMapping(value = "/api/auth")
 @Component
-@CrossOrigin
 public class AuthController {
 
     @Autowired
@@ -62,7 +61,18 @@ public class AuthController {
         return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
                                         token), HttpStatus.OK);
     }
-    
+
+//    @PostMapping(value = "/login/social")
+//    public ResponseEntity<JwtResponse> login(@Valid @RequestBody String email) {
+//        User user = userService.getUserByEmail(email);
+//
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+//        String token = jwtTokenUtil.generateToken(userDetails);
+//
+//        return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
+//                token), HttpStatus.OK);
+//    }
+
     @PostMapping(value = "/edit")
     @ExceptionHandling
     public ResponseEntity<User> edit(@Valid @RequestBody EditUserDto userData) {

@@ -18,4 +18,6 @@ public interface UserService {
     List<OrderHistory> getUserOrdersById(long id);
     User updateUserLocation(long id, Location location);
     User editUser(EditUserDto userData);
+
+    User getUserByEmail(String email);
 }

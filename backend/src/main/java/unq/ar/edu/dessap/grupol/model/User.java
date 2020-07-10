@@ -16,7 +16,6 @@ public class User {
     private long id;
     @Column(unique = true, nullable = false)
     private String username;
-    @Column(nullable = false)
     @JsonIgnore
     private String password;
     @Column(unique = true, nullable = false)
@@ -38,5 +37,4 @@ public class User {
     @JsonIgnore
     private Store store;
 
-    private String role;
 }
