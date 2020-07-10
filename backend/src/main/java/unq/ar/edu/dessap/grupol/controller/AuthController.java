@@ -62,7 +62,7 @@ public class AuthController {
         return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
                                         token), HttpStatus.OK);
     }
-
+    
     @PostMapping(value = "/edit")
     @ExceptionHandling
     public ResponseEntity<User> edit(@Valid @RequestBody EditUserDto userData) {
