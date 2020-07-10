@@ -22,7 +22,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
     private static final String[] AUTH_WHITELIST = {
             "/api/auth/login",
+            "/api/auth/login/social",
             "/api/auth/register",
+            "/api/auth/register/social",
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -59,12 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**").allowedOrigins("*")
-//                .allowedMethods("HEAD", "GET", "PUT", "POST",
-//                        "DELETE", "PATCH").allowedHeaders("*");
-//    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {

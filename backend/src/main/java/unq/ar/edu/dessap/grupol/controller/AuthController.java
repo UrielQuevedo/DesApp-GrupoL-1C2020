@@ -13,10 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
-import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.JwtResponse;
-import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
+import unq.ar.edu.dessap.grupol.controller.converter.Converter;
+import unq.ar.edu.dessap.grupol.controller.dtos.*;
 import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.security.JwtTokenUtil;
 import unq.ar.edu.dessap.grupol.security.JwtUserDetails;
@@ -62,16 +60,24 @@ public class AuthController {
                                         token), HttpStatus.OK);
     }
 
-//    @PostMapping(value = "/login/social")
-//    public ResponseEntity<JwtResponse> login(@Valid @RequestBody String email) {
-//        User user = userService.getUserByEmail(email);
-//
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-//        String token = jwtTokenUtil.generateToken(userDetails);
-//
-//        return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
-//                token), HttpStatus.OK);
-//    }
+    @PostMapping(value = "/login/social")
+    public ResponseEntity<JwtResponse> login(@Valid @RequestParam("email") String email) {
+        User user = userService.getUserByEmail(email);
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
+                token), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/register/social")
+    @ExceptionHandling
+    public ResponseEntity<UserSocialDto> register(@Valid @RequestBody UserSocialDto userData) {
+        User user = userService.createWithUsernameAndEmail(userData.getUsername(), userData.getEmail());
+
+        return new ResponseEntity<>(Converter.toUserSocialDto(user), HttpStatus.CREATED);
+    }
 
     @PostMapping(value = "/edit")
     @ExceptionHandling

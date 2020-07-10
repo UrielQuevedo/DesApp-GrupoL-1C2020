@@ -22,7 +22,6 @@ const useApi = (axiosFunction) => {
 }
 
 export const useGet = (url, queryParams = {}) => {
-  console.log(`/api${url}`);
   return useApi(() => axios.get(API_URL + url, { params: queryParams, 
                                                  headers: verifyTokenIfNotLoginOrRegister(`/api${url}`)}));
 }

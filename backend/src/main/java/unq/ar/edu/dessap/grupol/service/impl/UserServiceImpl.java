@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -95,6 +96,18 @@ public class UserServiceImpl implements UserService {
         if(user == null) {
             throw new NotFound();
         }
+        return user;
+    }
+
+    @Override
+    public User createWithUsernameAndEmail(String username, String email) {
+        if(userDao.existEmail(email)) throw new EmailExistException();
+        User user = User.builder()
+                .email(email)
+                .username(username)
+                .build();
+
+        userDao.save(user);
         return user;
     }
 

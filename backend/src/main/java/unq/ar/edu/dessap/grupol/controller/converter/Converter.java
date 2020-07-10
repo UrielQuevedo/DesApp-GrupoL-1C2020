@@ -102,12 +102,10 @@ public class Converter {
                 .build();
     }
 
-    public static LoginUserDto toLoginUserDto(User user) {
-        LoginUserDto loginUserDto = new LoginUserDto();
-        loginUserDto.setEmail(user.getEmail());
-        loginUserDto.setPassword(null);
-       // loginUserDto.setToken(JWT.getJWTToken(user.getUsername()));
-        return loginUserDto;
+    public static UserSocialDto toUserSocialDto(User user) {
+        return UserSocialDto.builder()
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .build();
     }
-
 }
