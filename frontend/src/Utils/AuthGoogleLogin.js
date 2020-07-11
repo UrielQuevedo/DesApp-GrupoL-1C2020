@@ -1,45 +1,45 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import GoogleLogin from 'react-google-login';
-import { registerLoginRequest, loginGoogleRequest } from '../Service/Api';
-import { useHistory } from 'react-router';
+import { registerGoogleRequest, loginGoogleRequest } from '../Service/Api';
+import { AuthContext } from '../Context/AuthContext';
 import '../Styles/ButtonGoogle.css';
 
 const AuthGoogleLogin = () => {
 
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-    const { push } = useHistory();
+    const { setAuth } = useContext(AuthContext);
 
     const responseGoogle = (response) => {
         const profile = response.profileObj;
         console.log(profile);
-        /* Si el email existe en el server, me traigo el token y lo guardo en el localstorage
-            para futuras peticiones, y se redirige al home.
-           Si no existe, guardas la data de la cuenta de google, guardas token el localstorage
-           y se redirige a mylocation  */ 
-
-        loginGoogleRequest(profile.email) 
-        .then((data) => {
-            console.log(data);
-            push('/mylocation');
-        })  
-        .catche((error) => {
-            console.log(error.response.data.message);
-        })
-
-
-        /*const account = {
+        const googleAccount = {
             email: profile.email,
-            password: "123",
             username: profile.name
         }
-
-        registerRequest(account)
-        .then((data) => {
-            console.log(data)
+        fetchLoginGoogleAccount(googleAccount);
+    }
+    
+    const fetchLoginGoogleAccount = (googleAccount) => {
+        loginGoogleRequest(googleAccount.email) 
+        .then(data => {
+            console.log(data);
+            localStorage.setItem('authorization', data.token);
+            setAuth({ type:'LOG_IN', isRemember:true, id: data.id });
+        })  
+        .catch(_ => {
+            fetchRegisterAccountGoogle(googleAccount);    
         })
-        .catch((error) => {
+    }
+
+    const fetchRegisterAccountGoogle = (googleAccount) => {
+        registerGoogleRequest(googleAccount)
+        .then(_ => {
+            console.log("Se registro el usuario correctamente");
+            fetchLoginGoogleAccount(googleAccount);
+        })
+        .catch(error => {
             console.log(error.response.data.message);
-        }) */
+        })  
     }
 
     return (

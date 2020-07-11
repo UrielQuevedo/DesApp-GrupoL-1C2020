@@ -26,6 +26,13 @@ public class JwtUserDetailsService implements UserDetailsService {
                         .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(), Collections.emptyList());
+                getPasswordOrNothing(user.getPassword()), Collections.emptyList());
+    }
+
+    private String getPasswordOrNothing(String password) {
+        if(password != null) {
+            return password;
+        }
+        return "Nothing";
     }
 }
