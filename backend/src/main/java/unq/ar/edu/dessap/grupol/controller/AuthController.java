@@ -3,13 +3,7 @@ package unq.ar.edu.dessap.grupol.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
@@ -17,19 +11,14 @@ import unq.ar.edu.dessap.grupol.controller.converter.Converter;
 import unq.ar.edu.dessap.grupol.controller.dtos.*;
 import unq.ar.edu.dessap.grupol.model.User;
 import unq.ar.edu.dessap.grupol.security.JwtTokenUtil;
-import unq.ar.edu.dessap.grupol.security.JwtUserDetails;
 import unq.ar.edu.dessap.grupol.security.JwtUserDetailsService;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-
 
 @RestController
 @Validated
 @RequestMapping(value = "/api/auth")
-@Component
 public class AuthController {
 
     @Autowired
@@ -40,7 +29,6 @@ public class AuthController {
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
-
 
     @PostMapping(value = "/register")
     @ExceptionHandling

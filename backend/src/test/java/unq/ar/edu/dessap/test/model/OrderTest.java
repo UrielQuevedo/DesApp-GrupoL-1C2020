@@ -1,4 +1,4 @@
-package unq.ar.edu.dessap.grupol.model;
+package unq.ar.edu.dessap.test.model;
 
 import org.junit.Assert;
 import org.junit.Test;

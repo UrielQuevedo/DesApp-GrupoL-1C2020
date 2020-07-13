@@ -1,7 +1,11 @@
-package unq.ar.edu.dessap.grupol.model;
+package unq.ar.edu.dessap.test.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import unq.ar.edu.dessap.grupol.model.Location;
+import unq.ar.edu.dessap.grupol.model.OrderHistory;
+import unq.ar.edu.dessap.grupol.model.Store;
+import unq.ar.edu.dessap.grupol.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

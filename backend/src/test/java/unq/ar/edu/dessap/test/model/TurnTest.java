@@ -1,7 +1,10 @@
-package unq.ar.edu.dessap.grupol.model;
+package unq.ar.edu.dessap.test.model;
 
 import org.junit.Assert;
 import org.junit.Test;
+import unq.ar.edu.dessap.grupol.model.Store;
+import unq.ar.edu.dessap.grupol.model.Turn;
+import unq.ar.edu.dessap.grupol.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
