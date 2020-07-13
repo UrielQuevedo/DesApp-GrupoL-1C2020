@@ -1,8 +1,9 @@
-package unq.ar.edu.dessap.grupol.service;
+package unq.ar.edu.dessap.test.service;
 
 import org.junit.Assert;
 import org.junit.Test;
 import unq.ar.edu.dessap.grupol.model.Location;
+import unq.ar.edu.dessap.grupol.service.GeoDistanceService;
 import unq.ar.edu.dessap.grupol.service.impl.GeoDistanceServiceImpl;
 
 public class GeoDistanceServiceTest {

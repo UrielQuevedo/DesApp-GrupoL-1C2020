@@ -1,29 +1,34 @@
 package unq.ar.edu.dessap.grupol.controller;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import unq.ar.edu.dessap.grupol.aspects.ExceptionHandling;
-import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.LoginUserDto;
-import unq.ar.edu.dessap.grupol.controller.dtos.UserDto;
+import unq.ar.edu.dessap.grupol.controller.converter.Converter;
+import unq.ar.edu.dessap.grupol.controller.dtos.*;
 import unq.ar.edu.dessap.grupol.model.User;
+import unq.ar.edu.dessap.grupol.security.JwtTokenUtil;
+import unq.ar.edu.dessap.grupol.security.JwtUserDetailsService;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.validation.Valid;
 
-
 @RestController
 @Validated
 @RequestMapping(value = "/api/auth")
-@Component
 public class AuthController {
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
 
     @PostMapping(value = "/register")
     @ExceptionHandling
@@ -34,10 +39,32 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
+    public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginUserDto loginUserDto) {
+        User user = userService.getUserByEmailAndPassword(loginUserDto.getEmail(), loginUserDto.getPassword());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
+                                        token), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/login/social")
+    public ResponseEntity<JwtResponse> login(@Valid @RequestParam("email") String email) {
+        User user = userService.getUserByEmail(email);
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
+                token), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/register/social")
     @ExceptionHandling
-    public ResponseEntity<User> login(@Valid @RequestBody LoginUserDto userData) {
-        User user = userService.getUserByEmailAndPassword(userData.getEmail(), userData.getPassword());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<UserSocialDto> register(@Valid @RequestBody UserSocialDto userData) {
+        User user = userService.createWithUsernameAndEmail(userData.getUsername(), userData.getEmail());
+
+        return new ResponseEntity<>(Converter.toUserSocialDto(user), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/edit")

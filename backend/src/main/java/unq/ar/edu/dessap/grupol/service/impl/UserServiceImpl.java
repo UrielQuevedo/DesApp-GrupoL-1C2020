@@ -7,17 +7,18 @@ import org.springframework.transaction.annotation.Transactional;
 import unq.ar.edu.dessap.grupol.controller.dtos.EditUserDto;
 import unq.ar.edu.dessap.grupol.controller.exception.EmailExistException;
 import unq.ar.edu.dessap.grupol.controller.exception.LoginException;
+import unq.ar.edu.dessap.grupol.controller.exception.NotFound;
 import unq.ar.edu.dessap.grupol.controller.exception.PasswordIncorrectException;
 import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -53,6 +54,10 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmailAndPassword(String email, String password) {
         User user = userDao.getUserByEmail(email);
         if (this.isPasswordCorrect(password, user.getPassword())) {
+//            if(user.getToken() == null) {
+//                user.setToken(JWT.getJWTToken(user.getUsername()));
+//                userDao.save(user);
+//            }
             return user;
         }
         throw new LoginException();
@@ -83,6 +88,27 @@ public class UserServiceImpl implements UserService {
             return user;
         }
         throw new PasswordIncorrectException();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        User user = userDao.getUserByEmail(email);
+        if(user == null) {
+            throw new NotFound();
+        }
+        return user;
+    }
+
+    @Override
+    public User createWithUsernameAndEmail(String username, String email) {
+        if(userDao.existEmail(email)) throw new EmailExistException();
+        User user = User.builder()
+                .email(email)
+                .username(username)
+                .build();
+
+        userDao.save(user);
+        return user;
     }
 
     private void setEmailUser(User user, String newEmail) {

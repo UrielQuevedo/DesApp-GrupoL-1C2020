@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { verifyTokenIfNotLoginOrRegister } from '../Utils/ProviderToken';
 
 const API_URL = process.env.REACT_APP_API_BACKEND + '/api';
 
@@ -21,13 +22,14 @@ const useApi = (axiosFunction) => {
 }
 
 export const useGet = (url, queryParams = {}) => {
-  return useApi(() => axios.get(API_URL + url, { params: queryParams }));
+  return useApi(() => axios.get(API_URL + url, { params: queryParams, 
+                                                 headers: verifyTokenIfNotLoginOrRegister(`/api${url}`)}));
 }
 
 export const usePost = (url, body) => {
-  return useApi(() => axios.post(API_URL + url, body));
+  return useApi(() => axios.post(API_URL + url, body, { headers: verifyTokenIfNotLoginOrRegister(`/api${url}`)}));
 }
 
 export const useDelete = (url, body) => {
-  return useApi(() => axios.delete(API_URL + url, { data: body }));
+  return useApi(() => axios.delete(API_URL + url, { data: body , headers: verifyTokenIfNotLoginOrRegister(`/api${url}`)}));
 }

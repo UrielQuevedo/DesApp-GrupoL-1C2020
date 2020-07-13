@@ -249,7 +249,7 @@ public class InitService {
         User user = User.builder()
                 .email("elchinidelaesquina@gmail.com")
                 .password(passwordEncoder.encode("test"))
-                .username("Chino Saran")
+                .username("saran")
                 .store(store)
                 .build();
 
@@ -419,7 +419,7 @@ public class InitService {
         User user = User.builder()
                 .email("test@gmail.com")
                 .password(passwordEncoder.encode("test"))
-                .username("Test")
+                .username("testing")
                 .store(store)
                 .build();
 
@@ -537,7 +537,7 @@ public class InitService {
                     .email("marian" + store.getName() + "@gmail.com")
                     .location(location)
                     .password("sarasa")
-                    .username("mariano")
+                    .username("mari " + store.getName())
                     .store(store)
                     .build();
             userDao.save(user);

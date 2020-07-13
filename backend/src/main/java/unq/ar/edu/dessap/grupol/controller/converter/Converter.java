@@ -101,4 +101,11 @@ public class Converter {
                 .totalQuantity(shoppingCart.getTotalQuantity())
                 .build();
     }
+
+    public static UserSocialDto toUserSocialDto(User user) {
+        return UserSocialDto.builder()
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .build();
+    }
 }
