@@ -30,7 +30,7 @@ public class ApiLogs {
         LogManager.getLogger(jp.getSignature().getDeclaringTypeName()).info("Fecha: " + timestamp);
         LogManager.getLogger(jp.getSignature().getDeclaringTypeName()).info(log);
     }
-    
+
     // reporta el error en caso de que exista
     @AfterThrowing(pointcut = "allResources()", throwing = "exception")
     public void apiResponseExceptionLog(JoinPoint jp, Exception exception) {
