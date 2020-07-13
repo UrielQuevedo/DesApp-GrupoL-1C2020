@@ -24,12 +24,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
-
     @PostMapping(value = "/register")
     @ExceptionHandling
     public ResponseEntity<User> register(@Valid @RequestBody UserDto userData) {
@@ -41,22 +35,17 @@ public class AuthController {
     @PostMapping(value = "/login")
     public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginUserDto loginUserDto) {
         User user = userService.getUserByEmailAndPassword(loginUserDto.getEmail(), loginUserDto.getPassword());
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        String token = jwtTokenUtil.generateToken(userDetails);
 
         return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
-                                        token), HttpStatus.OK);
+                                        user.getToken()), HttpStatus.OK);
     }
 
     @PostMapping(value = "/login/social")
     public ResponseEntity<JwtResponse> login(@Valid @RequestParam("email") String email) {
         User user = userService.getUserByEmail(email);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        String token = jwtTokenUtil.generateToken(userDetails);
-
         return new ResponseEntity<>(new JwtResponse(user.getId(), user.getEmail(), user.getUsername(),
-                token), HttpStatus.OK);
+                user.getToken()), HttpStatus.OK);
     }
 
     @PostMapping(value = "/register/social")

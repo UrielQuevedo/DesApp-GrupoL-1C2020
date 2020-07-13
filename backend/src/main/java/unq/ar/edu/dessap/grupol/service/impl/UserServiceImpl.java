@@ -1,6 +1,7 @@
 package unq.ar.edu.dessap.grupol.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,8 @@ import unq.ar.edu.dessap.grupol.controller.exception.NotFound;
 import unq.ar.edu.dessap.grupol.controller.exception.PasswordIncorrectException;
 import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.persistence.UserDao;
+import unq.ar.edu.dessap.grupol.security.JwtTokenUtil;
+import unq.ar.edu.dessap.grupol.security.JwtUserDetailsService;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import java.util.List;
@@ -24,6 +27,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
 
     @Override
     public User create(String _username, String _password, String _email) {
@@ -54,13 +63,18 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmailAndPassword(String email, String password) {
         User user = userDao.getUserByEmail(email);
         if (this.isPasswordCorrect(password, user.getPassword())) {
-//            if(user.getToken() == null) {
-//                user.setToken(JWT.getJWTToken(user.getUsername()));
-//                userDao.save(user);
-//            }
+            generateTokenIfNotExist(user);
             return user;
         }
         throw new LoginException();
+    }
+
+    private void generateTokenIfNotExist(User user) {
+        if(user.getToken() == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+            String token = jwtTokenUtil.generateToken(userDetails);
+            user.setToken(token);
+        }
     }
 
     @Override
@@ -96,6 +110,7 @@ public class UserServiceImpl implements UserService {
         if(user == null) {
             throw new NotFound();
         }
+        generateTokenIfNotExist(user);
         return user;
     }
 
