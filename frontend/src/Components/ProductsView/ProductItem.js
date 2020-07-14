@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react';
 import { ShoppingCartContext } from '../../Context/ShoppingCartContext';
 import '../../Styles/ProductItem.css';
 import BuyModal from './BuyModal';
+import formatPrice from '../../Utils/Formatters/FormatPrice';
 
 const ProductItem = ({ product }) => {
   const { name, brand, price, id, storeId } = product;
@@ -52,7 +53,7 @@ const ProductItem = ({ product }) => {
         <div className="product-item-container-info">
           <img src="https://via.placeholder.com/180" style={{ borderRadius:'6px' }} alt="imagen del store"/>
           <div className="name">
-            ${price}
+            {formatPrice(price)}
           </div>
           <div className="address">
             {name}

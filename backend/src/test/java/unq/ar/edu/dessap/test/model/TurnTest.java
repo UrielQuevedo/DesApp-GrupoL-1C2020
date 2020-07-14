@@ -6,7 +6,6 @@ import unq.ar.edu.dessap.grupol.model.Store;
 import unq.ar.edu.dessap.grupol.model.Turn;
 import unq.ar.edu.dessap.grupol.model.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.mock;
@@ -49,9 +48,9 @@ public class TurnTest {
         LocalDateTime date = LocalDateTime.now();
 
         Turn turn = Turn.builder()
-                    .date(date).build();
+                    .time(date.toString()).build();
 
-        Assert.assertEquals(date, turn.getDate());
+        Assert.assertEquals(date.toString(), turn.getTime());
     }
 
     @Test
@@ -65,12 +64,12 @@ public class TurnTest {
         turn.setId(1);
         turn.setUser(userMock);
         turn.setStore(storeMock);
-        turn.setDate(date);
+        turn.setTime(date.toString());
 
         Assert.assertEquals(1, turn.getId());
         Assert.assertEquals(userMock, turn.getUser());
         Assert.assertEquals(storeMock, turn.getStore());
-        Assert.assertEquals(date, turn.getDate());
+        Assert.assertEquals(date.toString(), turn.getTime());
     }
 
     @Test
@@ -78,11 +77,11 @@ public class TurnTest {
         Turn turn1 = Turn.builder().build();
         Turn turn2 = new Turn();
 
-        Assert.assertNull(turn1.getDate());
+        Assert.assertNull(turn1.getTime());
         Assert.assertNull(turn1.getStore());
         Assert.assertNull(turn1.getUser());
 
-        Assert.assertNull(turn2.getDate());
+        Assert.assertNull(turn2.getTime());
         Assert.assertNull(turn2.getStore());
         Assert.assertNull(turn2.getUser());
     }

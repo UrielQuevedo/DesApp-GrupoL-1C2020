@@ -19,6 +19,7 @@ import PublishStore from '../View/PublishStore';
 import UserData from '../View/UserData';
 import UserOrders from '../View/UserOrders';
 import ShoppingCartProvider from '../Context/ShoppingCartContext';
+import MakeAPurchase from '../View/MakeAPurchase';
 
 function App() {
   return (
@@ -37,9 +38,10 @@ function App() {
                 <Route exact path='/' component={Home} />
                 <Route exact path='/store' component={Store} />
                 <Route exact path='/profile/mydata' component={UserData} />
-                <Route exact path='/profile/myorders' component={UserOrders} />
                 <Route exact path='/publish/store' component={PublishStore} />
                 <ShoppingCartProvider>
+                  <Route exact path='/profile/myorders' component={UserOrders} />
+                  <Route exact path='/profile/shoppingcart' component={MakeAPurchase}/>
                   <Route exact path='/stores' component={AllStoresWrapper} />
                   <Route exact path='/stores/category/:category' component={StoresCategoriesWrapper} />
                   <Route exact path='/stores/:store_id/products/:category' component={Products} />

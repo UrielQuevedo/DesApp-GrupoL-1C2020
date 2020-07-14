@@ -12,7 +12,11 @@ import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.annotation.PostConstruct;
+<<<<<<< HEAD
 import java.io.IOException;
+=======
+import java.time.DayOfWeek;
+>>>>>>> feature/make-purchase
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +26,8 @@ import java.util.List;
 @Service
 @Transactional
 public class InitService {
+    private final List<DayOfWeek> openDays =
+            new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY, DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.SUNDAY, DayOfWeek.SATURDAY));
 
     @Autowired
     private UserDao userDao;
@@ -48,10 +54,7 @@ public class InitService {
     }
 
     private void createSimpleUsers() {
-        List<String> names = new ArrayList<>(Arrays.asList("24Open"));
-        for (String name : names) {
-            userService.create(name, "test", name + "@gmail.com");
-        }
+        userService.create("Uriel Quevedo", "test", "quevedouriel3@gmail.com");
     }
 
     private void createStores() {
@@ -145,12 +148,18 @@ public class InitService {
         products.add(product6);
 
         Location location = new Location(-34.716633, -58.259892, "Calle bonita");
+        final List<Time> times = new ArrayList<>();
+        final Time time = Time.builder().of("08:00").until("23:00").build();;
+        times.add(time);
 
         Store store = Store.builder()
                 .maxDistance(20.00)
                 .name("chino")
+                .payments(new ArrayList<>(Arrays.asList(Payment.TARJETA, Payment.EFECTIVO)))
                 .sector(Sector.ALMACEN)
+                .openDays(openDays)
                 .products(products)
+                .times(times)
                 .location(location)
                 .build();
         product.setStore(store);
@@ -230,14 +239,21 @@ public class InitService {
         products.add(product6);
 
         Location location = new Location(-34.715692, -58.257890, "Calle con chinos");
+        final List<Time> times = new ArrayList<>();
+        final Time time = Time.builder().of("08:00").until("23:00").build();;
+        times.add(time);
 
         Store store = Store.builder()
                 .maxDistance(20.00)
                 .name("Chino de la esquina")
                 .sector(Sector.ALMACEN)
                 .products(products)
+                .openDays(openDays)
+                .payments(new ArrayList<>(Arrays.asList(Payment.TARJETA, Payment.EFECTIVO)))
+                .times(times)
                 .location(location)
                 .build();
+
 
         product.setStore(store);
         product2.setStore(store);
@@ -315,12 +331,18 @@ public class InitService {
         products.add(product6);
 
         Location location = new Location(-34.718220, -58.257757, "Calle fea");
+        final List<Time> times = new ArrayList<>();
+        final Time time = Time.builder().of("08:00").until("23:00").build();;
+        times.add(time);
 
         Store store = Store.builder()
                 .maxDistance(20.00)
                 .name("Rifarita")
                 .sector(Sector.ALMACEN)
                 .products(products)
+                .openDays(openDays)
+                .times(times)
+                .payments(new ArrayList<>(Arrays.asList(Payment.TARJETA, Payment.EFECTIVO)))
                 .location(location)
                 .build();
 
@@ -400,13 +422,19 @@ public class InitService {
         products.add(product6);
 
         Location location = new Location(-34.735310, -58.260750, "Calle larga");
+        final List<Time> times = new ArrayList<>();
+        final Time time = Time.builder().of("08:00").until("23:00").build();;
+        times.add(time);
 
         Store store = Store.builder()
                 .maxDistance(20.00)
                 .name("test")
                 .sector(Sector.ALMACEN)
                 .products(products)
+                .openDays(openDays)
                 .location(location)
+                .times(times)
+                .payments(new ArrayList<>(Arrays.asList(Payment.TARJETA, Payment.EFECTIVO)))
                 .build();
 
         product.setStore(store);
@@ -451,6 +479,10 @@ public class InitService {
 
         products.add(product);
 
+        final List<Time> times = new ArrayList<>();
+        final Time time = Time.builder().of("08:00").until("23:00").build();;
+        times.add(time);
+
         Store store = Store.builder()
                 .location(location)
                 .maxDistance(2.0)
@@ -458,6 +490,8 @@ public class InitService {
                 .payments(payments)
                 .sector(Sector.ALMACEN)
                 .products(products)
+                .times(times)
+                .openDays(openDays)
                 .build();
 
         product.setStore(store);

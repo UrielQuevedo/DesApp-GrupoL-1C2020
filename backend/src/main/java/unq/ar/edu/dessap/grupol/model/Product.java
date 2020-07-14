@@ -5,7 +5,6 @@ import lombok.*;
 import unq.ar.edu.dessap.grupol.model.offer.Offer;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -36,5 +35,9 @@ public class Product {
 
     public Long getStoreId() {
         return store.getId();
+    }
+
+    public void decreaseStock(int quantity) {
+        this.stock -= quantity;
     }
 }

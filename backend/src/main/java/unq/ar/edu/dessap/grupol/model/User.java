@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,19 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
+<<<<<<< HEAD
     private String token;
     @Transient
     @JsonIgnore
     @Builder.Default
     private List<OrderHistory> orders = new ArrayList<>();
+=======
+>>>>>>> feature/make-purchase
     private Location location;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @Builder.Default
+    private List<OrderHistory> ordersHistory = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_shopping_cart_id", referencedColumnName = "id")
@@ -37,5 +45,17 @@ public class User {
     @JsonIgnore
     private Store store;
 
+<<<<<<< HEAD
 
+=======
+    public void makeAOrderHistory() {
+        OrderHistory orderHistory = OrderHistory.builder()
+                .date(LocalDateTime.now())
+                .user(this)
+                .build();
+        orderHistory.addOrders(this.shoppingCart.getOrders());
+        this.ordersHistory.add(orderHistory);
+        this.shoppingCart.removeAllOrders();
+    }
+>>>>>>> feature/make-purchase
 }

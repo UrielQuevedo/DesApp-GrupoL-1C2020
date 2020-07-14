@@ -19,7 +19,6 @@ const ShoppingCartProvider = ({ children }) => {
         setShoppingCart,
         getShoppingCartLoading
     }}>
-      <ShoppingCart />
       {children}
     </ShoppingCartContext.Provider>
   );
