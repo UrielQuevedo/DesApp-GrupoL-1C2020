@@ -12,11 +12,8 @@ import unq.ar.edu.dessap.grupol.persistence.UserDao;
 import unq.ar.edu.dessap.grupol.service.UserService;
 
 import javax.annotation.PostConstruct;
-<<<<<<< HEAD
 import java.io.IOException;
-=======
 import java.time.DayOfWeek;
->>>>>>> feature/make-purchase
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
