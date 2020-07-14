@@ -107,12 +107,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit</artifactId>
-            <version>0.14.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
