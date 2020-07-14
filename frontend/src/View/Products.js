@@ -12,6 +12,7 @@ import { UserContext } from '../Context/UserContext';
 import { useGetProductsFiltered } from '../Service/ProductService';
 import { useGetCategories, useGetStore } from '../Service/StoreService';
 import '../Styles/Stores.css';
+import ShoppingCart from '../Components/ShoppingCart/ShoppingCart';
 
 const Products = ({ location }) => {
   const { category, store_id } = useParams();
@@ -160,6 +161,7 @@ const Products = ({ location }) => {
 
   return (
     <div style={{ marginTop:'4.5rem', display:'flex' }}>
+      <ShoppingCart />
       <LateralMenu />
       <Grid container item xs={10}>
         <Grid container item style={{ padding:'1rem', width:"100%" }} direction="column">

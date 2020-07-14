@@ -5,6 +5,7 @@ import { ShoppingCartContext } from '../../Context/ShoppingCartContext';
 import { UserContext } from '../../Context/UserContext';
 import { useDeleteProductToShoppingCart, usePostProductToShoppingCart } from '../../Service/ShoppingCartService';
 import '../../Styles/ProductItem.css';
+import formatPrice from '../../Utils/Formatters/FormatPrice';
 
 const BuyModal = ({ actualPriceShoppingCart, productOrder, orderId, product, isOpen, setOpen, isAdded }) => {
   const [ newProduct, setNewProduct ] = useState({
@@ -56,7 +57,7 @@ const BuyModal = ({ actualPriceShoppingCart, productOrder, orderId, product, isO
       <DialogTitle id="customized-dialog-title" style={{ textTransform:'capitalize' }}>
         <Grid container justify="space-between">
           <h4 style={{ margin:'0' }}>{ product.name }</h4>
-          <div>${product.price}</div>
+          <div>{formatPrice(product.price)}</div>
         </Grid>
       </DialogTitle>
       <form onSubmit={handleAddProduct}>
@@ -84,7 +85,7 @@ const BuyModal = ({ actualPriceShoppingCart, productOrder, orderId, product, isO
                   Su pedido quedaria en:
                 </div>
                 <div>
-                  ${ actualPriceShoppingCart + newProduct.totalPrice }
+                  {formatPrice(actualPriceShoppingCart + newProduct.totalPrice)}
                 </div>
               </Grid>
             </Grid>
@@ -100,7 +101,7 @@ const BuyModal = ({ actualPriceShoppingCart, productOrder, orderId, product, isO
             Cancelar
           </Button>
           <Button type="submit" variant="contained" color="primary">
-            Agregar a mi pedido (${newProduct.totalPrice})
+            Agregar a mi pedido ({formatPrice(newProduct.totalPrice)})
           </Button>
         </DialogActions>
       </form>

@@ -105,7 +105,7 @@ public class Store {
         DateTimeFormatter isoTime = DateTimeFormatter.ofPattern("HH:mm");
         List<String> tickets = new ArrayList<>();
         this.times.forEach(time -> tickets.addAll(GenerateTickets
-                .generateTickets( LocalTime.parse(time.getOf(), isoTime),  LocalTime.parse(time.getUntil(), isoTime), 15)
+                .generateTickets( LocalTime.parse(time.getOf(), isoTime),  LocalTime.parse(time.getUntil(), isoTime), 15, this)
         .stream().map(localTime -> localTime.format(isoTime)).collect(Collectors.toList())));
         return tickets;
     }

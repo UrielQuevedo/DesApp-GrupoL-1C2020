@@ -8,8 +8,10 @@ import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartDeleteProductDto;
 import unq.ar.edu.dessap.grupol.controller.dtos.ShoppingCartProductDto;
 import unq.ar.edu.dessap.grupol.model.*;
 import unq.ar.edu.dessap.grupol.persistence.*;
+import unq.ar.edu.dessap.grupol.service.MailService;
 import unq.ar.edu.dessap.grupol.service.ShoppingCartService;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 
 @Service
@@ -21,6 +23,9 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
     @Autowired
     private StoreDao storeDao;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private ProductDao productDao;
@@ -83,7 +88,14 @@ public class ShoppingCartImpl implements ShoppingCartService {
         order.makePurchase();
         switch (purchaseDto.getMethodOfDelivery()) {
             case ("Delivery") : {
-                //Enviar email con en horario y dia de entrega
+                LocalTime regularTime = LocalTime.now();
+                int minutes = regularTime.getMinute() + 30;
+                int hour = regularTime.getHour();
+                if(minutes >= 60) {
+                    hour++;
+                    minutes = minutes - 60;
+                };
+                mailService.sendDeliveryInfo(user.getEmail(), LocalTime.of(hour,minutes).toString(), order.getStoreName());
                 break;
             }
             case ("Turn") : {
@@ -103,6 +115,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
                 .store(store)
                 .time(time)
                 .build();
+        mailService.sendTurnInfo(user.getEmail(), turn.getTime(), store.getName());
         store.addTurn(turn);
         storeDao.save(store);
     }

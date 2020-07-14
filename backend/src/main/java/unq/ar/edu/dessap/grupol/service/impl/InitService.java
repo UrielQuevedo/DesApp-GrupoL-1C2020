@@ -49,10 +49,7 @@ public class InitService {
     }
 
     private void createSimpleUsers() {
-        List<String> names = new ArrayList<>(Arrays.asList("24Open"));
-        for (String name : names) {
-            userService.create(name, "test", name + "@gmail.com");
-        }
+        userService.create("Uriel Quevedo", "test", "quevedouriel3@gmail.com");
     }
 
     private void createStores() {

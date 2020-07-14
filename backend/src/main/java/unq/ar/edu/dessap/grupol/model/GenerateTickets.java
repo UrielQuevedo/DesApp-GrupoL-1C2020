@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GenerateTickets {
 
@@ -17,11 +18,13 @@ public class GenerateTickets {
         return Duration.between(start, end).getSeconds() / 60;
     }
 
-    private static boolean isTicketAdded(LocalTime currentTime, LocalTime ticket, boolean isNewDay) {
-        return currentTime.isBefore(ticket) || (isNewDay && currentTime.isAfter(ticket));
+    private static boolean isTicketAdded(LocalTime currentTime, LocalTime ticket, boolean isNewDay, Store store) {
+        return (currentTime.isBefore(ticket) ||
+                (isNewDay && currentTime.isAfter(ticket))) &&
+                        !store.getTurns().stream().map(Turn::getTime).collect(Collectors.toList()).contains(ticket.toString());
     }
 
-    public static List<LocalTime> generateTickets(LocalTime start, LocalTime end, int difference) {
+    public static List<LocalTime> generateTickets(LocalTime start, LocalTime end, int difference, Store store) {
         List<LocalTime> tickets = new ArrayList<>();
         LocalTime currentTime = LocalTime.now();
         LocalTime ticket = start;
@@ -31,7 +34,7 @@ public class GenerateTickets {
         long missingMinutes = diferrenceHour(start, end);
 
         while (missingMinutes >= 0) {
-            if (isTicketAdded(currentTime, ticket, isNewDay)) {
+            if (isTicketAdded(currentTime, ticket, isNewDay, store)) {
                 tickets.add(ticket);
             }
             ticketMinute += difference;

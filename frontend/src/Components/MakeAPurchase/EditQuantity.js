@@ -3,6 +3,7 @@ import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Grid, But
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import formatPrice from '../../Utils/Formatters/FormatPrice';
 
 const EditQuantity = ({ handleNextStep, shoppingCart }) => {
   const [ expanded, setExpanded ] = useState('');
@@ -59,7 +60,7 @@ const EditQuantity = ({ handleNextStep, shoppingCart }) => {
           </form>
         </Grid>
         <Grid item xs="3" style={{marginTop:'2px'}}>
-          <b>Total:</b> ${totalPrice}
+          <b>Total:</b> {formatPrice(totalPrice)}
         </Grid>
       </Grid>
     ))
@@ -91,7 +92,7 @@ const EditQuantity = ({ handleNextStep, shoppingCart }) => {
       <div style={{ marginTop:'10px', borderTop:'2px solid black', paddingTop:'10px'}}>
         <Grid container item xs="12" justify="space-between">
           <b>Subtotal </b>
-          ${shoppingCart.totalPrice}
+          {formatPrice(shoppingCart.totalPrice)}
         </Grid>
       </div>
       <Button

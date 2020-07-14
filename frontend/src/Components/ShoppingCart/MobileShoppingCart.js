@@ -3,6 +3,7 @@ import { Button, Badge } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import '../../Styles/ShoppingCart.css';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import formatPrice from '../../Utils/Formatters/FormatPrice';
 
 const MobileShoppingCart = ({ stateStyle, totalPrice, totalAmount }) => {
   return (
@@ -15,7 +16,7 @@ const MobileShoppingCart = ({ stateStyle, totalPrice, totalAmount }) => {
           ver mi pedido
         </span>
         <span className="price">
-          ${totalPrice}
+          {formatPrice(totalPrice)}
         </span>
       </Button>
     </div>

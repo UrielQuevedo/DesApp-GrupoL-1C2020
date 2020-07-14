@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import '../../../Styles/NavigationBar.css';
 import UserLocationButton from '../UserLocationButton';
 import UserMenuItems from '../UserMenuItems';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Svg from '../../Svg';
 
 
@@ -29,6 +30,14 @@ const MobileNavigationBar = ({ trigger, user }) => {
         onClose={handlerNavigationBarClose}
       >
         <List style={{width:'200px'}}>
+          <Link to="/stores" style={{ textDecoration:'none' }}>
+            <ListItem button>
+              <ListItemIcon className="icons">
+                <ShoppingCartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Tiendas" style={{ color:'#000000de' }} />
+            </ListItem>
+          </Link>
           <Link to="/store" style={{ textDecoration:'none' }}>
             <ListItem button>
               <ListItemIcon className="icons">

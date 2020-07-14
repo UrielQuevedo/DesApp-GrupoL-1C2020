@@ -34,8 +34,8 @@ export const useMakePuchase = (id) => {
   const [ values, setValues ] = useState({});
   const { method, loading: makeAPurchaseLoading } = usePost(`${pathname}/${id}/shoppingcart/purchase`, values);
 
-  const makeAPurchase = () => {
-    method();
+  const makeAPurchase = (setStep, setShoppingCart) => {
+    method((data) => { setShoppingCart(data); setStep(3) }, setStep(4));
   }
 
   return { makeAPurchase, makeAPurchaseLoading, values, setValues };

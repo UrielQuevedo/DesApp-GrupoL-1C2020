@@ -6,9 +6,10 @@ import SelectWithDrawalMethod from '../Components/MakeAPurchase/SelectWithDrawal
 import { ShoppingCartContext } from '../Context/ShoppingCartContext';
 import { useMakePuchase } from '../Service/ShoppingCartService';
 import { UserContext } from '../Context/UserContext';
+import SuccessfulPurchase from '../Components/MakeAPurchase/SuccessfulPurchase';
 
 const MakeAPurchase = () => {
-  const { shoppingCart } = useContext(ShoppingCartContext);
+  const { shoppingCart, setShoppingCart } = useContext(ShoppingCartContext);
   const { user } = useContext(UserContext);
   const [ activeStep, setActiveStep ] = useState(0);
   const { makeAPurchase, values, setValues } = useMakePuchase(user.id);
@@ -20,7 +21,7 @@ const MakeAPurchase = () => {
 
   const handleBuy = (e) => {
     e.preventDefault();
-    makeAPurchase();
+    makeAPurchase(setActiveStep, setShoppingCart);
   };
 
   const StepOptions = () => {
@@ -31,6 +32,8 @@ const MakeAPurchase = () => {
         return <SelectPayment shoppingCart={shoppingCart} handleNextStep={handleNext} values={values} setValues={setValues} />;
       case 2:
         return <SelectWithDrawalMethod shoppingCart={shoppingCart} handleNextStep={handleNext} handleBuy={handleBuy} values={values} setValues={setValues} />
+      case 3:
+        return <SuccessfulPurchase />
       default:
         return <div>This purchase is not valid</div>
     }

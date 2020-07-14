@@ -38,9 +38,9 @@ function App() {
                 <Route exact path='/' component={Home} />
                 <Route exact path='/store' component={Store} />
                 <Route exact path='/profile/mydata' component={UserData} />
-                <Route exact path='/profile/myorders' component={UserOrders} />
                 <Route exact path='/publish/store' component={PublishStore} />
                 <ShoppingCartProvider>
+                  <Route exact path='/profile/myorders' component={UserOrders} />
                   <Route exact path='/profile/shoppingcart' component={MakeAPurchase}/>
                   <Route exact path='/stores' component={AllStoresWrapper} />
                   <Route exact path='/stores/category/:category' component={StoresCategoriesWrapper} />
