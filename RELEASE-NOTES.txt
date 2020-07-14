@@ -28,7 +28,7 @@ KNOWN ISSUES:
 - 
 
 ---------------------------------------------------------------------
-TAG ENTREGA 2.0
+TAG ENTREGA 1.0
 ---------------------------------------------------------------------
 NEW FEATURES:
 * Home.
@@ -44,6 +44,24 @@ NOTES:
 - Carrito de compras.
 - Realizar una compra.
 - Register con cuenta de Gmail.
+
+KNOWN ISSUES:
+- 
+
+---------------------------------------------------------------------
+TAG ENTREGA 1.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Concern compras.
+* Login con cuenta de Google.
+* Autenticacion mediante token.
+* Cargar/modificar productos mediante CSV.
+* Test de arquitectura.
+* Auditoria de web services.
+* Envio de emails.
+
+NOTES:
+- Formatters de fecha
 
 KNOWN ISSUES:
 - 
