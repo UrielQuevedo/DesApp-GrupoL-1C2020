@@ -20,6 +20,7 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false)
     private String email;
+    private String token;
     @Transient
     @JsonIgnore
     @Builder.Default
@@ -35,5 +36,6 @@ public class User {
     @JoinColumn(name = "fk_store_id", referencedColumnName = "id")
     @JsonIgnore
     private Store store;
+
 
 }
