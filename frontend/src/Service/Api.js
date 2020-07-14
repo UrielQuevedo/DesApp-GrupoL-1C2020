@@ -25,3 +25,5 @@ export const updateProductRequest = (idProduct, product_data) => request('PUT', 
 export const getUserById = (idUser) => request('GET', `/api/v1/users/${idUser}`);
 export const publishStoreRequest = (idUser, store_data) => request('POST', `/api/users/${idUser}/stores`, store_data);
 export const existsProductsRequest = (ids) => request('GET', `/api/stores/products/exists/${ids}`);
+export const addProductToShoppingCartOrder = (idUser, data) => request('POST', `/api/users/${idUser}/shoppingcart/product`, data);
+export const getOrdersHistory = (idUser) => request('GET', `/api/v1/users/${idUser}/orders`);

@@ -5,6 +5,7 @@ import lombok.Setter;
 import unq.ar.edu.dessap.grupol.model.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,4 +20,6 @@ public class StoreDto {
     private List<Payment> payments;
     private List<TimeDto> times;
     private List<ProductDto> products;
+    private boolean isOpen;
+    private List<String> tickets;
 }

@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,8 +64,9 @@ public class Store {
     @JsonIgnore
     private List<Product> products = new ArrayList<>();
 
-    @Transient
-    private List<Turn> turns;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "store")
+    @Builder.Default
+    private List<Turn> turns = new ArrayList<>();
 
     public void addProduct(Product product) {
         this.products.add(product);
@@ -78,5 +82,43 @@ public class Store {
 
     public void addTimes(Time time) {
         this.times.add(time);
+    }
+
+    public boolean getIsOpen() {
+        DateTimeFormatter isoTime = DateTimeFormatter.ofPattern("HH:mm");
+        String today = LocalDate.now().getDayOfWeek().toString();
+        boolean isOpenToday = this.getOpenDays().stream().anyMatch(dayOfWeek -> dayOfWeek.name().equals(today));
+
+        return isOpenToday && this.times.stream().anyMatch(time -> {
+            LocalTime start = LocalTime.parse(time.getOf(), isoTime);
+            LocalTime end = LocalTime.parse(time.getUntil(), isoTime);
+            LocalTime timeNow = LocalTime.now();
+            if (start.isAfter(end)) {
+                return !timeNow.isBefore(start) || !timeNow.isAfter(end);
+            } else {
+                return !timeNow.isBefore(start) && !timeNow.isAfter(end);
+            }
+        });
+    }
+
+    public List<String> getTickets() {
+        DateTimeFormatter isoTime = DateTimeFormatter.ofPattern("HH:mm");
+        List<String> tickets = new ArrayList<>();
+        this.times.forEach(time -> tickets.addAll(GenerateTickets
+                .generateTickets( LocalTime.parse(time.getOf(), isoTime),  LocalTime.parse(time.getUntil(), isoTime), 15, this)
+        .stream().map(localTime -> localTime.format(isoTime)).collect(Collectors.toList())));
+        return tickets;
+    }
+
+    public void verifyPayment(Payment payment) {
+        if (!this.payments.contains(payment)) throw new RuntimeException("El Payment no es valido");
+    }
+
+    public void verifyTurn(String turnTime) {
+        if (this.turns.stream().anyMatch(turn -> turn.getTime().equals(turnTime))) throw new RuntimeException("El Turno ya esta tomado");
+    }
+
+    public void addTurn(Turn turn) {
+        this.turns.add(turn);
     }
 }

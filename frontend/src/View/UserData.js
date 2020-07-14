@@ -122,7 +122,7 @@ const UserData = () => {
   }
 
   return (
-    <Grid container justify="center" direction="row" style={{ marginTop:'4.5rem', display:'flex' }}>
+    <Grid container justify="center" direction="row" style={{ marginTop:'4.5rem', display:'flex', marginBottom:'30px' }}>
       <Grid container item xs={9} justify="center">
         <NavigationProfile actualView={1} />
         <DataContainerProfile title="Editar Mis Datos" view={settingView} />

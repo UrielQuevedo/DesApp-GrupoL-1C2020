@@ -1,12 +1,10 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,8 +16,14 @@ public class OrderHistory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id")
+    @JsonIgnore
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderHistory", cascade = CascadeType.ALL)
     private List<Order> orders;
     private LocalDateTime date;
+
+    public void addOrders(List<Order> orders) {
+        orders.forEach(order -> order.setOrderHistory(this));
+        this.orders = orders;
+    }
 }

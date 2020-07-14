@@ -1,5 +1,6 @@
 package unq.ar.edu.dessap.grupol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,5 +23,11 @@ public class Time {
     private String until;
 
     @ManyToMany(mappedBy = "times")
-    private List<Store> stores;
+    @JsonIgnore
+    @Builder.Default
+    private List<Store> stores = new ArrayList<>();
+
+    public void addStore(Store store) {
+        this.stores.add(store);
+    }
 }

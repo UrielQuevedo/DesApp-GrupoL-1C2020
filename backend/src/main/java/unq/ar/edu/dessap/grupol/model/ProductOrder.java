@@ -26,4 +26,9 @@ public class ProductOrder {
     public Double getTotalPrice() {
         return this.product.getPrice() * this.quantity;
     }
+
+    public void verify() {
+        if (this.quantity > this.product.getStock()) throw new RuntimeException("No hay esa cantidad de stock de " + this.product.getName());
+        this.product.decreaseStock(this.quantity);
+    }
 }

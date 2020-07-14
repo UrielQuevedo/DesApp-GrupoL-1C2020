@@ -46,6 +46,8 @@ public class Converter {
         //storeDto.setPayments(store.getPayments());
         storeDto.setTimes(toTimesDtos(store.getTimes()));
         storeDto.setProducts(toProductsDtos(store.getProducts()));
+        storeDto.setOpen(store.getIsOpen());
+        storeDto.setTickets(store.getTickets());
         return storeDto;
     }
 

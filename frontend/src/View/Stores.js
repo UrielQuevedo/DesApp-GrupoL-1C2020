@@ -11,6 +11,7 @@ import ShowStoreOnMap from '../Components/ProductsAndStores/ShowStoresOnMap';
 import { UserContext } from '../Context/UserContext';
 import '../Styles/Stores.css';
 import { categories } from '../Utils/Constans';
+import ShoppingCart from '../Components/ShoppingCart/ShoppingCart';
 
 const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
   const { category } = useParams();
@@ -126,6 +127,7 @@ const Stores = ({ stores, storesLoading, totalPages, filter, setFilter }) => {
 
   return (
     <div style={{ marginTop:'4.5rem', display:'flex' }}>
+      <ShoppingCart />
       <LateralMenu />
       <Grid container item xs={10}>
         <Grid container item style={{ padding:'1rem', width:"100%" }} direction="column">
